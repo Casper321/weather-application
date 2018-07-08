@@ -29,7 +29,7 @@ const DayForecast = ({ day, degrees, weatherType, amountRain }) => {
 
 const styles = StyleSheet.create({
   mainContent: {
-    backgroundColor: '#fff',
+    backgroundColor: style.COL_WHITE,
     width: '95%',
     marginLeft: 'auto',
     marginRight: 'auto',
