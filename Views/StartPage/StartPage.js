@@ -16,7 +16,6 @@ export default class StartPage extends Component {
         <CityHeader city={'Göteborg'} />
         <Warning message={'1 risk för västra Götalands län, Bohuslän och Göteborg.'} />
         <DayForecast day={'Söndag 8 juli'} degrees={25} weatherType={'Soligt'} amountRain={0} />
-        <Text>Kulans text</Text>
       </Container>
     )
   }
