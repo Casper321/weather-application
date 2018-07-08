@@ -2,15 +2,16 @@ import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { FontAwesome, MaterialCommunityIcons, Feather } from '@expo/vector-icons/'
 import * as style from '../../../Assets/style'
+import s from '../../../Assets/style'
 
 const Warning = ({ message = 'Ingen varning utfärdad.' }) => {
   return (
-    <View style={styles.warning}>
-      <View style={styles.warningIconContainer}>
+    <View style={[s.w, s.mlA, s.mrA, s.pa2, s.mb3, s.mt1, s.col_bg_white, s.flexDr, s.flexJsb, s.flexAce]}>
+      <View style={[styles.warningIconContainer, s.flex2]}>
         <View style={[styles.center, styles.flexOne]}>
           <FontAwesome style={styles.warningCircle} name='circle-thin' color={style.COL_WARNING} size={50} />
         </View>
-        <View style={styles.center}>
+        <View>
           <MaterialCommunityIcons
             style={styles.warningFire}
             name='fire'
@@ -19,10 +20,10 @@ const Warning = ({ message = 'Ingen varning utfärdad.' }) => {
           />
         </View>
       </View>
-      <Text style={[styles.descText, styles.flexSeven]}>
+      <Text style={[s.flex8]}>
         {message}
       </Text>
-      <View style={[styles.warningArrow, styles.flexOne]}>
+      <View style={[s.flexOne, s.flexDr, s.flexJfe, s.flexAce]}>
         <Feather name='chevron-right' color={style.COL_PRIMARY} size={style.ICON_SIZE_MEDIUM} />
       </View>
     </View>
@@ -30,26 +31,14 @@ const Warning = ({ message = 'Ingen varning utfärdad.' }) => {
 }
 
 const styles = StyleSheet.create({
-  warning: {
-    width: '95%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    padding: 6,
-    marginBottom: 12,
-    marginTop: 4,
-    backgroundColor: '#fff',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
   warningIconContainer: {
     height: 50,
     width: 50
   },
-  warningArrow: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center'
+  warningFire: {
+    position: 'absolute',
+    top: -37,
+    left: 10
   }
 })
 
