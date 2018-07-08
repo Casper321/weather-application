@@ -22,8 +22,19 @@ export const SPACING_M = 18
 export const SPACING_L = 26
 export const SPACING_XL = 38
 
+export const FONT_SIZE_XS = 12
+export const FONT_SIZE_S = 17
+export const FONT_SIZE_M = 20
+export const FONT_SIZE_L = 26
+
+export const WIDTH_STANDARD = '95%'
+
+export const BORDER_RADIUS_STANDARD = 4
+
+export const BORDER_WIDTH_STANDARD = 1
 export default StyleSheet.create({
   /* Color */
+  col_primary: { color: COL_PRIMARY },
   col_grey: { color: COL_GREY },
   col_dark_grey: { color: COL_DARK_GREY },
   col_warning: { color: COL_WARNING },
@@ -33,13 +44,14 @@ export default StyleSheet.create({
   col_black: { color: COL_BLACK },
 
   /* Background color */
-  col_bg_primary: { color: COL_PRIMARY },
-  col_bg_secondary: { color: COL_SECONDARY },
-  col_bg_grey: { color: COL_GREY },
-  col_bg_dark_grey: { color: COL_DARK_GREY },
-  col_bg_warning: { color: COL_WARNING },
-  col_bg_yellow_sun: { color: COL_YELLOW_SUN },
-  col_bg_water_blue: { color: COL_WATER_BLUE },
+  col_bg_primary: { backgroundColor: COL_PRIMARY },
+  col_bg_secondary: { backgroundColor: COL_SECONDARY },
+  col_bg_grey: { backgroundColor: COL_GREY },
+  col_bg_dark_grey: { backgroundColor: COL_DARK_GREY },
+  col_bg_warning: { backgroundColor: COL_WARNING },
+  col_bg_yellow_sun: { backgroundColor: COL_YELLOW_SUN },
+  col_bg_water_blue: { backgroundColor: COL_WATER_BLUE },
+  col_bg_white: { backgroundColor: COL_WHITE },
 
   /* Margin */
   ma0: { margin: SPACING_XXS },
@@ -48,6 +60,7 @@ export default StyleSheet.create({
   ma3: { margin: SPACING_M },
   ma4: { margin: SPACING_L },
   ma5: { margin: SPACING_XL },
+  maA: { margin: 'auto' },
 
   mt0: { marginTop: SPACING_XXS },
   mt1: { marginTop: SPACING_XS },
@@ -55,6 +68,15 @@ export default StyleSheet.create({
   mt3: { marginTop: SPACING_M },
   mt4: { marginTop: SPACING_L },
   mt5: { marginTop: SPACING_XL },
+  mtA: { marginTop: 'auto' },
+
+  mb0: { marginBottom: SPACING_XXS },
+  mb1: { marginBottom: SPACING_XS },
+  mb2: { marginBottom: SPACING_S },
+  mb3: { marginBottom: SPACING_M },
+  mb4: { marginBottom: SPACING_L },
+  mb5: { marginBottom: SPACING_XL },
+  mbA: { marginBottom: 'auto' },
 
   ml0: { marginLeft: SPACING_XXS },
   ml1: { marginLeft: SPACING_XS },
@@ -62,6 +84,7 @@ export default StyleSheet.create({
   ml3: { marginLeft: SPACING_M },
   ml4: { marginLeft: SPACING_L },
   ml5: { marginLeft: SPACING_XL },
+  mlA: { marginLeft: 'auto' },
 
   mr0: { marginRight: SPACING_XXS },
   mr1: { marginRight: SPACING_XS },
@@ -69,54 +92,64 @@ export default StyleSheet.create({
   mr3: { marginRight: SPACING_M },
   mr4: { marginRight: SPACING_L },
   mr5: { marginRight: SPACING_XL },
+  mrA: { marginRight: 'auto' },
 
   /* Padding */
-  pa0: { margin: SPACING_XXS },
-  pa1: { margin: SPACING_XS },
-  pa2: { margin: SPACING_S },
-  pa3: { margin: SPACING_M },
-  pa4: { margin: SPACING_L },
-  pa5: { margin: SPACING_XL },
+  pa0: { padding: SPACING_XXS },
+  pa1: { padding: SPACING_XS },
+  pa2: { padding: SPACING_S },
+  pa3: { padding: SPACING_M },
+  pa4: { padding: SPACING_L },
+  pa5: { padding: SPACING_XL },
+  paA: { padding: 'auto' },
 
-  pb0: { marginBottom: SPACING_XXS },
-  pb1: { marginBottom: SPACING_XS },
-  pb2: { marginBottom: SPACING_S },
-  pb3: { marginBottom: SPACING_M },
-  pb4: { marginBottom: SPACING_L },
-  pb5: { marginBottom: SPACING_XL },
+  pt0: { paddingTop: SPACING_XXS },
+  pt1: { paddingTop: SPACING_XS },
+  pt2: { paddingTop: SPACING_S },
+  pt3: { paddingTop: SPACING_M },
+  pt4: { paddingTop: SPACING_L },
+  pt5: { paddingTop: SPACING_XL },
+  ptA: { paddingTop: 'auto' },
 
-  pt0: { marginTop: SPACING_XXS },
-  pt1: { marginTop: SPACING_XS },
-  pt2: { marginTop: SPACING_S },
-  pt3: { marginTop: SPACING_M },
-  pt4: { marginTop: SPACING_L },
-  pt5: { marginTop: SPACING_XL },
+  pl0: { paddingLeft: SPACING_XXS },
+  pl1: { paddingLeft: SPACING_XS },
+  pl2: { paddingLeft: SPACING_S },
+  pl3: { paddingLeft: SPACING_M },
+  pl4: { paddingLeft: SPACING_L },
+  pl5: { paddingLeft: SPACING_XL },
+  plA: { paddingLeft: 'auto' },
 
-  pl0: { marginLeft: SPACING_XXS },
-  pl1: { marginLeft: SPACING_XS },
-  pl2: { marginLeft: SPACING_S },
-  pl3: { marginLeft: SPACING_M },
-  pl4: { marginLeft: SPACING_L },
-  pl5: { marginLeft: SPACING_XL },
+  pr0: { paddingRight: SPACING_XXS },
+  pr1: { paddingRight: SPACING_XS },
+  pr2: { paddingRight: SPACING_S },
+  pr3: { paddingRight: SPACING_M },
+  pr4: { paddingRight: SPACING_L },
+  pr5: { paddingRight: SPACING_XL },
+  prA: { paddingRight: 'auto' },
 
-  pr0: { marginRight: SPACING_XXS },
-  pr1: { marginRight: SPACING_XS },
-  pr2: { marginRight: SPACING_S },
-  pr3: { marginRight: SPACING_M },
-  pr4: { marginRight: SPACING_L },
-  pr5: { marginRight: SPACING_XL },
-
-  pb0: { marginBottom: SPACING_XXS },
-  pb1: { marginBottom: SPACING_XS },
-  pb2: { marginBottom: SPACING_S },
-  pb3: { marginBottom: SPACING_M },
-  pb4: { marginBottom: SPACING_L },
-  pb5: { marginBottom: SPACING_XL },
+  pb0: { paddingBottom: SPACING_XXS },
+  pb1: { paddingBottom: SPACING_XS },
+  pb2: { paddingBottom: SPACING_S },
+  pb3: { paddingBottom: SPACING_M },
+  pb4: { paddingBottom: SPACING_L },
+  pb5: { paddingBottom: SPACING_XL },
+  pbA: { paddingBottom: 'auto' },
 
   /* Font weight */
-  b0: { fontWeight: '300' },
-  b1: { fontWeight: '500' },
-  b2: { fontWeight: '700' },
+  fw0: { fontWeight: '300' },
+  fw1: { fontWeight: '500' },
+  fw2: { fontWeight: '700' },
+
+  /* Font size */
+  fz0: { fontSize: FONT_SIZE_XS },
+  fz1: { fontSize: FONT_SIZE_S },
+  fz2: { fontSize: FONT_SIZE_M },
+  fz3: { fontSize: FONT_SIZE_L },
+
+  /* Text align */
+  tac: { textAlign: 'center' },
+  tal: { textAlign: 'left' },
+  tar: { textAlign: 'right' },
 
   /* Flex */
   flex1: { flex: 1 },
@@ -124,5 +157,43 @@ export default StyleSheet.create({
   flex3: { flex: 3 },
   flex4: { flex: 4 },
   flex5: { flex: 5 },
-  flex6: { flex: 6 }
+  flex7: { flex: 7 },
+  flex8: { flex: 8 },
+  flex9: { flex: 9 },
+  flex10: { flex: 10 },
+
+  flexDc: { flexDirection: 'column' },
+  flexDr: { flexDirection: 'row' },
+
+  flexJfs: { justifyContent: 'flex-start' },
+  flexJfe: { justifyContent: 'flex-end' },
+  flexJsa: { justifyContent: 'space-around' },
+  flexJsb: { justifyContent: 'space-between' },
+  flexJse: { justifyContent: 'space-evenly' },
+  flexJce: { justifyContent: 'center' },
+
+  flexAfs: { alignItems: 'flex-start' },
+  flexAfe: { alignItems: 'flex-end' },
+  flexAce: { alignItems: 'center' },
+  flexAst: { alignItems: 'stretch' },
+
+  /* Width */
+  w: { width: WIDTH_STANDARD },
+
+  /* Border radius */
+  br: { borderRadius: BORDER_RADIUS_STANDARD },
+  btrr: { borderTopRightRadius: BORDER_RADIUS_STANDARD },
+  btlr: { borderTopLeftRadius: BORDER_RADIUS_STANDARD },
+  bblr: { borderBottomLeftRadius: BORDER_RADIUS_STANDARD },
+  bbrr: { borderBottomRightRadius: BORDER_RADIUS_STANDARD },
+
+  /* Border Width */
+  bw: { borderWidth: BORDER_WIDTH_STANDARD },
+  bbw: { borderBottomWidth: BORDER_WIDTH_STANDARD },
+  btw: { borderTopWidth: BORDER_WIDTH_STANDARD },
+  blw: { borderLeftWidth: BORDER_WIDTH_STANDARD },
+  brw: { borderRightWidth: BORDER_WIDTH_STANDARD },
+
+  /* Border Color */
+  bc: { borderColor: COL_GREY }
 })
