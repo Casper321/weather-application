@@ -50,7 +50,7 @@ const ForecastHour = ({ time, weatherType, temperature, rain }) => {
 
 const styles = StyleSheet.create({
   forecastHour: {
-    backgroundColor: '#fff',
+    backgroundColor: style.COL_WHITE,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     fontWeight: '500',
-    color: '#000',
+    color: style.COL_BLACK,
   },
 })
 
