@@ -33,13 +33,17 @@ const ForecastHours = () => {
   return (
     <View style={styles.mainContent}>
       {hours.map(hour => {
-        return <ForecastHour
-          key={hour.time}
-          time={hour.time}
-          weatherType={hour.weatherType}
-          temperature={hour.temp}
-          rain={hour.rain}
-        />
+        return (
+          <ForecastHour
+            key={hour.time}
+            time={hour.time}
+            weatherType={hour.weatherType}
+            temperature={hour.temp}
+            rain={hour.rain}
+            windSpeed={hour.windSpeed}
+            windGust={hour.windGust}
+          />
+        )
       })}
     </View>
   )

@@ -9,7 +9,7 @@ import Snow from './Snow'
 
 const DayForecast = ({ day, degrees, weatherType, amountRain, windSpeed, windGust }) => {
   return (
-    <View style={[s.col_bg_white, s.w, s.mlA, s.mrA, s.br0]}>
+    <View style={[s.col_bg_white, s.w, s.mlA, s.mrA, s.mb3, s.br0]}>
       <View style={[s.bbw, s.bc, s.flexJce, s.pa1]}>
         <Text style={[s.ml1, s.fz1, s.fw1, s.col_black]}>{day}</Text>
       </View>
