@@ -5,6 +5,7 @@ import * as style from '../Assets/style'
 import s from '../Assets/style'
 import Wind from './Wind'
 import Rain from './Rain'
+import Snow from './Snow'
 
 const DayForecast = ({ day, degrees, weatherType, amountRain, windSpeed, windGust }) => {
   return (
@@ -21,6 +22,7 @@ const DayForecast = ({ day, degrees, weatherType, amountRain, windSpeed, windGus
         <View>
           <Rain amountRain={amountRain} />
           <Wind windSpeed={windSpeed} windGust={windGust} />
+          <Snow amountSnow={0} />
         </View>
       </View>
     </View>

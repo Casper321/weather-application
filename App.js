@@ -4,6 +4,7 @@ import StartPage from './Views/StartPage/StartPage'
 
 export default class App extends React.Component {
   render () {
+    
     return <StartPage />
   }
 }
