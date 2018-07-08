@@ -40,6 +40,8 @@ export default StyleSheet.create({
   col_bg_warning: { color: COL_WARNING },
   col_bg_yellow_sun: { color: COL_YELLOW_SUN },
   col_bg_water_blue: { color: COL_WATER_BLUE },
+  col_bg_white: { color: COL_WHITE },
+
 
   /* Margin */
   ma0: { margin: SPACING_XXS },
