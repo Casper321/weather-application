@@ -33,7 +33,12 @@ const styles = StyleSheet.create({
     width: '95%',
     marginLeft: 'auto',
     marginRight: 'auto',
-    borderRadius: 1
+    padding: 6,
+    marginBottom: 12,
+    marginTop: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: style.COL_GREY,
+    borderRadius: 1,
   },
   mainContentHeader: {
     borderBottomWidth: 1,
