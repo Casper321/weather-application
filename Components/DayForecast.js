@@ -4,6 +4,7 @@ import { FontAwesome } from '@expo/vector-icons'
 import * as style from '../Assets/style'
 import Wind from './Wind'
 import Rain from './Rain'
+import Snow from './Snow'
 
 const DayForecast = ({ day, degrees, weatherType, amountRain }) => {
   return (
@@ -18,7 +19,7 @@ const DayForecast = ({ day, degrees, weatherType, amountRain }) => {
           <FontAwesome style={weatherType} name='sun-o' size={style.ICON_SIZE_LARGE} color={style.COL_YELLOW_SUN} />
         </View>
         <View style={styles.mainContentItem}>
-          <Rain amountRain={0} />
+          <Snow amountSnow={0} />
           <Wind />
         </View>
       </View>
