@@ -75,28 +75,14 @@ export default class StartPage extends Component {
   render () {
     const { forecasts } = this.state
 
-    let forecast = null
-    if (forecasts.hours) {
-      if (forecasts.hours.length >= 1) {
-        forecast = <ForecastHours hours={forecasts.hours} />
-      }
-    }
-
     return (
       <Container>
         <Header />
         <ScrollView>
           <CityHeader city={'Göteborg'} />
           <Warning message={'1 risk för västra Götalands län, Bohuslän och Göteborg.'} />
-          <DayForecast
-            day={'Måndag 9 juli'}
-            degrees={25}
-            weatherType={'Soligt'}
-            amountRain={0}
-            windSpeed={4}
-            windGust={10}
-          />
-          {forecast || <Loading message={'Laddar väderdata...'} />}
+          {forecasts.hours ? <DayForecast hours={forecasts.hours} /> : <Loading message={'Laddar väderdata...'} />}
+          {forecasts.hours ? <ForecastHours hours={forecasts.hours} /> : <Loading message={'Laddar väderdata...'} />}
         </ScrollView>
       </Container>
     )

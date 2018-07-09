@@ -1,9 +1,7 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import ForecastHour from './ForecastHour'
-import s from '../Assets/style'
 import * as style from '../Assets/style'
-import getDayFromDayIndex from '../Assets/Functions/getDayFromDayIndex'
 import ForecastHeader from './ForecastHeader'
 import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
 

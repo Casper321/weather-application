@@ -16,7 +16,7 @@ export default (getWeatherIcon = (num, iconSize = 30) => {
       break
 
     case 2:
-      icon = <Ionicons name='ios-partly-sunny-outline' size={iconSize} color={style.COL_YELLOW_SUN} />
+      icon = <FontAwesome name='sun-o' size={iconSize} color={style.COL_YELLOW_SUN} />
       break
 
     case 3:
