@@ -6,13 +6,13 @@ import s from '../Assets/style'
 
 const Wind = ({ windSpeed, windGust }) => {
   return (
-    <View style={[s.flexDr, s.flexJsa, s.mt2]}>
+    <View style={[s.flexDr, s.flexJsa]}>
       <View>
         <FontAwesome name='circle-thin' size={style.ICON_SIZE_MEDIUM} color={style.COL_DARK_GREY} />
-        <Text style={[s.fz1, s.fw1, s.col_black, s.ml2, styles.weatherWindValue]}>{windSpeed}</Text>
+        <Text style={[s.fz1, s.fw1, s.col_black, s.ml2, styles.weatherWindValue]}>{Math.round(windSpeed)}</Text>
       </View>
       <View style={[s.ml0, s.flexAce]}>
-        <Text style={[s.fw2]}>({windGust})</Text>
+        <Text style={[s.fw2]}>({Math.round(windGust)})</Text>
         <Text>m/s</Text>
       </View>
     </View>

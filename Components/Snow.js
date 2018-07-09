@@ -18,8 +18,7 @@ const styles = StyleSheet.create({
   weatherType: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    alignItems: 'center',
-    marginTop: 8
+    alignItems: 'center'
   },
   weatherValue: {
     fontSize: 16,

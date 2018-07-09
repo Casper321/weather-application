@@ -1,14 +1,15 @@
 import { StyleSheet } from 'react-native'
 
 export const COL_PRIMARY = '#000'
-export const COL_SECONDARY = 'blue'
+export const COL_SECONDARY = '#4885ed'
 export const COL_GREY = '#ddd'
-export const COL_DARK_GREY = '#a5a4a4'
+export const COL_DARK_GREY = '#afafaf'
 export const COL_WARNING = '#8A2BE2'
 export const COL_YELLOW_SUN = '#FDB813'
 export const COL_WATER_BLUE = '#40a4df'
 export const COL_BLACK = '#000'
 export const COL_WHITE = '#fff'
+export const COL_CLOUDY = '#9b9b9b'
 
 export const ICON_SIZE_XS = 16
 export const ICON_SIZE_SMALL = 24
@@ -35,6 +36,7 @@ export const BORDER_WIDTH_STANDARD = 1
 export default StyleSheet.create({
   /* Color */
   col_primary: { color: COL_PRIMARY },
+  col_secondary: { color: COL_SECONDARY },
   col_grey: { color: COL_GREY },
   col_dark_grey: { color: COL_DARK_GREY },
   col_warning: { color: COL_WARNING },
@@ -195,5 +197,8 @@ export default StyleSheet.create({
   brw: { borderRightWidth: BORDER_WIDTH_STANDARD },
 
   /* Border Color */
-  bc: { borderColor: COL_GREY }
+  bc: { borderColor: COL_GREY },
+
+  /* Position */
+  abs: { position: 'absolute' }
 })

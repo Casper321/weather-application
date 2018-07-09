@@ -1,43 +1,35 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
-import { FontAwesome, Feather, MaterialCommunityIcons } from '@expo/vector-icons'
 import Wind from './Wind'
+import getWeatherIcon from '../Assets/Functions/getWeatherIcon'
 import * as style from '../Assets/style'
 import s from '../Assets/style'
 
-const ForecastHour = ({ time, weatherType, temperature, rain, windSpeed, windGust }) => {
-  let icon = null
-  let randNum = Math.floor(Math.random() * 100 + 10)
-  if (randNum % 3 === 0) {
-    icon = <FontAwesome name='sun-o' size={style.ICON_SIZE_SMALL} color={style.COL_YELLOW_SUN} />
-  } else if (randNum % 2 === 0) {
-    icon = <Feather name='cloud-rain' size={style.ICON_SIZE_SMALL} color={style.COL_WATER_BLUE} />
-  } else {
-    icon = <MaterialCommunityIcons name='weather-cloudy' size={style.ICON_SIZE_SMALL} color={style.COL_GREY} />
-  }
-
+const ForecastHour = ({ time, weatherType, weatherTypeNum, temperature, rain, windSpeed, windGust }) => {
+  const icon = getWeatherIcon(parseInt(weatherTypeNum), style.ICON_SIZE_MEDIUM)
+  // let icon = null
   return (
     <View style={styles.forecastHour}>
-      <View>
-        <Text style={styles.textBold}>
+      <View style={[s.flex2]}>
+        <Text style={[styles.textBold, s.fz1]}>
           kl. {time}
         </Text>
-        <Text style={styles.smallText}>
+        <Text style={[styles.smallText, s.fz0, s.col_dark_grey]}>
           {weatherType}
         </Text>
       </View>
-      <View style={styles.forecastDayTemp}>
-        <Text style={styles.textBold}>{temperature}°</Text>
+      <View style={[styles.forecastDayTemp, s.flex1]}>
+        <Text style={[styles.textBold, s.fz1]}>{Math.round(temperature)}°</Text>
       </View>
-      <View style={styles.forecastDayIcon}>
+      <View style={[styles.forecastDayIcon, s.flex1, s.flexDr, s.flexJce, s.mr1]}>
         {icon}
       </View>
       <Wind windSpeed={windSpeed} windGust={windGust} />
-      <View style={styles.forecastDayTemp}>
-        <Text style={styles.textBold}>
+      <View style={[styles.forecastDayTemp, s.flex1]}>
+        <Text style={[styles.textBold, s.fz1]}>
           {rain}
         </Text>
-        <Text style={styles.smallText}>
+        <Text style={[styles.smallText, s.fz0, s.col_dark_grey]}>
           mm/h
         </Text>
       </View>
