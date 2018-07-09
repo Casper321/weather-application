@@ -3,43 +3,48 @@ import { View, StyleSheet } from 'react-native'
 import ForecastHour from './ForecastHour'
 import s from '../Assets/style'
 import * as style from '../Assets/style'
+import getDayFromDayIndex from '../Assets/Functions/getDayFromDayIndex'
+import ForecastHeader from './ForecastHeader'
+import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
 
-class Day {
-  constructor (time, weatherType, temp, windSpeed, windGust, rain) {
-    this.time = time
-    this.weatherType = weatherType
-    this.temp = temp
-    this.windSpeed = windSpeed
-    this.windGust = windGust
-    this.rain = rain
-  }
-}
-
-const ForecastHours = () => {
-  let hours = []
-  for (let i = 13; i < 24; i++) {
-    hours.push(
-      new Day(
-        i,
-        'Klart',
-        Math.floor(Math.random() * 10 + 15),
-        Math.floor(Math.random() * 4 + 2),
-        Math.floor(Math.random() * 8 + 4),
-        0
-      )
-    )
-  }
+const ForecastHours = ({ hours }) => {
+  // Get today & tomorrow forecast
+  const todayHours = getDayHoursForecast(0, hours)
+  const tomorrowHours = getDayHoursForecast(1, hours)
 
   return (
     <View style={styles.mainContent}>
-      {hours.map(hour => {
+      <ForecastHeader day={todayHours[0].day} date={todayHours[0].date} sunriseTime={'04:47'} sunsetTime={'22:58'} />
+      {todayHours.map(hour => {
         return (
           <ForecastHour
             key={hour.time}
             time={hour.time}
             weatherType={hour.weatherType}
+            weatherTypeNum={hour.weatherTypeNum}
             temperature={hour.temp}
-            rain={hour.rain}
+            rain={hour.averageRain}
+            windSpeed={hour.windSpeed}
+            windGust={hour.windGust}
+          />
+        )
+      })}
+
+      <ForecastHeader
+        day={tomorrowHours[0].day}
+        date={tomorrowHours[0].date}
+        sunriseTime={'04:47'}
+        sunsetTime={'22:58'}
+      />
+      {tomorrowHours.map(hour => {
+        return (
+          <ForecastHour
+            key={hour.time}
+            time={hour.time}
+            weatherType={hour.weatherType}
+            weatherTypeNum={hour.weatherTypeNum}
+            temperature={hour.temp}
+            rain={hour.averageRain}
             windSpeed={hour.windSpeed}
             windGust={hour.windGust}
           />

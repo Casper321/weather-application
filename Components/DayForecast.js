@@ -19,7 +19,7 @@ const DayForecast = ({ day, degrees, weatherType, amountRain, windSpeed, windGus
           <Text style={[s.tac, s.fz2, s.col_black, s.mt2, s.mb2]}>{weatherType}</Text>
           <FontAwesome style={weatherType} name='sun-o' size={style.ICON_SIZE_LARGE} color={style.COL_YELLOW_SUN} />
         </View>
-        <View>
+        <View style={[s.flexJsb, s.flexAfs]}>
           <Rain amountRain={amountRain} />
           <Wind windSpeed={windSpeed} windGust={windGust} />
           <Snow amountSnow={0} />
