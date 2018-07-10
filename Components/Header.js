@@ -6,7 +6,7 @@ import s from '../Assets/style'
 
 const Header = () => {
   return (
-    <View style={[styles.header, s.pt2, s.pb2, s.col_bg_white, s.flexDr, s.flexJsb, s.flexAce]}>
+    <View style={[s.bbcp, s.bbw, s.pt2, s.pb2, s.col_bg_white, s.flexDr, s.flexJsb, s.flexAce]}>
       <View style={[s.flex1, s.ml3]}>
         <Entypo name='info' size={style.ICON_SIZE_SMALL} color={style.COL_PRIMARY} />
       </View>
@@ -20,12 +20,5 @@ const Header = () => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  header: {
-    borderBottomWidth: 2,
-    borderBottomColor: style.COL_PRIMARY
-  }
-})
 
 export default Header

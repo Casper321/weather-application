@@ -2,6 +2,8 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import ForecastHour from './ForecastHour'
 import * as style from '../Assets/style'
+import s from '../Assets/style'
+
 import ForecastHeader from './ForecastHeader'
 import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
 
@@ -11,7 +13,7 @@ const ForecastHours = ({ hours }) => {
   const tomorrowHours = getDayHoursForecast(1, hours)
 
   return (
-    <View style={styles.mainContent}>
+    <View style={[s.col_bg_white, s.w, s.mlA, s.mrA, s.br]}>
       <ForecastHeader day={todayHours[0].day} date={todayHours[0].date} sunriseTime={'04:47'} sunsetTime={'22:58'} />
       {todayHours.map(hour => {
         return (
@@ -52,14 +54,5 @@ const ForecastHours = ({ hours }) => {
   )
 }
 
-const styles = StyleSheet.create({
-  mainContent: {
-    backgroundColor: style.COL_WHITE,
-    width: '95%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    borderRadius: 1
-  }
-})
 
 export default ForecastHours

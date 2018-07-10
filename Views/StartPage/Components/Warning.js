@@ -6,14 +6,14 @@ import s from '../../../Assets/style'
 
 const Warning = ({ message = 'Ingen varning utfärdad.' }) => {
   return (
-    <View style={[s.w, s.mlA, s.mrA, s.pa2, s.mb3, s.mt1, s.col_bg_white, s.flexDr, s.flexJsb, s.flexAce]}>
+    <View style={[s.br, s.w, s.mlA, s.mrA, s.pa2, s.mb3, s.mt1, s.col_bg_white, s.flexDr, s.flexJsb, s.flexAce]}>
       <View style={[styles.warningIconContainer, s.flex2]}>
         <View style={[styles.center, styles.flexOne]}>
-          <FontAwesome style={styles.warningCircle} name='circle-thin' color={style.COL_WARNING} size={50} />
+          <FontAwesome name='circle-thin' color={style.COL_WARNING} size={50} />
         </View>
         <View>
           <MaterialCommunityIcons
-            style={styles.warningFire}
+            style={[styles.warningFire, s.abs]}
             name='fire'
             color={style.COL_PRIMARY}
             size={style.ICON_SIZE_SMALL}
@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     width: 50
   },
   warningFire: {
-    position: 'absolute',
     top: -37,
     left: 10
   }

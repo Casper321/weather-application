@@ -1,19 +1,14 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View } from 'react-native'
+import s from '../Assets/style'
+
 
 const Container = ({ children }) => {
   return (
-    <View style={styles.container}>
+    <View style={[s.flex1, s.col_bg_grey]}>
       {children}
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ddd'
-  }
-})
 
 export default Container

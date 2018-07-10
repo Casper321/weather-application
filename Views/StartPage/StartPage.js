@@ -22,6 +22,7 @@ export default class StartPage extends Component {
   }
 
   /* async */ getWeatherForecast (city, latitude, longitude) {
+    // TODO: Get gps location and get forecast. Next forecast users get by searching
     // TODO: convert city name to coordinates **//
     // TODO: add search field functionality
     // CURRENTLY: using example api call
@@ -47,7 +48,7 @@ export default class StartPage extends Component {
 
     forecastData.timeSeries.forEach(hour => {
       let timeObj = {}
-
+  
       timeObj.time = hour.validTime.slice(11, 13)
       timeObj.date = hour.validTime.slice(5, 10).replace('-', '/')
       timeObj.temp = hour.parameters.find(element => element.name === 't').values[0]
@@ -74,7 +75,6 @@ export default class StartPage extends Component {
 
   render () {
     const { forecasts } = this.state
-
     return (
       <Container>
         <Header />
@@ -88,5 +88,3 @@ export default class StartPage extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({})
