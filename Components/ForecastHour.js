@@ -9,7 +9,7 @@ const ForecastHour = ({ time, weatherType, weatherTypeNum, temperature, rain, wi
   const icon = getWeatherIcon(parseInt(weatherTypeNum), style.ICON_SIZE_MEDIUM)
   // let icon = null
   return (
-    <View style={[s.col_white, s.flexDr, s.flexJce, s.flexAce, s.pl1, s.pr1, s.pb0, s.pt0, s.bbw, s.col_grey]}>
+    <View style={[s.col_white, s.flexDr, s.flexJce, s.flexAce, s.pl1, s.pr1, s.pb0, s.pt0, s.bbw, s.bc, s.col_grey]}>
       <View style={[s.flex2]}>
         <Text style={[s.col_black, s.fw1, s.fz1]}>
           kl. {time}
