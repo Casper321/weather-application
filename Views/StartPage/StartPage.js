@@ -95,7 +95,6 @@ export default class StartPage extends Component {
   render () {
     console.log(this.state)
     const { forecasts } = this.state
-
     return (
       <Container>
         <Header />

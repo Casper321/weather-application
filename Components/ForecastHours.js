@@ -2,10 +2,10 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 import ForecastHour from './ForecastHour'
-import * as style from '../Assets/style'
+import s from '../Assets/style'
+
 import ForecastHeader from './ForecastHeader'
 import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
-import getMonth from '../Assets/Functions/getMonth'
 
 const ForecastHours = ({ hours }) => {
   // Get today & tomorrow forecast
@@ -14,8 +14,8 @@ const ForecastHours = ({ hours }) => {
   const d = new Date()
 
   return (
-    <View style={styles.mainContent}>
-      <ForecastHeader day={'Idag'} date={getMonth(d.getMonth())} sunriseTime={'04:47'} sunsetTime={'22:58'} />
+    <View style={[s.col_bg_white, s.w, s.mlA, s.mrA, s.br]}>
+      <ForecastHeader day={todayHours[0].day} date={todayHours[0].date} sunriseTime={'04:47'} sunsetTime={'22:58'} />
       {todayHours.map(hour => {
         return (
           <ForecastHour
@@ -54,16 +54,6 @@ const ForecastHours = ({ hours }) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  mainContent: {
-    backgroundColor: style.COL_WHITE,
-    width: '95%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    borderRadius: 1
-  }
-})
 
 ForecastHours.propTypes = {
   hours: PropTypes.array.isRequired
