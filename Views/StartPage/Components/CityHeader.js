@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Text, View } from 'react-native'
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons/'
 import * as style from '../../../Assets/style'
@@ -16,6 +17,10 @@ const CityHeader = ({ city }) => {
       </View>
     </View>
   )
+}
+
+CityHeader.propTypes = {
+  city: PropTypes.string
 }
 
 export default CityHeader

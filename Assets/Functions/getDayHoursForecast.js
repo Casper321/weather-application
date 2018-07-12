@@ -1,13 +1,3 @@
-/*
-  0 = today
-  1 = tomorrow
-  2 = in 2 days
-  ...
-  7 = in 7 days
-
-  returns array of hours forecasts objects
-*/
-
 export default (getDayHoursForecast = (daySearched, hoursForecast) => {
   const todayHours = []
   const date = new Date()
@@ -37,3 +27,13 @@ export default (getDayHoursForecast = (daySearched, hoursForecast) => {
 
   return todayHours
 })
+
+/*
+  0 = today
+  1 = tomorrow
+  2 = in 2 days
+  ...
+  7 = in 7 days
+
+  returns array of hours forecasts objects
+*/

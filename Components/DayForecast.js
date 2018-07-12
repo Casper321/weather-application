@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
+import PropTypes from 'prop-types'
 import { FontAwesome } from '@expo/vector-icons'
 import * as style from '../Assets/style'
 import s from '../Assets/style'
@@ -30,6 +31,10 @@ const DayForecast = ({ hours }) => {
       </View>
     </View>
   )
+}
+
+DayForecast.propTypes = {
+  hours: PropTypes.array.isRequired
 }
 
 export default DayForecast

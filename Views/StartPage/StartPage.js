@@ -8,29 +8,49 @@ import DayForecast from '../../Components/DayForecast'
 import ForecastHours from '../../Components/ForecastHours'
 import Loading from '../../Components/Loading'
 
-import forecastData from '../../Assets/test-api.json'
+/* import forecastData from '../../Assets/test-api.json' */
 import getWeatherCondition from '../../Assets/Functions/getWeatherCondition'
 import getDayFromDayIndex from '../../Assets/Functions/getDayFromDayIndex'
+import { Location, Permissions } from 'expo'
 
 export default class StartPage extends Component {
   state = {
-    forecasts: []
+    forecasts: [],
+    currentLatitude: '',
+    currentLongitude: '',
+    hasLocationPermission: false
   }
 
   componentDidMount () {
-    this.getWeatherForecast('Göteborg', 123, 456)
+    // Retrieve user current geolocation
+    this.getLocation()
   }
 
-  /* async */ getWeatherForecast (city, latitude, longitude) {
-    // TODO: convert city name to coordinates **//
+  getLocation = async () => {
+    const { status } = await Permissions.askAsync(Permissions.LOCATION)
+    if (status !== 'granted') {
+      this.setState({ hasLocationPermission: false })
+    } else {
+      this.setState({ hasLocationPermissions: true })
+    }
+
+    const location = await Location.getCurrentPositionAsync({})
+    const currentLatitude = Number.parseFloat(location.coords.latitude).toPrecision(5)
+    const currentLongitude = Number.parseFloat(location.coords.longitude).toPrecision(5)
+
+    this.getWeatherForecast('', currentLatitude, currentLongitude)
+
+    this.setState({ currentLatitude, currentLongitude })
+  }
+
+  getWeatherForecast = async (city, latitude, longitude) => {
+    // TODO: convert city name to coordinates, see info bottom **//
     // TODO: add search field functionality
-    // CURRENTLY: using example api call
 
-    // const lat = 57.708
-    // const long = 11.974
-
-    // const api_call = await fetch(`https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${long}/lat/${lat}/data.json`)
-    // const forecastData = await api_call.json()
+    const api_call = await fetch(
+      `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`
+    )
+    const forecastData = await api_call.json()
 
     const newForecastResult = {
       city,
@@ -73,14 +93,18 @@ export default class StartPage extends Component {
   }
 
   render () {
-    const { forecasts } = this.state
+    console.log(this.state)
+    const { forecasts, currentLatitude, currentLongitude } = this.state
 
     return (
       <Container>
         <Header />
         <ScrollView>
           <CityHeader city={'Göteborg'} />
-          <Warning message={'1 risk för västra Götalands län, Bohuslän och Göteborg.'} />
+          {currentLatitude ? <Text>{currentLatitude}</Text> : <Loading message={'Väntar på latitude data...'} />}
+          {currentLongitude ? <Text>{currentLongitude}</Text> : <Loading message={'Väntar på longitude data...'} />}
+
+          {forecasts.warning && <Warning message={'1 risk för västra Götalands län, Bohuslän och Göteborg.'} />}
           {forecasts.hours ? <DayForecast hours={forecasts.hours} /> : <Loading message={'Laddar väderdata...'} />}
           {forecasts.hours ? <ForecastHours hours={forecasts.hours} /> : <Loading message={'Laddar väderdata...'} />}
         </ScrollView>
@@ -89,4 +113,6 @@ export default class StartPage extends Component {
   }
 }
 
-const styles = StyleSheet.create({})
+/* API KEY locationiq.com --> 102c0e44882475
+  Convert location to coordinates: https://eu1.locationiq.org/v1/search.php?key=102c0e44882475&q=Göteborg&format=json
+*/

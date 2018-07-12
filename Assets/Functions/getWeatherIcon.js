@@ -35,11 +35,11 @@ export default (getWeatherIcon = (num, iconSize = 30) => {
       break
 
     case 6:
-      icon = <Ionicons name='weather-fog' size={iconSize} color={style.COL_DARK_GREY} />
+      icon = <MaterialCommunityIcons name='weather-fog' size={iconSize} color={style.COL_DARK_GREY} />
       break
 
     case 7:
-      icon = <Ionicons name='weather-fog' size={iconSize} color={style.COL_DARK_GREY} />
+      icon = <MaterialCommunityIcons name='weather-fog' size={iconSize} color={style.COL_DARK_GREY} />
       break
 
     case 8:
