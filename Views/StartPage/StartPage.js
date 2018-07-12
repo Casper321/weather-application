@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, ScrollView, StyleSheet } from 'react-native'
+import { ScrollView } from 'react-native'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
 import CityHeader from './Components/CityHeader'
@@ -94,18 +94,15 @@ export default class StartPage extends Component {
 
   render () {
     console.log(this.state)
-    const { forecasts, currentLatitude, currentLongitude } = this.state
+    const { forecasts } = this.state
 
     return (
       <Container>
         <Header />
         <ScrollView>
           <CityHeader city={'Göteborg'} />
-          {currentLatitude ? <Text>{currentLatitude}</Text> : <Loading message={'Väntar på latitude data...'} />}
-          {currentLongitude ? <Text>{currentLongitude}</Text> : <Loading message={'Väntar på longitude data...'} />}
-
           {forecasts.warning && <Warning message={'1 risk för västra Götalands län, Bohuslän och Göteborg.'} />}
-          {forecasts.hours ? <DayForecast hours={forecasts.hours} /> : <Loading message={'Laddar väderdata...'} />}
+          {forecasts.hours && <DayForecast hours={forecasts.hours} />}
           {forecasts.hours ? <ForecastHours hours={forecasts.hours} /> : <Loading message={'Laddar väderdata...'} />}
         </ScrollView>
       </Container>
