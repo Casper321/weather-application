@@ -89,6 +89,9 @@ export default class StartPage extends Component {
 
       timeObj.time = hour.validTime.slice(11, 13)
       timeObj.date = hour.validTime.slice(5, 10).replace('-', '/')
+      timeObj.day = hour.validTime.slice(8, 10)
+      timeObj.dayNumber = hour.validTime.slice(8, 10)
+      timeObj.month = hour.validTime.slice(5, 7)
       timeObj.temp = hour.parameters.find(element => element.name === 't').values[0]
       timeObj.windSpeed = hour.parameters.find(element => element.name === 'ws').values[0]
       timeObj.windGust = hour.parameters.find(element => element.name === 'gust').values[0]
@@ -99,6 +102,8 @@ export default class StartPage extends Component {
       timeObj.weatherType = getWeatherCondition(hour.parameters.find(element => element.name === 'Wsymb2').values[0])
       timeObj.weatherTypeNum = hour.parameters.find(element => element.name === 'Wsymb2').values[0]
 
+      console.log(timeObj.month)
+      console.log(timeObj.day)
       // Change day on midnight
       timeObj.time === '00' && activeDayIndex++
       activeDayIndex === 6 ? (activeDayIndex = 0) : null
@@ -112,8 +117,9 @@ export default class StartPage extends Component {
   }
 
   render () {
-    // console.log(this.state)
     const { forecasts, currentLocation } = this.state
+    console.log(forecasts)
+
     return (
       <Container>
         <Header />

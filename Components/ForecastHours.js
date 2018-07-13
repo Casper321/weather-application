@@ -6,6 +6,7 @@ import s from '../Assets/style'
 
 import ForecastHeader from './ForecastHeader'
 import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
+import getMonth from '../Assets/Functions/getMonth'
 
 const ForecastHours = ({ hours }) => {
   // Get today & tomorrow forecast
@@ -15,7 +16,13 @@ const ForecastHours = ({ hours }) => {
 
   return (
     <View style={[s.col_bg_white, s.w, s.mlA, s.mrA, s.br]}>
-      <ForecastHeader day={todayHours[0].day} date={todayHours[0].date} sunriseTime={'04:47'} sunsetTime={'22:58'} />
+      {todayHours.length >= 1 &&
+        <ForecastHeader
+          day={'Idag'}
+          date={`${todayHours[0].dayNumber} ${getMonth(todayHours[0].month)}`}
+          sunriseTime={'04:47'}
+          sunsetTime={'22:58'}
+        />}
       {todayHours.map(hour => {
         return (
           <ForecastHour
@@ -32,8 +39,8 @@ const ForecastHours = ({ hours }) => {
       })}
 
       <ForecastHeader
-        day={tomorrowHours[0].day}
-        date={tomorrowHours[0].date}
+        day={todayHours.length < 1 ? 'Idag' : 'Imorgon'}
+        date={`${tomorrowHours[0].dayNumber} ${getMonth(tomorrowHours[0].month)}`}
         sunriseTime={'04:47'}
         sunsetTime={'22:58'}
       />

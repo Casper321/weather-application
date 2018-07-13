@@ -1,60 +1,70 @@
+import unformatDayHours from './unformatDayHours'
+
 export default (getMonth = monthIndex => {
+  if (typeof monthIndex === 'string') {
+    if (monthIndex[0] === '0') {
+      monthIndex = unformatDayHours(monthIndex)
+    } else {
+      monthIndex = parseInt(monthIndex)
+    }
+  }
+
   let month = null
   switch (monthIndex) {
-    case 0:
+    case 1:
       month = 'Januari'
       break
 
-    case 1:
+    case 2:
       month = 'Februari'
       break
 
-    case 2:
+    case 3:
       month = 'Mars'
 
       break
 
-    case 3:
+    case 4:
       month = 'April'
 
       break
 
-    case 4:
+    case 5:
       month = 'Maj'
 
       break
 
-    case 5:
+    case 6:
       month = 'Juni'
 
       break
 
-    case 6:
+    case 7:
       month = 'Juli'
 
       break
 
-    case 7:
+    case 8:
       month = 'Augusti'
 
       break
 
-    case 8:
+    case 9:
       month = 'September'
 
       break
 
-    case 9:
+    case 10:
       month = 'Oktober'
 
       break
 
-    case 10:
+    case 11:
       month = 'November'
 
       break
 
-    case 11:
+    case 12:
       month = 'December'
 
       break
