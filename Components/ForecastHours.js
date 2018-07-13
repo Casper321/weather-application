@@ -12,7 +12,6 @@ const ForecastHours = ({ hours }) => {
   // Get today & tomorrow forecast
   const todayHours = getDayHoursForecast(0, hours)
   const tomorrowHours = getDayHoursForecast(1, hours)
-  const d = new Date()
 
   return (
     <View style={[s.col_bg_white, s.w, s.mlA, s.mrA, s.br]}>

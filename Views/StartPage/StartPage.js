@@ -4,7 +4,7 @@ import Container from '../../Components/Container'
 import Header from '../../Components/Header'
 import CityHeader from './Components/CityHeader'
 import Warning from './Components/Warning'
-import DayForecast from '../../Components/DayForecast'
+import CurrentForecast from '../../Components/CurrentForecast'
 import ForecastHours from '../../Components/ForecastHours'
 import Loading from '../../Components/Loading'
 
@@ -118,6 +118,8 @@ export default class StartPage extends Component {
 
   render () {
     const { forecasts, currentLocation } = this.state
+    const d = new Date()
+    const currentHour = d.getHours() + 1
     console.log(forecasts)
 
     return (
@@ -126,7 +128,8 @@ export default class StartPage extends Component {
         <ScrollView>
           <CityHeader city={currentLocation} />
           {forecasts.warning && <Warning message={'1 risk för västra Götalands län, Bohuslän och Göteborg.'} />}
-          {forecasts.hours && <DayForecast hours={forecasts.hours} />}
+          {forecasts.hours &&
+            <CurrentForecast currentHour={forecasts.hours.find(hour => parseInt(hour.time) === currentHour)} />}
           {forecasts.hours ? <ForecastHours hours={forecasts.hours} /> : <Loading message={'Laddar väderdata...'} />}
         </ScrollView>
       </Container>
