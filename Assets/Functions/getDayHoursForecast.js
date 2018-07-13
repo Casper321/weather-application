@@ -1,6 +1,7 @@
 export default (getDayHoursForecast = (daySearched, hoursForecast) => {
   const todayHours = []
   const date = new Date()
+  const currentHour = date.getHours() + 1
   let month = date.getMonth() + 1
   let day = date.getDate() + daySearched
   let sumDate = ''
@@ -20,8 +21,17 @@ export default (getDayHoursForecast = (daySearched, hoursForecast) => {
   sumDate = `${month}/${day}`
 
   hoursForecast.forEach(hour => {
-    if (hour.date === sumDate) {
-      todayHours.push({ ...hour })
+    // If search is current day don't allow hours before current time
+    if (daySearched === 0) {
+      if (currentHour <= parseInt(hour.time)) {
+        if (hour.date === sumDate) {
+          todayHours.push({ ...hour })
+        }
+      }
+    } else {
+      if (hour.date === sumDate) {
+        todayHours.push({ ...hour })
+      }
     }
   })
 

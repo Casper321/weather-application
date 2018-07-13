@@ -18,7 +18,8 @@ export default class StartPage extends Component {
     forecasts: [],
     currentLatitude: '',
     currentLongitude: '',
-    hasLocationPermission: false
+    hasLocationPermission: false,
+    currentLocation: ''
   }
 
   componentDidMount () {
@@ -39,8 +40,26 @@ export default class StartPage extends Component {
     const currentLongitude = Number.parseFloat(location.coords.longitude).toPrecision(5)
 
     this.getWeatherForecast('', currentLatitude, currentLongitude)
+    this.getLocationFromCoordinates(currentLatitude, currentLongitude)
 
     this.setState({ currentLatitude, currentLongitude })
+  }
+
+  getLocationFromCoordinates = async (latitude, longitude) => {
+    /*
+    console.log(latitude, longitude)
+    const api_call = await fetch(
+      `https://eu1.locationiq.org/v1/reverse.php?key=102c0e44882475&lat=${latitude}&lon=${longitude}&format=json`
+    )
+      .then(response => {
+        const location = response.display_name
+        console.log(response)
+        console.log(location)
+      })
+      .catch(error => console.log(error))
+      */
+    // const location = JSON.parse(api_call)
+    // this.setState({ currentLocation: api_call.display_name })
   }
 
   getWeatherForecast = async (city, latitude, longitude) => {
@@ -93,13 +112,13 @@ export default class StartPage extends Component {
   }
 
   render () {
-    console.log(this.state)
-    const { forecasts } = this.state
+    // console.log(this.state)
+    const { forecasts, currentLocation } = this.state
     return (
       <Container>
         <Header />
         <ScrollView>
-          <CityHeader city={'Göteborg'} />
+          <CityHeader city={currentLocation} />
           {forecasts.warning && <Warning message={'1 risk för västra Götalands län, Bohuslän och Göteborg.'} />}
           {forecasts.hours && <DayForecast hours={forecasts.hours} />}
           {forecasts.hours ? <ForecastHours hours={forecasts.hours} /> : <Loading message={'Laddar väderdata...'} />}
@@ -111,4 +130,5 @@ export default class StartPage extends Component {
 
 /* API KEY locationiq.com --> 102c0e44882475
   Convert location to coordinates: https://eu1.locationiq.org/v1/search.php?key=102c0e44882475&q=Göteborg&format=json
+  Convert coordinates to location: https://eu1.locationiq.org/v1/reverse.php?key=102c0e44882475&lat=LATITUDE&lon=LONGITUDE&format=json
 */
