@@ -102,8 +102,6 @@ export default class StartPage extends Component {
       timeObj.weatherType = getWeatherCondition(hour.parameters.find(element => element.name === 'Wsymb2').values[0])
       timeObj.weatherTypeNum = hour.parameters.find(element => element.name === 'Wsymb2').values[0]
 
-      console.log(timeObj.month)
-      console.log(timeObj.day)
       // Change day on midnight
       timeObj.time === '00' && activeDayIndex++
       activeDayIndex === 6 ? (activeDayIndex = 0) : null
