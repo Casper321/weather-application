@@ -14,7 +14,8 @@ const BoxContainer = ({ children }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: style.COL_WHITE,
-    borderRadius: 12
+    borderRadius: 10,
+    elevation: 2
   }
 })
 
