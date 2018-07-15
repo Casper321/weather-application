@@ -33,6 +33,9 @@ export const WIDTH_STANDARD = '95%'
 export const BORDER_RADIUS_STANDARD = 4
 
 export const BORDER_WIDTH_STANDARD = 1
+
+export const BOX_SHADOW_STANDARD = 2
+
 export default StyleSheet.create({
   /* Color */
   col_primary: { color: COL_PRIMARY },
@@ -205,5 +208,8 @@ export default StyleSheet.create({
   bbcp: { borderBottomColor: COL_PRIMARY },
 
   /* Position */
-  abs: { position: 'absolute' }
+  abs: { position: 'absolute' },
+
+  /* Box shadow */
+  boxSh: { elevation: BOX_SHADOW_STANDARD }
 })

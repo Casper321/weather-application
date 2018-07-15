@@ -9,43 +9,28 @@ import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
 import getMonth from '../Assets/Functions/getMonth'
 import BoxContainer from './BoxContainer'
 
-const ForecastHours = ({ hours }) => {
+const ForecastHours = ({ hours, forecastDay }) => {
   // Get today & tomorrow forecast
-  const todayHours = getDayHoursForecast(0, hours)
-  const tomorrowHours = getDayHoursForecast(1, hours)
+  const dayHours = getDayHoursForecast(forecastDay, hours)
+
+  let dayLabel = null
+  if (forecastDay === 0) {
+    dayLabel = 'Idag'
+  } else if (forecastDay === 1) {
+    dayLabel = 'Imorgon'
+  }
 
   return (
     <BoxContainer>
-      <View style={[s.br]}>
-        {todayHours.length >= 1 &&
+      <View>
+        {dayHours.length >= 1 &&
           <ForecastHeader
-            day={'Idag'}
-            date={`${todayHours[0].dayNumber} ${getMonth(todayHours[0].month)}`}
+            day={dayLabel}
+            date={`${dayHours[0].dayNumber} ${getMonth(dayHours[0].month)}`}
             sunriseTime={'04:47'}
             sunsetTime={'22:58'}
           />}
-        {todayHours.map(hour => {
-          return (
-            <ForecastHour
-              key={hour.time}
-              time={hour.time}
-              weatherType={hour.weatherType}
-              weatherTypeNum={hour.weatherTypeNum}
-              temperature={hour.temp}
-              rain={hour.averageRain}
-              windSpeed={hour.windSpeed}
-              windGust={hour.windGust}
-            />
-          )
-        })}
-
-        <ForecastHeader
-          day={todayHours.length < 1 ? 'Idag' : 'Imorgon'}
-          date={`${tomorrowHours[0].dayNumber} ${getMonth(tomorrowHours[0].month)}`}
-          sunriseTime={'04:47'}
-          sunsetTime={'22:58'}
-        />
-        {tomorrowHours.map(hour => {
+        {dayHours.map(hour => {
           return (
             <ForecastHour
               key={hour.time}

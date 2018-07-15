@@ -5,7 +5,7 @@ import s from '../Assets/style'
 
 const BoxContainer = ({ children }) => {
   return (
-    <View style={[styles.container, s.mb3, s.w, s.mlA, s.mrA]}>
+    <View style={[styles.container, s.mt3, s.w, s.mlA, s.mrA, s.boxSh]}>
       {children}
     </View>
   )
@@ -14,8 +14,7 @@ const BoxContainer = ({ children }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: style.COL_WHITE,
-    borderRadius: 10,
-    elevation: 2
+    borderRadius: 10
   }
 })
 
