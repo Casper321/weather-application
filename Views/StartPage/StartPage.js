@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
 import CityHeader from './Components/CityHeader'
@@ -8,10 +8,11 @@ import CurrentForecast from '../../Components/CurrentForecast'
 import ForecastHours from '../../Components/ForecastHours'
 import Loading from '../../Components/Loading'
 
-/* import forecastData from '../../Assets/test-api.json' */
+// import forecastData from '../../Assets/test-api.json'
 import getWeatherCondition from '../../Assets/Functions/getWeatherCondition'
 import getDayFromDayIndex from '../../Assets/Functions/getDayFromDayIndex'
 import { Location, Permissions } from 'expo'
+import CenterContainer from '../../Components/CenterContainer'
 
 export default class StartPage extends Component {
   state = {
@@ -118,17 +119,19 @@ export default class StartPage extends Component {
     const { forecasts, currentLocation } = this.state
     const d = new Date()
     const currentHour = d.getHours() + 1
-    console.log(forecasts)
 
     return (
       <Container>
         <Header />
         <ScrollView>
-          <CityHeader city={currentLocation} />
           {forecasts.warning && <Warning message={'1 risk för västra Götalands län, Bohuslän och Göteborg.'} />}
-          {forecasts.hours &&
-            <CurrentForecast currentHour={forecasts.hours.find(hour => parseInt(hour.time) === currentHour)} />}
-          {forecasts.hours ? <ForecastHours hours={forecasts.hours} /> : <Loading message={'Laddar väderdata...'} />}
+          {forecasts.hours
+            ? <View>
+              <CurrentForecast currentHour={forecasts.hours.find(hour => parseInt(hour.time) === currentHour)} />
+              <ForecastHours forecastDay={0} hours={forecasts.hours} />
+              <ForecastHours forecastDay={1} hours={forecasts.hours} />
+            </View>
+            : <Loading message={'Laddar din väderdata...'} />}
         </ScrollView>
       </Container>
     )
