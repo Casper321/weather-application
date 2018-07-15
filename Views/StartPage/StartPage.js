@@ -54,7 +54,6 @@ export default class StartPage extends Component {
       .then(response => {
         const location = response.display_name
         console.log(response)
-        console.log(location)
       })
       .catch(error => console.log(error))
       */
@@ -118,13 +117,12 @@ export default class StartPage extends Component {
     const { forecasts, currentLocation } = this.state
     const d = new Date()
     const currentHour = d.getHours() + 1
-    console.log(forecasts)
 
     return (
       <Container>
         <Header />
         <ScrollView>
-          <CityHeader city={currentLocation} />
+          {forecasts.hours && <CityHeader city={currentLocation} />}
           {forecasts.warning && <Warning message={'1 risk för västra Götalands län, Bohuslän och Göteborg.'} />}
           {forecasts.hours &&
             <CurrentForecast currentHour={forecasts.hours.find(hour => parseInt(hour.time) === currentHour)} />}
