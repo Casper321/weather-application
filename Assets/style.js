@@ -179,9 +179,10 @@ export default StyleSheet.create({
   flexAce: { alignItems: 'center' },
   flexAst: { alignItems: 'stretch' },
 
-
   /* Width */
   w: { width: WIDTH_STANDARD },
+  w50: { width: '50%' },
+  w100: { width: '100%' },
 
   /* Border radius */
   br: { borderRadius: BORDER_RADIUS_STANDARD },
@@ -200,9 +201,8 @@ export default StyleSheet.create({
   /* Border Color */
   bc: { borderColor: COL_GREY },
 
-    /* Border Bottom Color */
-  bbcp: { borderBottomColor: COL_PRIMARY},
-
+  /* Border Bottom Color */
+  bbcp: { borderBottomColor: COL_PRIMARY },
 
   /* Position */
   abs: { position: 'absolute' }
