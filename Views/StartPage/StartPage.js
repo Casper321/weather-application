@@ -127,7 +127,12 @@ export default class StartPage extends Component {
           {forecasts.warning && <Warning message={'1 risk för västra Götalands län, Bohuslän och Göteborg.'} />}
           {forecasts.hours
             ? <View>
-              <CurrentForecast currentHour={forecasts.hours.find(hour => parseInt(hour.time) === currentHour)} />
+              <CurrentForecast
+                currentHour={
+                    forecasts.hours.find(hour => parseInt(hour.time) === currentHour) ||
+                      forecasts.hours.find(hour => hour)
+                  }
+                />
               <ForecastHours forecastDay={0} hours={forecasts.hours} />
               <ForecastHours forecastDay={1} hours={forecasts.hours} />
             </View>
