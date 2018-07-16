@@ -1,16 +1,27 @@
 import React from 'react'
-import { createBottomTabNavigator, createMaterialBottomTabNavigator } from 'react-navigation'
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
 import StartPage from '../Views/StartPage/StartPage'
+import SearchPage from '../Views/SearchPage/SearchPage'
 import TenDaysForecastPage from '../Views/TenDaysForecastPage/TenDaysForecastPage'
 import WarningPage from '../Views/WarningPage/WarningPage'
 import AnalysisPage from '../Views/AnalysisPage/AnalysisPage'
 import { FontAwesome, SimpleLineIcons, Entypo, MaterialCommunityIcons } from '@expo/vector-icons'
 import * as style from '../Assets/style'
 
+const TenDaysForecastStack = createStackNavigator({
+  Långprognos: TenDaysForecastPage,
+  Sök: SearchPage
+})
+
+const StartStack = createStackNavigator({
+  Start: StartPage,
+  Sök: SearchPage
+})
+
 export const Tabs = createBottomTabNavigator(
   {
-    Start: StartPage,
-    Långprognos: TenDaysForecastPage,
+    Start: StartStack,
+    Långprognos: TenDaysForecastStack,
     Varningar: WarningPage,
     Dataanalys: AnalysisPage
   },

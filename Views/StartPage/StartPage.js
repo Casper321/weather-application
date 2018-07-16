@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, View } from 'react-native'
+import { ScrollView, View, Button } from 'react-native'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
 import CityHeader from './Components/CityHeader'
@@ -47,6 +47,7 @@ export default class StartPage extends Component {
   }
 
   getLocationFromCoordinates = async (latitude, longitude) => {
+    /*
     console.log(latitude, longitude)
     const api_call = await fetch(
       `https://eu1.locationiq.org/v1/reverse.php?key=102c0e44882475&lat=${latitude}&lon=${longitude}&format=json`
@@ -62,6 +63,7 @@ export default class StartPage extends Component {
 
     // const location = JSON.parse(api_call)
     // this.setState({ currentLocation: api_call.display_name })
+    */
   }
 
   getWeatherForecast = async (city, latitude, longitude) => {
@@ -124,6 +126,7 @@ export default class StartPage extends Component {
     return (
       <Container>
         <Header />
+        <Button title='Sök här' onPress={() => this.props.navigation.navigate('Sök')} />
         <ScrollView>
           {forecasts.warning && <Warning message={'1 risk för västra Götalands län, Bohuslän och Göteborg.'} />}
           {forecasts.hours
