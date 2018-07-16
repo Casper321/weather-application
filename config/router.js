@@ -1,16 +1,16 @@
 import React from 'react'
 import { createBottomTabNavigator, createMaterialBottomTabNavigator } from 'react-navigation'
 import StartPage from '../Views/StartPage/StartPage'
-import TestPage from '../Views/TestPage/TestPage'
+import TenDaysForecastPage from '../Views/TenDaysForecastPage/TenDaysForecastPage'
 import WarningPage from '../Views/WarningPage/WarningPage'
 import AnalysisPage from '../Views/AnalysisPage/AnalysisPage'
-import { FontAwesome, SimpleLineIcons, Entypo } from '@expo/vector-icons'
+import { FontAwesome, SimpleLineIcons, Entypo, MaterialCommunityIcons } from '@expo/vector-icons'
 import * as style from '../Assets/style'
 
 export const Tabs = createBottomTabNavigator(
   {
     Start: StartPage,
-    Långprognos: TestPage,
+    Långprognos: TenDaysForecastPage,
     Varningar: WarningPage,
     Dataanalys: AnalysisPage
   },
@@ -42,6 +42,14 @@ export const Tabs = createBottomTabNavigator(
         } else if (routeName === 'Dataanalys') {
           icon = (
             <Entypo name={'line-graph'} size={style.ICON_SIZE_SMALL} color={focused ? tintColor : inactiveTintColor} />
+          )
+        } else if (routeName === 'Långprognos') {
+          icon = (
+            <MaterialCommunityIcons
+              name={'radar'}
+              size={style.ICON_SIZE_SMALL}
+              color={focused ? tintColor : inactiveTintColor}
+            />
           )
         }
 

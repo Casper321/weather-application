@@ -3,7 +3,7 @@ import { Text, View } from 'react-native'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
 
-export default class TestPage extends Component {
+export default class TenDaysForecastPage extends Component {
   render () {
     return (
       <Container>
