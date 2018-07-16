@@ -47,17 +47,19 @@ export default class StartPage extends Component {
   }
 
   getLocationFromCoordinates = async (latitude, longitude) => {
-    /*
     console.log(latitude, longitude)
     const api_call = await fetch(
       `https://eu1.locationiq.org/v1/reverse.php?key=102c0e44882475&lat=${latitude}&lon=${longitude}&format=json`
     )
       .then(response => {
-        const location = response.display_name
-        console.log(response)
+        const data = JSON.parse(response)
+        const currentLocation = data.display_name
+        console.log(data)
+        console.log(currentLocation)
+        this.setState({ currentLocation })
       })
       .catch(error => console.log(error))
-      */
+
     // const location = JSON.parse(api_call)
     // this.setState({ currentLocation: api_call.display_name })
   }

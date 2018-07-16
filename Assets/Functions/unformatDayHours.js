@@ -1,4 +1,5 @@
 export default (unformatDayHours = value => {
+  value = value.toString()
   if (value[0] === '0') {
     value = value.slice(1, 2)
   }

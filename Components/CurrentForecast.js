@@ -17,11 +17,12 @@ const CurrentForecast = ({ currentHour }) => {
 
   return (
     <BoxContainer>
+      {console.log(currentHour)}
       <View style={[s.br0]}>
         <View style={[s.bbw, s.bc, s.flexJce, s.pa1]}>
           <Text
             style={[s.ml1, s.fz1, s.fw1, s.col_black]}
-          >{`Idag ${unformatDayHours(currentHour.month)} ${getMonth(currentHour.month)} klockan ${currentHour.time}`}</Text>
+          >{`Idag ${unformatDayHours(currentHour.dayNumber)} ${getMonth(currentHour.month)} klockan ${currentHour.time}`}</Text>
         </View>
         <View style={[s.flexDr, s.flexJsa, s.flexAfe, s.pb5]}>
           <Text style={[s.col_black, s.fw1, s.fz3]}>{Math.round(temp)}°</Text>
