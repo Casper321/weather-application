@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 
+export const COL_GOOGLE_BLUE = '#4285F4'
 export const COL_PRIMARY = '#000'
 export const COL_SECONDARY = '#4885ed'
 export const COL_GREY = '#ddd'
