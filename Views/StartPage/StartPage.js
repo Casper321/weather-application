@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Button } from 'react-native'
+import { ScrollView, View, Text } from 'react-native'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
 import CityHeader from './Components/CityHeader'
@@ -17,10 +17,13 @@ import CenterContainer from '../../Components/CenterContainer'
 export default class StartPage extends Component {
   state = {
     forecasts: [],
-    currentLatitude: '',
-    currentLongitude: '',
-    hasLocationPermission: false,
-    currentLocation: ''
+    currentLocation: {
+      latitude: '',
+      longitude: '',
+      city: '',
+      suburb: ''
+    },
+    hasLocationPermission: false
   }
 
   componentDidMount () {
@@ -46,24 +49,24 @@ export default class StartPage extends Component {
     this.setState({ currentLatitude, currentLongitude })
   }
 
-  getLocationFromCoordinates = async (latitude, longitude) => {
-    /*
-    console.log(latitude, longitude)
-    const api_call = await fetch(
-      `https://eu1.locationiq.org/v1/reverse.php?key=102c0e44882475&lat=${latitude}&lon=${longitude}&format=json`
+  getLocationFromCoordinates = (latitude, longitude) => {
+    const request = new XMLHttpRequest()
+    request.open(
+      'GET',
+      `https://eu1.locationiq.org/v1/reverse.php?key=102c0e44882475&lat=${latitude}&lon=${longitude}&format=json`,
+      true
     )
-      .then(response => {
-        const data = JSON.parse(response)
-        const currentLocation = data.display_name
-        console.log(data)
-        console.log(currentLocation)
-        this.setState({ currentLocation })
-      })
-      .catch(error => console.log(error))
+    request.onload = () => {
+      var data = JSON.parse(request.response)
+      const newLocation = {}
+      newLocation.latitude = data.lat
+      newLocation.longitude = data.lon
+      newLocation.city = data.address.city
+      newLocation.suburb = data.address.suburb
 
-    // const location = JSON.parse(api_call)
-    // this.setState({ currentLocation: api_call.display_name })
-    */
+      this.setState({ currentLocation: { ...newLocation } })
+    }
+    request.send(null)
   }
 
   getWeatherForecast = async (city, latitude, longitude) => {
@@ -123,12 +126,16 @@ export default class StartPage extends Component {
     const d = new Date()
     const currentHour = d.getHours() + 1
 
+    console.log(currentLocation)
+
     return (
       <Container>
-        <Header />
-        <Button title='Sök här' onPress={() => this.props.navigation.navigate('Sök')} />
+        <Header navigation={this.props.navigation} />
         <ScrollView>
           {forecasts.warning && <Warning message={'1 risk för västra Götalands län, Bohuslän och Göteborg.'} />}
+          {currentLocation.city
+            ? <CityHeader city={currentLocation.suburb ? currentLocation.suburb : currentLocation.city} />
+            : null}
           {forecasts.hours
             ? <View>
               <CurrentForecast
@@ -150,4 +157,10 @@ export default class StartPage extends Component {
 /* API KEY locationiq.com --> 102c0e44882475
   Convert location to coordinates: https://eu1.locationiq.org/v1/search.php?key=102c0e44882475&q=Göteborg&format=json
   Convert coordinates to location: https://eu1.locationiq.org/v1/reverse.php?key=102c0e44882475&lat=LATITUDE&lon=LONGITUDE&format=json
+*/
+
+/*
+IDEAS:
+- Kunna swipea CurrentForecast och få ett nytt card med morgondagens övermorgons forecast? Sen kunna trycka på em dag och få upp alla timmarna på den?
+
 */

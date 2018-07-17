@@ -7,10 +7,10 @@ import s from '../../../Assets/style'
 
 const CityHeader = ({ city }) => {
   return (
-    <View style={[s.flexDr, s.flexJsb, s.flexAce, s.pa2]}>
+    <View style={[s.flexDr, s.flexJsb, s.flexAce, s.pl2, s.pr2, s.pt2]}>
       <View style={[s.flexDr, s.flexJsa, s.flexAce, s.flex1]}>
         <FontAwesome name='star-o' color={style.COL_PRIMARY} size={style.ICON_SIZE_MEDIUM} />
-        <Text style={[s.ml3, s.fz3, s.fw2, s.col_black]}>{city}</Text>
+        <Text style={[s.ml2, s.fz3, s.fw1]}>{city}</Text>
       </View>
       <View style={[s.flex1, s.flexAfe]}>
         <MaterialCommunityIcons name='pin' color={style.COL_PRIMARY} size={style.ICON_SIZE_XS} />

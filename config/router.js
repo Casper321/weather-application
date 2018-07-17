@@ -8,15 +8,25 @@ import AnalysisPage from '../Views/AnalysisPage/AnalysisPage'
 import { FontAwesome, SimpleLineIcons, Entypo, MaterialCommunityIcons } from '@expo/vector-icons'
 import * as style from '../Assets/style'
 
-const TenDaysForecastStack = createStackNavigator({
-  Långprognos: TenDaysForecastPage,
-  Sök: SearchPage
-})
+const TenDaysForecastStack = createStackNavigator(
+  {
+    Långprognos: TenDaysForecastPage,
+    Sök: SearchPage
+  },
+  {
+    headerMode: 'none'
+  }
+)
 
-const StartStack = createStackNavigator({
-  Start: StartPage,
-  Sök: SearchPage
-})
+const StartStack = createStackNavigator(
+  {
+    Start: StartPage,
+    Sök: SearchPage
+  },
+  {
+    headerMode: 'none'
+  }
+)
 
 export const Tabs = createBottomTabNavigator(
   {
