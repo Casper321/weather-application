@@ -17,7 +17,7 @@ const CurrentForecast = ({ currentHour }) => {
 
   return (
     <BoxContainer>
-      <View style={[s.br0]}>
+      <View style={[s.br0, s.br]}>
         <View style={[s.bbw, s.bc, s.flexJce, s.pa1]}>
           <Text
             style={[s.ml1, s.fz1, s.fw1, s.col_black]}
