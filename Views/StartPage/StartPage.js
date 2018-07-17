@@ -12,7 +12,6 @@ import Loading from '../../Components/Loading'
 import getWeatherCondition from '../../Assets/Functions/getWeatherCondition'
 import getDayFromDayIndex from '../../Assets/Functions/getDayFromDayIndex'
 import { Location, Permissions } from 'expo'
-import CenterContainer from '../../Components/CenterContainer'
 
 export default class StartPage extends Component {
   state = {
@@ -27,7 +26,6 @@ export default class StartPage extends Component {
   }
 
   componentDidMount () {
-    // Retrieve user current geolocation
     this.getLocation()
   }
 
@@ -70,9 +68,6 @@ export default class StartPage extends Component {
   }
 
   getWeatherForecast = async (city, latitude, longitude) => {
-    // TODO: convert city name to coordinates, see info bottom **//
-    // TODO: add search field functionality
-
     const api_call = await fetch(
       `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`
     )
@@ -125,8 +120,6 @@ export default class StartPage extends Component {
     const { forecasts, currentLocation } = this.state
     const d = new Date()
     const currentHour = d.getHours() + 1
-
-    console.log(currentLocation)
 
     return (
       <Container>
