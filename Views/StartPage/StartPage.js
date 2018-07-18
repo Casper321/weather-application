@@ -8,7 +8,7 @@ import CurrentForecast from '../../Components/CurrentForecast'
 import ForecastHours from '../../Components/ForecastHours'
 import Loading from '../../Components/Loading'
 
-// import forecastData from '../../Assets/test-api.json'
+import forecastData from '../../Assets/test-api.json'
 import getWeatherCondition from '../../Assets/Functions/getWeatherCondition'
 import getDayFromDayIndex from '../../Assets/Functions/getDayFromDayIndex'
 import { Location, Permissions } from 'expo'
@@ -68,10 +68,12 @@ export default class StartPage extends Component {
   }
 
   getWeatherForecast = async (city, latitude, longitude) => {
+    /*
     const api_call = await fetch(
       `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`
     )
     const forecastData = await api_call.json()
+    */
 
     const newForecastResult = {
       city,
@@ -126,12 +128,10 @@ export default class StartPage extends Component {
         <Header navigation={this.props.navigation} />
         <ScrollView>
           {forecasts.warning && <Warning message={'1 risk för västra Götalands län, Bohuslän och Göteborg.'} />}
-          {currentLocation.city
-            ? <CityHeader city={currentLocation.suburb ? currentLocation.suburb : currentLocation.city} />
-            : null}
           {forecasts.hours
             ? <View>
               <CurrentForecast
+                location={currentLocation.suburb ? currentLocation.suburb : currentLocation.city}
                 currentHour={
                     forecasts.hours.find(hour => parseInt(hour.time) === currentHour) ||
                       forecasts.hours.find(hour => hour)
