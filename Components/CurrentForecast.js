@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, TouchableHighlight } from 'react-native'
 import PropTypes from 'prop-types'
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons, Entypo } from '@expo/vector-icons'
 import * as style from '../Assets/style'
@@ -11,7 +11,7 @@ import getMonth from '../Assets/Functions/getMonth'
 import unformatDayHours from '../Assets/Functions/unformatDayHours'
 import BoxContainer from './BoxContainer'
 
-const CurrentForecast = ({ currentHour, location }) => {
+const CurrentForecast = ({ currentHour, location, getNewLocation }) => {
   const { day, temp, weatherType, weatherTypeNum, averageRain, windSpeed, windGust } = currentHour
   const icon = getWeatherIcon(parseInt(weatherTypeNum), style.ICON_SIZE_LARGE)
   const month = new Date().getMonth()
@@ -27,13 +27,15 @@ const CurrentForecast = ({ currentHour, location }) => {
       </View>
       <View style={[s.bbw, s.btw, s.bc, s.flexDr, s.flexJsa, s.mt1]}>
         <View style={[s.flexJce, s.flexAce, s.bc, s.flex1, s.pt2, s.pb2]}>
-          <MaterialIcons name='favorite-border' size={style.ICON_SIZE_MEDIUM} color={'#9b111e'} />
+          <MaterialIcons name='favorite-border' size={style.ICON_SIZE_SMALL + 4} color={'#9b111e'} />
         </View>
         <View style={[s.flexJce, s.flexAce, s.bc, s.flex1, s.pt2, s.pb2]}>
-          <MaterialCommunityIcons name='reload' size={style.ICON_SIZE_MEDIUM} color={style.COL_GOOGLE_BLUE} />
+          <TouchableHighlight onPress={() => getNewLocation()}>
+            <MaterialCommunityIcons name='reload' size={style.ICON_SIZE_SMALL + 4} color={style.COL_GOOGLE_BLUE} />
+          </TouchableHighlight>
         </View>
         <View style={[s.flexJce, s.flexAce, s.flex1, s.pt2, s.pb2]}>
-          <Entypo name='pin' size={style.ICON_SIZE_MEDIUM - 4} color={'#008744'} />
+          <Entypo name='pin' size={style.ICON_SIZE_SMALL} color={'#008744'} />
         </View>
       </View>
       <View style={[s.br0]}>

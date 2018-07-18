@@ -118,6 +118,12 @@ export default class StartPage extends Component {
     this.setState({ forecasts: newForecastResult })
   }
 
+  updateState = (type, value) => {
+    const state = { ...this.state }
+    state[type] = value
+    this.setState(state)
+  }
+
   render () {
     const { forecasts, currentLocation } = this.state
     const d = new Date()
@@ -132,6 +138,7 @@ export default class StartPage extends Component {
             ? <View>
               <CurrentForecast
                 location={currentLocation.suburb ? currentLocation.suburb : currentLocation.city}
+                getNewLocation={() => this.getLocation()}
                 currentHour={
                     forecasts.hours.find(hour => parseInt(hour.time) === currentHour) ||
                       forecasts.hours.find(hour => hour)
