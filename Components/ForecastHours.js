@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, TouchableHighlight } from 'react-native'
 import PropTypes from 'prop-types'
 import ForecastHour from './ForecastHour'
 import s from '../Assets/style'
@@ -20,6 +20,11 @@ const ForecastHours = ({ hours, forecastDay }) => {
     dayLabel = 'Imorgon'
   }
 
+  onHourPressed = event => {
+    console.log('here')
+    console.log(event)
+  }
+
   return (
     <BoxContainer>
       <View>
@@ -32,22 +37,27 @@ const ForecastHours = ({ hours, forecastDay }) => {
           />}
         {dayHours.map(hour => {
           return (
-            <ForecastHour
-              key={hour.time}
-              time={hour.time}
-              weatherType={hour.weatherType}
-              weatherTypeNum={hour.weatherTypeNum}
-              temperature={hour.temp}
-              rain={hour.averageRain}
-              windSpeed={hour.windSpeed}
-              windGust={hour.windGust}
-            />
+            <TouchableHighlight key={Math.random() * 1000} onPress={hour => this.onHourPressed(hour)}>
+              <ForecastHour
+                time={hour.time}
+                weatherType={hour.weatherType}
+                weatherTypeNum={hour.weatherTypeNum}
+                temperature={hour.temp}
+                rain={hour.averageRain}
+                windSpeed={hour.windSpeed}
+                windGust={hour.windGust}
+              />
+            </TouchableHighlight>
           )
         })}
       </View>
     </BoxContainer>
   )
 }
+
+/*
+
+*/
 
 ForecastHours.propTypes = {
   hours: PropTypes.array.isRequired

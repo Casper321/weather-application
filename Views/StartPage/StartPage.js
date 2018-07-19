@@ -140,14 +140,14 @@ export default class StartPage extends Component {
           {newestForecastSearch.warning && <Warning message={newestForecastSearch.warning.message} />}
           {newestForecastSearch.hours
             ? <View>
-              <CurrentForecast
-                location={currentLocation.suburb ? currentLocation.suburb : currentLocation.city}
-                getNewLocation={() => this.getLocation()}
-                currentHour={
-                    newestForecastSearch.hours.find(hour => parseInt(hour.time) === currentHour) ||
-                      newestForecastSearch.hours.find(hour => hour)
-                  }
-                />
+                <CurrentForecast
+                  location={currentLocation.suburb ? currentLocation.suburb : currentLocation.city}
+                  getNewLocation={() => this.getLocation()}
+                  currentHour={
+                      newestForecastSearch.hours.find(hour => parseInt(hour.time) === currentHour) ||
+                        newestForecastSearch.hours.find(hour => hour)
+                    }
+                  />
               <ForecastHours forecastDay={0} hours={newestForecastSearch.hours} />
               <ForecastHours forecastDay={1} hours={newestForecastSearch.hours} />
             </View>
