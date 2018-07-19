@@ -28,12 +28,32 @@ const StartStack = createStackNavigator(
   }
 )
 
+const WarningStack = createStackNavigator(
+  {
+    Varningar: WarningPage,
+    Sök: SearchPage
+  },
+  {
+    headerMode: 'none'
+  }
+)
+
+const AnalysisStack = createStackNavigator(
+  {
+    Dataanalys: AnalysisPage,
+    Sök: SearchPage
+  },
+  {
+    headerMode: 'none'
+  }
+)
+
 export const Tabs = createBottomTabNavigator(
   {
     Start: StartStack,
     Långprognos: TenDaysForecastStack,
-    Varningar: WarningPage,
-    Dataanalys: AnalysisPage
+    Varningar: WarningStack,
+    Dataanalys: AnalysisStack
   },
   {
     navigationOptions: ({ navigation }) => ({

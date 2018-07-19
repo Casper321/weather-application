@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, StyleSheet, ScrollView } from 'react-native'
+import { Text, View, TextInput, StyleSheet, ScrollView, TouchableNativeFeedback } from 'react-native'
 import { SearchBar } from 'react-native-elements'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
@@ -23,9 +23,7 @@ export default class SearchPage extends Component {
     request.onload = () => {
       try {
         const cities = JSON.parse(request.response)
-        console.log(cities)
         if (cities && cities !== undefined) {
-          console.log('here')
           const citiesAvailable = cities.map(city => {
             let cityObj = {}
             cityObj.city = city.display_name
@@ -34,7 +32,6 @@ export default class SearchPage extends Component {
             return cityObj
           })
 
-          console.log(citiesAvailable)
           this.setState({ citiesAvailable, searchFound: true })
         }
       } catch (error) {}
@@ -52,7 +49,11 @@ export default class SearchPage extends Component {
         const longerLocationName = city.city.substring(city.city.indexOf(',') + 2, city.city.length)
 
         if (city && city !== undefined) {
-          return <SearchItem city={cityName} longerLocationName={longerLocationName} key={longerLocationName} />
+          return (
+            <TouchableNativeFeedback onPress={console.log(cityName)}>
+              <SearchItem city={cityName} longerLocationName={longerLocationName} key={Math.random() * 1000} />
+            </TouchableNativeFeedback>
+          )
         }
       })
     }

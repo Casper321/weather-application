@@ -7,7 +7,7 @@ export default class WarningPage extends Component {
   render () {
     return (
       <Container>
-        <Header />
+        <Header navigation={this.props.navigation} />
         <View>
           <Text>VARNINGSSIDAN WEHOOO</Text>
         </View>

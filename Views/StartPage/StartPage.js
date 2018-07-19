@@ -26,7 +26,9 @@ export default class StartPage extends Component {
   }
 
   componentDidMount () {
-    this.getLocation()
+    const { currentLatitude, currentLongitude } = this.getLocation()
+    this.getWeatherForecast('', currentLatitude, currentLongitude)
+    this.getLocationFromCoordinates(currentLatitude, currentLongitude)
   }
 
   getLocation = async () => {
@@ -41,13 +43,12 @@ export default class StartPage extends Component {
     const currentLatitude = Number.parseFloat(location.coords.latitude).toPrecision(5)
     const currentLongitude = Number.parseFloat(location.coords.longitude).toPrecision(5)
 
-    this.getWeatherForecast('', currentLatitude, currentLongitude)
-    this.getLocationFromCoordinates(currentLatitude, currentLongitude)
-
     this.setState({ currentLatitude, currentLongitude })
+    return { currentLatitude, currentLatitude }
   }
 
   getLocationFromCoordinates = (latitude, longitude) => {
+    /*
     const request = new XMLHttpRequest()
     request.open(
       'GET',
@@ -65,6 +66,7 @@ export default class StartPage extends Component {
       this.setState({ currentLocation: { ...newLocation } })
     }
     request.send(null)
+    */
   }
 
   getWeatherForecast = async (city, latitude, longitude) => {
@@ -85,7 +87,7 @@ export default class StartPage extends Component {
     }
 
     const date = new Date()
-    let activeDayIndex = date.getDay()
+    let activeDayIndex = new Date().getDay()
     let forecastHours = []
 
     forecastData.timeSeries.forEach(hour => {
@@ -115,7 +117,9 @@ export default class StartPage extends Component {
     })
 
     newForecastResult.hours = [...forecastHours]
-    this.setState({ forecasts: newForecastResult })
+    const state = { ...this.state }
+    state.forecasts.push(newForecastResult)
+    this.setState(state)
   }
 
   updateState = (type, value) => {
@@ -126,26 +130,26 @@ export default class StartPage extends Component {
 
   render () {
     const { forecasts, currentLocation } = this.state
-    const d = new Date()
-    const currentHour = d.getHours() + 1
+    const newestForecastSearch = forecasts[forecasts.length - 1] || {}
+    const currentHour = new Date().getHours() + 1
 
     return (
       <Container>
         <Header navigation={this.props.navigation} />
         <ScrollView>
-          {forecasts.warning && <Warning message={'1 risk för västra Götalands län, Bohuslän och Göteborg.'} />}
-          {forecasts.hours
+          {newestForecastSearch.warning && <Warning message={newestForecastSearch.warning.message} />}
+          {newestForecastSearch.hours
             ? <View>
               <CurrentForecast
                 location={currentLocation.suburb ? currentLocation.suburb : currentLocation.city}
                 getNewLocation={() => this.getLocation()}
                 currentHour={
-                    forecasts.hours.find(hour => parseInt(hour.time) === currentHour) ||
-                      forecasts.hours.find(hour => hour)
+                    newestForecastSearch.hours.find(hour => parseInt(hour.time) === currentHour) ||
+                      newestForecastSearch.hours.find(hour => hour)
                   }
                 />
-              <ForecastHours forecastDay={0} hours={forecasts.hours} />
-              <ForecastHours forecastDay={1} hours={forecasts.hours} />
+              <ForecastHours forecastDay={0} hours={newestForecastSearch.hours} />
+              <ForecastHours forecastDay={1} hours={newestForecastSearch.hours} />
             </View>
             : <Loading message={'Laddar din väderdata...'} />}
         </ScrollView>
