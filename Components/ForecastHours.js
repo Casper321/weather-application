@@ -1,9 +1,9 @@
 import React from 'react'
-import { View, StyleSheet, TouchableHighlight } from 'react-native'
+import { View, StyleSheet, TouchableNativeFeedback, TouchableHighlight, FlatList } from 'react-native'
 import PropTypes from 'prop-types'
 import ForecastHour from './ForecastHour'
 import s from '../Assets/style'
-
+import * as style from '../Assets/style'
 import ForecastHeader from './ForecastHeader'
 import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
 import getMonth from '../Assets/Functions/getMonth'
@@ -20,44 +20,52 @@ const ForecastHours = ({ hours, forecastDay }) => {
     dayLabel = 'Imorgon'
   }
 
-  onHourPressed = event => {
-    console.log('here')
-    console.log(event)
+  renderHeader = () => {
+    return (
+      <ForecastHeader
+        day={dayLabel}
+        date={`${dayHours[0].dayNumber} ${getMonth(dayHours[0].month)}`}
+        sunriseTime={'04:47'}
+        sunsetTime={'22:58'}
+      />
+    )
+  }
+
+  onHourPressed = item => {
+    console.log(item)
   }
 
   return (
     <BoxContainer>
-      <View>
-        {dayHours.length >= 1 &&
-          <ForecastHeader
-            day={dayLabel}
-            date={`${dayHours[0].dayNumber} ${getMonth(dayHours[0].month)}`}
-            sunriseTime={'04:47'}
-            sunsetTime={'22:58'}
-          />}
-        {dayHours.map(hour => {
-          return (
-            <TouchableHighlight key={Math.random() * 1000} onPress={hour => this.onHourPressed(hour)}>
-              <ForecastHour
-                time={hour.time}
-                weatherType={hour.weatherType}
-                weatherTypeNum={hour.weatherTypeNum}
-                temperature={hour.temp}
-                rain={hour.averageRain}
-                windSpeed={hour.windSpeed}
-                windGust={hour.windGust}
-              />
-            </TouchableHighlight>
-          )
-        })}
-      </View>
+      <FlatList
+        data={dayHours}
+        keyExtractor={item => `${item.date} ${item.time}`}
+        ListHeaderComponent={() => this.renderHeader()}
+        renderItem={({ item }) => (
+          <TouchableHighlight underlayColor={style.COL_GREY} activeOpacity={1} onPress={() => this.onHourPressed(item)}>
+            <ForecastHour
+              time={item.time}
+              weatherType={item.weatherType}
+              weatherTypeNum={item.weatherTypeNum}
+              temperature={item.temp}
+              rain={item.averageRain}
+              windSpeed={item.windSpeed}
+              windGust={item.windGust}
+            />
+          </TouchableHighlight>
+        )}
+      />
     </BoxContainer>
   )
 }
 
-/*
-
-*/
+const styles = StyleSheet.create({
+  seperator: {
+    height: style.BORDER_WIDTH_STANDARD,
+    backgroundColor: style.COL_GREY,
+    width: '100%'
+  }
+})
 
 ForecastHours.propTypes = {
   hours: PropTypes.array.isRequired
