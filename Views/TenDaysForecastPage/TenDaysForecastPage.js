@@ -7,7 +7,7 @@ export default class TenDaysForecastPage extends Component {
   render () {
     return (
       <Container>
-        <Header />
+        <Header navigation={this.props.navigation} />
         <View>
           <Text>Hello from testpage!</Text>
         </View>

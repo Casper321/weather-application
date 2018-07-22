@@ -2,6 +2,7 @@ import React from 'react'
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
 import StartPage from '../Views/StartPage/StartPage'
 import SearchPage from '../Views/SearchPage/SearchPage'
+import InfoPage from '../Views/InfoPage/InfoPage'
 import TenDaysForecastPage from '../Views/TenDaysForecastPage/TenDaysForecastPage'
 import WarningPage from '../Views/WarningPage/WarningPage'
 import AnalysisPage from '../Views/AnalysisPage/AnalysisPage'
@@ -11,7 +12,8 @@ import * as style from '../Assets/style'
 const TenDaysForecastStack = createStackNavigator(
   {
     Långprognos: TenDaysForecastPage,
-    Sök: SearchPage
+    Sök: SearchPage,
+    Info: InfoPage,
   },
   {
     headerMode: 'none'
@@ -21,12 +23,37 @@ const TenDaysForecastStack = createStackNavigator(
 const StartStack = createStackNavigator(
   {
     Start: StartPage,
-    Sök: SearchPage
+    Sök: SearchPage,
+    Info: InfoPage,
   },
   {
     headerMode: 'none'
   }
 )
+
+const WarningStack = createStackNavigator(
+  {
+    Varningar: WarningPage,
+    Sök: SearchPage,
+    Info: InfoPage,
+  },
+  {
+    headerMode: 'none'
+  }
+)
+
+const DataAnalysStack = createStackNavigator(
+  {
+    Dataanalys: AnalysisPage,
+    Sök: SearchPage,
+    Info: InfoPage,
+  },
+  {
+    headerMode: 'none'
+  }
+)
+
+
 
 export const Tabs = createBottomTabNavigator(
   {

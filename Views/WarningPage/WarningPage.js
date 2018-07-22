@@ -11,7 +11,7 @@ export default class WarningPage extends Component {
   render () {
     return (
       <Container>
-        <Header />
+        <Header navigation={this.props.navigation} />
         <ScrollView>
           <Warning message={'DISPLAY WARNING HERE'} typeOfWarning={'fire'} />
           <Warning message={'DISPLAY WARNING HERE'} typeOfWarning={'weather-snowy'} />
