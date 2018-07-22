@@ -1,25 +1,29 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, ScrollView} from 'react-native'
-import Container from '../../Components/Container'
+import BoxContainer from '../../Components/BoxContainer'
 import Header from '../../Components/Header'
 import { FontAwesome, MaterialCommunityIcons, Feather } from '@expo/vector-icons/'
 import * as style from '../../Assets/style'
 import s from '../../Assets/style'
 import Warning from './Components/Warning'
+import Container from '../../Components/Container';
 
 export default class WarningPage extends Component {
   render () {
     return (
       <Container>
-        <Header navigation={this.props.navigation} />
-        <ScrollView>
+      <Header navigation={this.props.navigation} />
+      <ScrollView>
+      <BoxContainer>
           <Warning message={'DISPLAY WARNING HERE'} typeOfWarning={'fire'} />
           <Warning message={'DISPLAY WARNING HERE'} typeOfWarning={'weather-snowy'} />
           <Warning message={'DISPLAY WARNING HERE'} typeOfWarning={'weather-rainy'} />
           <Warning message={'DISPLAY WARNING HERE'} typeOfWarning={'weather-windy'} />
-        </ScrollView>
+          </BoxContainer>  
+      </ScrollView>
       </Container>
-    )
+      )
+
   // fire, weather-snowy, weather-rainy, weather-windy
   }
 }

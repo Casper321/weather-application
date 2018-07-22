@@ -8,10 +8,15 @@ export default class InfoPage extends Component {
  
   render () {
     return (
-      <Container>
-        <Text>
-        THIS IS THE INFO PAGE  
-        </Text>
+        <Container>
+      <Header navigation={this.props.navigation} />
+      <ScrollView>
+      <BoxContainer>
+          <Text>
+          This is the info page
+          </Text>
+      </BoxContainer>  
+      </ScrollView>
       </Container>
     )
   }
