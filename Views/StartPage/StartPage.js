@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { ScrollView, View, Text } from 'react-native'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
-import CityHeader from './Components/CityHeader'
-import Warning from './Components/Warning'
 import CurrentForecast from '../../Components/CurrentForecast'
 import ForecastHours from '../../Components/ForecastHours'
 import Loading from '../../Components/Loading'
@@ -14,7 +12,7 @@ import getDayFromDayIndex from '../../Assets/Functions/getDayFromDayIndex'
 import { Location, Permissions } from 'expo'
 
 export default class StartPage extends Component {
-  state = {
+  state = { 
     forecasts: [],
     currentLocation: {
       latitude: '',
