@@ -12,7 +12,7 @@ import getDayFromDayIndex from '../../Assets/Functions/getDayFromDayIndex'
 import { Location, Permissions } from 'expo'
 
 export default class StartPage extends Component {
-  state = { 
+  state = {
     forecasts: [],
     currentLocation: {
       latitude: '',
@@ -30,6 +30,7 @@ export default class StartPage extends Component {
   }
 
   getLocation = async () => {
+    /*
     const { status } = await Permissions.askAsync(Permissions.LOCATION)
     if (status !== 'granted') {
       this.setState({ hasLocationPermission: false })
@@ -43,6 +44,7 @@ export default class StartPage extends Component {
 
     this.setState({ currentLatitude, currentLongitude })
     return { currentLatitude, currentLatitude }
+    */
   }
 
   getLocationFromCoordinates = (latitude, longitude) => {

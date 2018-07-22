@@ -64,7 +64,7 @@ export const Tabs = createBottomTabNavigator(
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor, inactiveTintColor }) => {
         const { routeName } = navigation.state
-        let icon
+        let icon = null
         if (routeName === 'Start') {
           icon = (
             <FontAwesome name={'sun-o'} size={style.ICON_SIZE_SMALL} color={focused ? tintColor : inactiveTintColor} />

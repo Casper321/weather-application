@@ -28,6 +28,46 @@ export default class TenDaysForecastPage extends Component {
         weatherTypeNumNight: 4,
         weatherTypeNumDay: 3,
         totalRain: 1
+      },
+      {
+        key: 2,
+        day: 'Ons',
+        date: '25 juli',
+        tempHigh: 25,
+        tempLow: 19,
+        weatherTypeNumNight: 4,
+        weatherTypeNumDay: 3,
+        totalRain: 1
+      },
+      {
+        key: 2,
+        day: 'Tors',
+        date: '26 juli',
+        tempHigh: 25,
+        tempLow: 19,
+        weatherTypeNumNight: 4,
+        weatherTypeNumDay: 3,
+        totalRain: 1
+      },
+      {
+        key: 2,
+        day: 'Fre',
+        date: '27 juli',
+        tempHigh: 25,
+        tempLow: 19,
+        weatherTypeNumNight: 4,
+        weatherTypeNumDay: 3,
+        totalRain: 1
+      },
+      {
+        key: 2,
+        day: 'Lör',
+        date: '28 juli',
+        tempHigh: 25,
+        tempLow: 19,
+        weatherTypeNumNight: 4,
+        weatherTypeNumDay: 3,
+        totalRain: 1
       }
     ]
 
