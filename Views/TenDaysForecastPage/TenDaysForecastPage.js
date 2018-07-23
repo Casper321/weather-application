@@ -37,7 +37,7 @@ export default class TenDaysForecastPage extends Component {
     return (
       <Container>
 
-        <Header />
+        <Header navigation={this.props.navigation}/>
         <ScrollView>
           <CityHeader city={'Göteborg'} />
           <Header10Days/>
