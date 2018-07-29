@@ -74,22 +74,21 @@ class StartPage extends Component {
     }
   }
   getWarningForecast = async () => {
-    console.log('HEJEJE')
     const api_call = await fetch(
       `https://opendata-download-warnings.smhi.se/api/version/2/alerts.json`
     )
     const warningForecastData = await api_call.json()
     let forecastWarnings = []
+    
 
-    warningForecastData.alerts.forEach(warning => {
+    warningForecastData.alert.forEach(warning => {
       let warningObj = {}
-      warningObj.location = warning.headline
-      warningObj.message = warning.description
+      warningObj.location = warning.info.headline
+      warningObj.message = warning.info.description
       forecastWarnings.push(warningObj)
+      
     })
-
-    console.log(forecastWarnings)
-
+    
     this.props.dispatch(weatherActions.setWeatherWarnings(forecastWarnings))  
   }
 

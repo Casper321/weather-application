@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, ScrollView, FlatList } from 'react-native'
+import { Text, View, StyleSheet, ScrollView, FlatList, TouchableHighlight } from 'react-native'
 import BoxContainer from '../../Components/BoxContainer'
 import Header from '../../Components/Header'
 import { FontAwesome, MaterialCommunityIcons, Feather } from '@expo/vector-icons/'
@@ -11,22 +11,19 @@ import { connect } from 'react-redux'
 
 
 class WarningPage extends Component {
-  renderHeader = () => {
-    return (
-      <Header navigation={this.props.navigation} />
-    )
-  }
-
+ 
   render () {
     const { weatherWarnings } = this.props
 
     return (
+      <Container>
+        <Header navigation={this.props.navigation} />
       <BoxContainer>
       <FlatList
-        ListHeaderComponent={this.renderHeader}
+        //ListHeaderComponent={this.renderHeader}
         data={weatherWarnings}
         renderItem={({ item }) => (
-          <TouchableHighlight underlayColor={style.COL_GREY} activeOpacity={1}>
+          <TouchableHighlight underlayColor={style.COL_GREY}>
             <Warning
               location = {item.location}
             />
@@ -34,6 +31,7 @@ class WarningPage extends Component {
         )}
       />
     </BoxContainer>
+    </Container>
     )
     // <Warning location={'DISPLAY location HERE'} typeOfWarning={'warning'} />
     // fire, weather-snowy, weather-rainy, weather-windy 
