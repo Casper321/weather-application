@@ -74,6 +74,7 @@ class StartPage extends Component {
     }
   }
   getWarningForecast = async () => {
+    console.log('HEJEJE')
     const api_call = await fetch(
       `https://opendata-download-warnings.smhi.se/api/version/2/alerts.json`
     )
@@ -87,9 +88,9 @@ class StartPage extends Component {
       forecastWarnings.push(warningObj)
     })
 
-   
-   // const textWarnings = warningForecastData.message.text.textWarning.split('\n\n');
+    console.log(forecastWarnings)
 
+    this.props.dispatch(weatherActions.setWeatherWarnings(forecastWarnings))  
   }
 
   getWeatherForecast = async (city, latitude, longitude) => {
