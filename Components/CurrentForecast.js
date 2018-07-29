@@ -30,7 +30,7 @@ const CurrentForecast = ({ currentHour, location, getNewLocation }) => {
           <MaterialIcons name='favorite-border' size={style.ICON_SIZE_SMALL + 4} color={'#9b111e'} />
         </View>
         <View style={[s.flexJce, s.flexAce, s.bc, s.flex1, s.pt2, s.pb2]}>
-          <TouchableHighlight onPress={getNewLocation}>
+          <TouchableHighlight onPress={getNewLocation} underlayColor={style.COL_GREY}>
             <MaterialCommunityIcons name='reload' size={style.ICON_SIZE_SMALL + 4} color={style.COL_GOOGLE_BLUE} />
           </TouchableHighlight>
         </View>
