@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, ScrollView } from 'react-native'
+import { Text, View, StyleSheet, ScrollView, FlatList } from 'react-native'
 import BoxContainer from '../../Components/BoxContainer'
 import Header from '../../Components/Header'
 import { FontAwesome, MaterialCommunityIcons, Feather } from '@expo/vector-icons/'
@@ -8,23 +8,28 @@ import s from '../../Assets/style'
 import Warning from './Components/Warning'
 import Container from '../../Components/Container'
 
+
 export default class WarningPage extends Component {
   render () {
     return (
-      <Container>
-        <Header navigation={this.props.navigation} />
-        <ScrollView>
-          <BoxContainer>
-            <Warning message={'DISPLAY WARNING HERE'} typeOfWarning={'fire'} />
-            <Warning message={'DISPLAY WARNING HERE'} typeOfWarning={'weather-snowy'} />
-            <Warning message={'DISPLAY WARNING HERE'} typeOfWarning={'weather-rainy'} />
-            <Warning message={'DISPLAY WARNING HERE'} typeOfWarning={'weather-windy'} />
-          </BoxContainer>
-        </ScrollView>
-      </Container>
+      <BoxContainer>
+      <FlatList
+        ListHeaderComponent={() => <Header navigation={this.props.navigation} />}
+        renderItem={({ foreCastWarnings }) => (
+          <TouchableHighlight underlayColor={style.COL_GREY} activeOpacity={1}>
+            <Warning
+              location = {foreCastWarnings.location}
+            />
+          </TouchableHighlight>
+        )}
+      />
+    </BoxContainer>
     )
 
-    // fire, weather-snowy, weather-rainy, weather-windy
+
+    
+    // <Warning location={'DISPLAY location HERE'} typeOfWarning={'warning'} />
+    // fire, weather-snowy, weather-rainy, weather-windy 
   }
 }
 
