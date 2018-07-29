@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Text } from 'react-native'
+import { ScrollView, View, Text, Button } from 'react-native'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
 import CurrentForecast from '../../Components/CurrentForecast'
@@ -11,7 +11,10 @@ import getWeatherCondition from '../../Assets/Functions/getWeatherCondition'
 import getDayFromDayIndex from '../../Assets/Functions/getDayFromDayIndex'
 import { Location, Permissions } from 'expo'
 
-export default class StartPage extends Component {
+import { connect } from 'react-redux'
+import { weatherActions } from '../../Redux/WeatherReducer'
+
+class StartPage extends Component {
   state = {
     forecasts: [],
     currentLocation: {
@@ -41,7 +44,14 @@ export default class StartPage extends Component {
     const currentLatitude = Number.parseFloat(location.coords.latitude).toPrecision(5)
     const currentLongitude = Number.parseFloat(location.coords.longitude).toPrecision(5)
 
-    this.setState({ currentLatitude, currentLongitude })
+    this.props.dispatch(
+      weatherActions.setCurrentCoordinates({
+        latitude: currentLatitude,
+        longitude: currentLongitude
+      })
+    )
+    // this.setState({ currentLatitude, currentLongitude })
+
     return { currentLatitude, currentLongitude }
   }
 
@@ -61,7 +71,14 @@ export default class StartPage extends Component {
         newLocation.city = data.address.city
         newLocation.suburb = data.address.suburb
 
-        this.setState({ currentLocation: { ...newLocation } })
+        this.props.dispatch(
+          weatherActions.setCurrentCity({
+            city: data.address.city,
+            suburb: data.address.suburb
+          })
+        )
+
+        // this.setState({ currentLocation: { ...newLocation } })
       }
       request.send(null)
     }
@@ -126,14 +143,26 @@ export default class StartPage extends Component {
     this.setState(state)
   }
 
+  incrementNumber = () => {
+    let newNum = this.props.number
+    newNum = newNum + 1
+    this.props.dispatch(
+      weatherActions.incrementNumber({
+        number: newNum
+      })
+    )
+  }
+
   render () {
-    const { forecasts, currentLocation } = this.state
+    const { forecasts /*, currentLocation */ } = this.state
+    const { currentLocation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
 
     return (
       <Container>
         <Header navigation={this.props.navigation} />
+        <Button onPress={this.incrementNumber} title={'Increment global num'} />
         <ScrollView>
           {newestForecastSearch.warning && <Warning message={newestForecastSearch.warning.message} />}
           {newestForecastSearch.hours
@@ -155,6 +184,25 @@ export default class StartPage extends Component {
     )
   }
 }
+
+function mapStateToProps (state) {
+  return {
+    forecasts: state.weather.forecasts,
+    currentLocation: state.weather.currentLocation,
+    number: state.weather.number
+  }
+}
+
+/*
+function mapDispatchToProps (dispatch) {
+  return {
+    dispatchAddPerson: person => dispatch(addPerson(person)),
+    dispatchdeletePerson: person => dispatch(deletePerson(person))
+  }
+}
+*/
+
+export default connect(mapStateToProps)(StartPage)
 
 /* API KEY locationiq.com --> 102c0e44882475
   Convert location to coordinates: https://eu1.locationiq.org/v1/search.php?key=102c0e44882475&q=Göteborg&format=json
