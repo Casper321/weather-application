@@ -19,15 +19,18 @@ class WarningPage extends Component {
       <Container>
         <Header navigation={this.props.navigation} />
       <BoxContainer>
+      
       <FlatList
         //ListHeaderComponent={this.renderHeader}
         data={weatherWarnings}
+        
+     
         renderItem={({ item }) => (
-          <TouchableHighlight underlayColor={style.COL_GREY}>
+          <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => console.log(item.message)}>
             <Warning
               location = {item.location}
             />
-          </TouchableHighlight>
+           </TouchableHighlight>
         )}
       />
     </BoxContainer>

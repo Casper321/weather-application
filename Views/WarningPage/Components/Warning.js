@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, TouchableHighlight } from 'react-native'
 import { FontAwesome, MaterialCommunityIcons, Feather } from '@expo/vector-icons'
 import * as style from '../../../Assets/style'
 import s from '../../../Assets/style'
@@ -28,7 +28,7 @@ const Warning = ({ location = '' , typeOfWarning = 'warning', message = "Ingen v
           <FontAwesome name='circle-thin' color={style.COL_WARNING} size={50} />
         </View>
         <View>
-          <FontAwesome //MaterialCommunityIcons sen
+          <FontAwesome //MaterialCommunityIcons sen eller inte xd
             style={[styles.warningFire, s.abs]}
             name={typeOfWarning}
             color={style.COL_PRIMARY}
@@ -43,6 +43,7 @@ const Warning = ({ location = '' , typeOfWarning = 'warning', message = "Ingen v
         <Feather name='chevron-right' color={style.COL_PRIMARY} size={style.ICON_SIZE_MEDIUM} />
       </View>
     </View>
+    
   )
 }
 
