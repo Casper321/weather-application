@@ -6,7 +6,7 @@ import CurrentForecast from '../../Components/CurrentForecast'
 import ForecastHours from '../../Components/ForecastHours'
 import Loading from '../../Components/Loading'
 
-import forecastData from '../../Assets/test-api.json'
+// import forecastData from '../../Assets/test-api.json'
 import getWeatherCondition from '../../Assets/Functions/getWeatherCondition'
 import getDayFromDayIndex from '../../Assets/Functions/getDayFromDayIndex'
 import { Location, Permissions } from 'expo'
@@ -23,14 +23,13 @@ export default class StartPage extends Component {
     hasLocationPermission: false
   }
 
-  componentDidMount () {
-    const { currentLatitude, currentLongitude } = this.getLocation()
+  async componentDidMount () {
+    const { currentLatitude, currentLongitude } = await this.getLocation()
     this.getWeatherForecast('', currentLatitude, currentLongitude)
     this.getLocationFromCoordinates(currentLatitude, currentLongitude)
   }
 
   getLocation = async () => {
-    /*
     const { status } = await Permissions.askAsync(Permissions.LOCATION)
     if (status !== 'granted') {
       this.setState({ hasLocationPermission: false })
@@ -43,39 +42,36 @@ export default class StartPage extends Component {
     const currentLongitude = Number.parseFloat(location.coords.longitude).toPrecision(5)
 
     this.setState({ currentLatitude, currentLongitude })
-    return { currentLatitude, currentLatitude }
-    */
+    return { currentLatitude, currentLongitude }
   }
 
   getLocationFromCoordinates = (latitude, longitude) => {
-    /*
-    const request = new XMLHttpRequest()
-    request.open(
-      'GET',
-      `https://eu1.locationiq.org/v1/reverse.php?key=102c0e44882475&lat=${latitude}&lon=${longitude}&format=json`,
-      true
-    )
-    request.onload = () => {
-      var data = JSON.parse(request.response)
-      const newLocation = {}
-      newLocation.latitude = data.lat
-      newLocation.longitude = data.lon
-      newLocation.city = data.address.city
-      newLocation.suburb = data.address.suburb
+    if (latitude && longitude) {
+      const request = new XMLHttpRequest()
+      request.open(
+        'GET',
+        `https://eu1.locationiq.org/v1/reverse.php?key=102c0e44882475&lat=${latitude}&lon=${longitude}&format=json`,
+        true
+      )
+      request.onload = () => {
+        var data = JSON.parse(request.response)
+        const newLocation = {}
+        newLocation.latitude = data.lat
+        newLocation.longitude = data.lon
+        newLocation.city = data.address.city
+        newLocation.suburb = data.address.suburb
 
-      this.setState({ currentLocation: { ...newLocation } })
+        this.setState({ currentLocation: { ...newLocation } })
+      }
+      request.send(null)
     }
-    request.send(null)
-    */
   }
 
   getWeatherForecast = async (city, latitude, longitude) => {
-    /*
     const api_call = await fetch(
       `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`
     )
     const forecastData = await api_call.json()
-    */
 
     const newForecastResult = {
       city,
