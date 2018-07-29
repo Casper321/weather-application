@@ -1,77 +1,49 @@
-import React from 'react'
+import React from '../../../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react'
 import { Text, View, StyleSheet } from 'react-native'
 import getWeatherIcon from '../Assets/Functions/getWeatherIcon'
 import s from '../Assets/style'
 import * as style from '../Assets/style'
 
-const ForecastDay = ({
-  day,
-  date,
-  tempHigh,
-  tempLow,
-  weatherTypeNumNight,
-  weatherTypeNumDay,
-  totalRain
-}) => {
-  const iconNight = getWeatherIcon(
-    parseInt(weatherTypeNumNight),
-    style.ICON_SIZE_MEDIUM
-  )
-  const iconDay = getWeatherIcon(
-    parseInt(weatherTypeNumDay),
-    style.ICON_SIZE_MEDIUM
-  )
+const ForecastDay = ({ day, date, tempHigh, tempLow, weatherTypeNumNight, weatherTypeNumDay, totalRain }) => {
+  const iconNight = getWeatherIcon(parseInt(weatherTypeNumNight), style.ICON_SIZE_MEDIUM)
+  const iconDay = getWeatherIcon(parseInt(weatherTypeNumDay), style.ICON_SIZE_MEDIUM)
 
   return (
-      <View
-        style={[
-          s.col_white,
-          s.flexDr,
-          s.flexJsb,
-          s.flexAce,
-          s.pl2,
-          s.pr2,
-          s.pb0,
-          s.pt0,
-          s.bbw,
-          s.bc,
-          s.col_grey
-        ]}
-      >
-        <View style={[s.flex3]}>
-          <Text style={[s.col_black, s.fw1, s.fz1]}>
-            {day}
-          </Text>
-          <Text style={[s.fz0, s.col_dark_grey]}>
-            {date}
-          </Text>
+    <View style={[s.flexDr, s.flexJsb, s.flexAce, s.pl2, s.pr2, s.pb0, s.pt0, s.bbw, s.bc]}>
+      <View style={[s.flex3]}>
+        <Text style={[s.col_black, s.fw1, s.fz1]}>
+          {day}
+        </Text>
+        <Text style={[s.fz0, s.col_dark_grey]}>
+          {date}
+        </Text>
+      </View>
+      <View style={[s.flexDr, s.flexJce, s.flexAce, s.flex5]}>
+        <Text style={[s.col_black, s.fw1, s.fz1, styles.tempH]}>
+          {Math.round(tempHigh)}°
+        </Text>
+        <Text style={[s.col_dark_grey, s.fw1, s.fz1, styles.tempL]}>
+          {Math.round(tempLow)}°
+        </Text>
+      </View>
+      <View style={[s.flexDr, s.flexJsb, s.mr1, s.flex5]}>
+        <View style={[styles.weatherNatt]}>
+          {iconNight}
         </View>
-        <View style={[s.flexDr, s.flexJce, s.flexAce, s.flex5]}>
-          <Text style={[s.col_black, s.fw1, s.fz1, styles.tempH]}>
-            {Math.round(tempHigh)}°
-          </Text>
-          <Text style={[s.col_dark_grey, s.fw1, s.fz1, styles.tempL]}>
-            {Math.round(tempLow)}°
-          </Text>
-        </View>
-        <View style={[s.flexDr, s.flexJsb, s.mr1, s.flex5]}>
-          <View style={[styles.weatherNatt]}>
-            {iconNight}
-          </View>
-          <View style={[styles.weatherDag]}>
-            {iconDay}
-          </View>
-        </View>
-
-        <View style={[s.flexJce, s.flexAfe, s.flex4]}>
-          <Text style={[s.col_black, s.fw1, s.fz1]}>
-            {totalRain}
-          </Text>
-          <Text style={[s.fz0, s.col_dark_grey]}>
-            mm/24h
-          </Text>
+        <View style={[styles.weatherDag]}>
+          {iconDay}
         </View>
       </View>
+
+      <View style={[s.flexJce, s.flexAfe, s.flex4]}>
+        <Text style={[s.col_black, s.fw1, s.fz1]}>
+          {totalRain}
+        </Text>
+        <Text style={[s.fz0, s.col_dark_grey]}>
+          mm/24h
+        </Text>
+      </View>
+    </View>
   )
 }
 

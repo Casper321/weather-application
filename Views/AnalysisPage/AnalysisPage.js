@@ -1,24 +1,33 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, ScrollView } from 'react-native'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
 import { connect } from 'react-redux'
+import ForecastHours from '../../Components/ForecastHours'
 
-class WarningPage extends Component {
+class AnalysisPage extends Component {
   render () {
-    const { number, currentLocation } = this.props
+    const { currentLocation, forecasts } = this.props
 
     return (
       <Container>
         <Header navigation={this.props.navigation} />
-        <View>
-          <Text>Analyssidan yeah buddy</Text>
-          <Text>{number}</Text>
-          <Text>{currentLocation.city}</Text>
-          <Text>{currentLocation.suburb}</Text>
-          <Text>{currentLocation.latitude}</Text>
-          <Text>{currentLocation.longitude}</Text>
-        </View>
+        <ScrollView>
+          {forecasts.hours
+            ? <View>
+              <ForecastHours forecastDay={0} hours={forecasts.hours} />
+              <ForecastHours forecastDay={1} hours={forecasts.hours} />
+            </View>
+            : <Loading message={'Laddar din väderdata...'} />}
+        </ScrollView>
+        {currentLocation
+          ? <View>
+            <Text>{currentLocation.city}</Text>
+            <Text>{currentLocation.suburb}</Text>
+            <Text>{currentLocation.latitude}</Text>
+            <Text>{currentLocation.longitude}</Text>
+          </View>
+          : null}
       </Container>
     )
   }
@@ -26,9 +35,9 @@ class WarningPage extends Component {
 
 function mapStateToProps (state) {
   return {
-    number: state.weather.number,
-    currentLocation: state.weather.currentLocation
+    currentLocation: state.weather.currentLocation,
+    forecasts: state.weather.forecasts[state.weather.forecasts.length - 1]
   }
 }
 
-export default connect(mapStateToProps)(WarningPage)
+export default connect(mapStateToProps)(AnalysisPage)

@@ -6,7 +6,7 @@ import CurrentForecast from '../../Components/CurrentForecast'
 import ForecastHours from '../../Components/ForecastHours'
 import Loading from '../../Components/Loading'
 
-import forecastData from '../../Assets/test-api.json'
+// import forecastData from '../../Assets/test-api.json'
 import getWeatherCondition from '../../Assets/Functions/getWeatherCondition'
 import getDayFromDayIndex from '../../Assets/Functions/getDayFromDayIndex'
 import { Location, Permissions } from 'expo'
@@ -16,13 +16,6 @@ import { weatherActions } from '../../Redux/WeatherReducer'
 
 class StartPage extends Component {
   state = {
-    forecasts: [],
-    currentLocation: {
-      latitude: '',
-      longitude: '',
-      city: '',
-      suburb: ''
-    },
     hasLocationPermission: false
   }
 
@@ -50,8 +43,6 @@ class StartPage extends Component {
         longitude: currentLongitude
       })
     )
-    // this.setState({ currentLatitude, currentLongitude })
-
     return { currentLatitude, currentLongitude }
   }
 
@@ -77,20 +68,16 @@ class StartPage extends Component {
             suburb: data.address.suburb
           })
         )
-
-        // this.setState({ currentLocation: { ...newLocation } })
       }
       request.send(null)
     }
   }
 
   getWeatherForecast = async (city, latitude, longitude) => {
-    /*
     const api_call = await fetch(
       `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`
     )
     const forecastData = await api_call.json()
-    */
 
     const newForecastResult = {
       city,
@@ -132,9 +119,7 @@ class StartPage extends Component {
     })
 
     newForecastResult.hours = [...forecastHours]
-    const state = { ...this.state }
-    state.forecasts.push(newForecastResult)
-    this.setState(state)
+    this.props.dispatch(weatherActions.addForecast(newForecastResult))
   }
 
   updateState = (type, value) => {
@@ -143,26 +128,14 @@ class StartPage extends Component {
     this.setState(state)
   }
 
-  incrementNumber = () => {
-    let newNum = this.props.number
-    newNum = newNum + 1
-    this.props.dispatch(
-      weatherActions.incrementNumber({
-        number: newNum
-      })
-    )
-  }
-
   render () {
-    const { forecasts /*, currentLocation */ } = this.state
-    const { currentLocation } = this.props
+    const { forecasts, currentLocation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
 
     return (
       <Container>
         <Header navigation={this.props.navigation} />
-        <Button onPress={this.incrementNumber} title={'Increment global num'} />
         <ScrollView>
           {newestForecastSearch.warning && <Warning message={newestForecastSearch.warning.message} />}
           {newestForecastSearch.hours
@@ -188,19 +161,9 @@ class StartPage extends Component {
 function mapStateToProps (state) {
   return {
     forecasts: state.weather.forecasts,
-    currentLocation: state.weather.currentLocation,
-    number: state.weather.number
+    currentLocation: state.weather.currentLocation
   }
 }
-
-/*
-function mapDispatchToProps (dispatch) {
-  return {
-    dispatchAddPerson: person => dispatch(addPerson(person)),
-    dispatchdeletePerson: person => dispatch(deletePerson(person))
-  }
-}
-*/
 
 export default connect(mapStateToProps)(StartPage)
 

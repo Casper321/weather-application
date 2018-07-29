@@ -2,7 +2,7 @@ export const types = {
   ADD_FORECAST: 'ADD_FORECAST',
   SET_CURRENT_COORDINATES: 'SET_CURRENT_COORDINATES',
   SET_CURRENT_CITY: 'SET_CURRENT_COORDINATES',
-  INCREMENT_NUMBER: 'INCREMENT_NUMBER'
+  SET_WEATHER_WARNINGS: 'SET_WEATHER_WARNINGS'
 }
 
 export const weatherActions = {
@@ -15,8 +15,8 @@ export const weatherActions = {
   setCurrentCity: item => {
     return { type: types.SET_CURRENT_CITY, payload: item }
   },
-  incrementNumber: item => {
-    return { type: types.INCREMENT_NUMBER, payload: item }
+  setWeatherWarnings: item => {
+    return { type: types.SET_WEATHER_WARNINGS, payload: item }
   }
 }
 
@@ -28,14 +28,12 @@ const initialState = {
     city: '',
     suburb: ''
   },
-  number: 0
+  weatherWarnings: []
 }
 
 export default function WeatherReducer (state = initialState, action) {
   const { forecasts } = state
   const { type, payload } = action
-
-  console.log(state)
 
   switch (type) {
     case types.ADD_FORECAST:
@@ -64,10 +62,10 @@ export default function WeatherReducer (state = initialState, action) {
         currentLocation: newLocation
       }
 
-    case types.INCREMENT_NUMBER:
+    case types.SET_WEATHER_WARNINGS:
       return {
         ...state,
-        number: payload.number
+        weatherWarnings: payload
       }
 
     default:

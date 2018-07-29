@@ -11,7 +11,7 @@ const ForecastDays = ({ days }) => {
   const daysForecast = days.map(hour => {
     if (hour.time === 12) {
       return hour
-    }*/
+    } */
 
   return (
     <BoxContainer>
@@ -19,7 +19,7 @@ const ForecastDays = ({ days }) => {
         {days.map(day => {
           return (
             <ForecastDay
-              key={day.time}
+              key={Math.random() * 100}
               day={day.day}
               date={day.date}
               tempHigh={day.tempHigh}
@@ -34,6 +34,5 @@ const ForecastDays = ({ days }) => {
     </BoxContainer>
   )
 }
-
 
 export default ForecastDays
