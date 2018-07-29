@@ -71,10 +71,12 @@ export default class SearchPage extends Component {
           ? <FlatList
             data={citiesList}
             keyExtractor={() => Math.random() * 1000}
-            renderItem={({ city }) => (
-              <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => this.onCityPicked(city)}>
-                <SearchItem city={city.cityName} longerLocationName={city.longerLocationName} />
-              </TouchableHighlight>
+            renderItem={({ item }) => (
+              <BoxContainer>
+                <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => this.onCityPicked(item)}>
+                  <SearchItem city={item.cityName} longerLocationName={item.longerLocationName} />
+                </TouchableHighlight>
+              </BoxContainer>
               )}
             />
           : null}
