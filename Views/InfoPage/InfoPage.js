@@ -5,18 +5,17 @@ import Header from '../../Components/Header'
 import BoxContainer from '../../Components/BoxContainer'
 
 export default class InfoPage extends Component {
- 
   render () {
     return (
-        <Container>
-      <Header navigation={this.props.navigation} />
-      <ScrollView>
-      <BoxContainer>
-          <Text>
-          This is the info page
-          </Text>
-      </BoxContainer>  
-      </ScrollView>
+      <Container>
+        <Header navigation={this.props.navigation} />
+        <ScrollView>
+          <BoxContainer>
+            <Text>
+              This is the information page
+            </Text>
+          </BoxContainer>
+        </ScrollView>
       </Container>
     )
   }
