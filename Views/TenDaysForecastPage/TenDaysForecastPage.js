@@ -5,8 +5,9 @@ import Header from '../../Components/Header'
 import CityHeader from '../../Components/CityHeader'
 import Header10Days from './Components/Header10Days'
 import ForecastDays from '../../Components/ForecastDays'
+import { connect } from 'react-redux'
 
-export default class TenDaysForecastPage extends Component {
+class TenDaysForecastPage extends Component {
   render () {
     let days = [
       {
@@ -71,9 +72,11 @@ export default class TenDaysForecastPage extends Component {
       }
     ]
 
+    const { forecasts } = this.props
+    const hours = forecasts.hours
+
     return (
       <Container>
-
         <Header navigation={this.props.navigation} />
         <ScrollView>
           <CityHeader city={'Göteborg'} />
@@ -84,3 +87,11 @@ export default class TenDaysForecastPage extends Component {
     )
   }
 }
+
+function mapStateToProps (state) {
+  return {
+    forecasts: state.weather.forecasts[state.weather.forecasts.length - 1]
+  }
+}
+
+export default connect(mapStateToProps)(TenDaysForecastPage)

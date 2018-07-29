@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Text } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
 import CurrentForecast from '../../Components/CurrentForecast'
@@ -11,15 +11,11 @@ import getWeatherCondition from '../../Assets/Functions/getWeatherCondition'
 import getDayFromDayIndex from '../../Assets/Functions/getDayFromDayIndex'
 import { Location, Permissions } from 'expo'
 
-export default class StartPage extends Component {
+import { connect } from 'react-redux'
+import { weatherActions } from '../../Redux/WeatherReducer'
+
+class StartPage extends Component {
   state = {
-    forecasts: [],
-    currentLocation: {
-      latitude: '',
-      longitude: '',
-      city: '',
-      suburb: ''
-    },
     hasLocationPermission: false
   }
 
@@ -42,7 +38,12 @@ export default class StartPage extends Component {
     const currentLatitude = Number.parseFloat(location.coords.latitude).toPrecision(5)
     const currentLongitude = Number.parseFloat(location.coords.longitude).toPrecision(5)
 
-    this.setState({ currentLatitude, currentLongitude })
+    this.props.dispatch(
+      weatherActions.setCurrentCoordinates({
+        latitude: currentLatitude,
+        longitude: currentLongitude
+      })
+    )
     return { currentLatitude, currentLongitude }
   }
 
@@ -62,7 +63,12 @@ export default class StartPage extends Component {
         newLocation.city = data.address.city
         newLocation.suburb = data.address.suburb
 
-        this.setState({ currentLocation: { ...newLocation } })
+        this.props.dispatch(
+          weatherActions.setCurrentCity({
+            city: data.address.city,
+            suburb: data.address.suburb
+          })
+        )
       }
       request.send(null)
     }
@@ -132,9 +138,7 @@ export default class StartPage extends Component {
     })
 
     newForecastResult.hours = [...forecastHours]
-    const state = { ...this.state }
-    state.forecasts.push(newForecastResult)
-    this.setState(state)
+    this.props.dispatch(weatherActions.addForecast(newForecastResult))
   }
 
   updateState = (type, value) => {
@@ -144,7 +148,7 @@ export default class StartPage extends Component {
   }
 
   render () {
-    const { forecasts, currentLocation } = this.state
+    const { forecasts, currentLocation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
 
@@ -172,6 +176,15 @@ export default class StartPage extends Component {
     )
   }
 }
+
+function mapStateToProps (state) {
+  return {
+    forecasts: state.weather.forecasts,
+    currentLocation: state.weather.currentLocation
+  }
+}
+
+export default connect(mapStateToProps)(StartPage)
 
 /* API KEY locationiq.com --> 102c0e44882475
   Convert location to coordinates: https://eu1.locationiq.org/v1/search.php?key=102c0e44882475&q=Göteborg&format=json

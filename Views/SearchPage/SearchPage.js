@@ -56,6 +56,8 @@ export default class SearchPage extends Component {
         cityObj.longerLocationName = city.city.substring(city.city.indexOf(',') + 2, city.city.length)
         return cityObj
       })
+    } else {
+      citiesList = []
     }
 
     return (
@@ -65,7 +67,7 @@ export default class SearchPage extends Component {
           icon={{ type: 'font-awesome', name: 'search' }}
           placeholder='Skriv din ort här...'
         />
-        {citiesAvailable
+        {citiesList.length >= 1
           ? <FlatList
             data={citiesList}
             keyExtractor={() => Math.random() * 1000}
