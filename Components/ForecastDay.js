@@ -1,4 +1,4 @@
-import React from '../../../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react'
+import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import getWeatherIcon from '../Assets/Functions/getWeatherIcon'
 import s from '../Assets/style'
