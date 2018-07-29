@@ -129,9 +129,11 @@ class StartPage extends Component {
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
 
+    console.log(currentLocation)
+
     return (
       <Container>
-        <Header navigation={this.props.navigation} />
+        <Header updateWeather={this.getWeatherForecast} navigation={this.props.navigation} />
         <ScrollView>
           {newestForecastSearch.warning && <Warning message={newestForecastSearch.warning.message} />}
           {newestForecastSearch.hours

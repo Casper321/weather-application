@@ -57,6 +57,7 @@ export default function WeatherReducer (state = initialState, action) {
       newLocation.latitude = payload.latitude
       newLocation.longitude = payload.longitude
 
+      console.log('HALLLÅÅÅÅÅÅÅÅÅÅ')
       return {
         ...state,
         currentLocation: newLocation
