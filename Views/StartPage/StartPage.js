@@ -82,6 +82,7 @@ class StartPage extends Component {
       let warningObj = {}
       warningObj.location = warning.info.headline
       warningObj.message = warning.info.description
+      warningObj.icon = warning.info.event
       forecastWarnings.push(warningObj)
     })
 
@@ -144,7 +145,8 @@ class StartPage extends Component {
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
 
-    console.log(currentLocation)
+    console.log('Forecast redux', forecasts)
+    console.log('Location redux', currentLocation)
 
     return (
       <Container>
