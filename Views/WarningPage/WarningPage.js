@@ -29,6 +29,8 @@ class WarningPage extends Component {
           <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => console.log(item.message)}>
             <Warning
               location = {item.location}
+              typeOfWarning = {item.icon}
+              message = {item.message}
             />
            </TouchableHighlight>
         )}
@@ -41,16 +43,7 @@ class WarningPage extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  warningIconContainer: {
-    height: 50,
-    width: 50
-  },
-  warningFire: {
-    top: -37,
-    left: 10
-  }
-})
+
 
 function mapStateToProps (state) {
   return {

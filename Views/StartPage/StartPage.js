@@ -82,6 +82,7 @@ class StartPage extends Component {
       let warningObj = {}
       warningObj.location = warning.info.headline
       warningObj.message = warning.info.description
+      warningObj.icon = warning.info.event
       forecastWarnings.push(warningObj)
     })
 
