@@ -7,8 +7,10 @@ import SearchItem from './Components/SearchItem'
 import BoxContainer from '../../Components/BoxContainer'
 import style from '../../Assets/style'
 import * as s from '../../Assets/style'
+import { weatherActions } from '../../Redux/WeatherReducer'
+import { connect } from 'react-redux'
 
-export default class SearchPage extends Component {
+class SearchPage extends Component {
   state = {
     citySearch: '',
     citiesAvailable: []
@@ -42,7 +44,15 @@ export default class SearchPage extends Component {
   }
 
   onCityPicked = city => {
-    console.log(city)
+    const { latitude, longitude, cityName } = city
+    this.props.dispatch(
+      weatherActions.setCurrentCoordinates({
+        latitude,
+        longitude
+      })
+    )
+    this.props.dispatch(weatherActions.setCurrentCity({ cityName }))
+    this.props.navigation.navigate('Start')
   }
 
   render () {
@@ -54,6 +64,8 @@ export default class SearchPage extends Component {
         let cityObj = {}
         cityObj.cityName = city.city.substring(0, city.city.indexOf(','))
         cityObj.longerLocationName = city.city.substring(city.city.indexOf(',') + 2, city.city.length)
+        cityObj.latitude = Number.parseFloat(city.latitude).toPrecision(5)
+        cityObj.longitude = Number.parseFloat(city.longitude).toPrecision(5)
         return cityObj
       })
     } else {
@@ -71,10 +83,12 @@ export default class SearchPage extends Component {
           ? <FlatList
             data={citiesList}
             keyExtractor={() => Math.random() * 1000}
-            renderItem={({ city }) => (
-              <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => this.onCityPicked(city)}>
-                <SearchItem city={city.cityName} longerLocationName={city.longerLocationName} />
-              </TouchableHighlight>
+            renderItem={({ item }) => (
+              <BoxContainer>
+                <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => this.onCityPicked(item)}>
+                  <SearchItem city={item.cityName} longerLocationName={item.longerLocationName} />
+                </TouchableHighlight>
+              </BoxContainer>
               )}
             />
           : null}
@@ -83,4 +97,10 @@ export default class SearchPage extends Component {
   }
 }
 
-const styles = StyleSheet.create({})
+function mapStateToProps (state) {
+  return {
+    currentLocation: state.weather.currentLocation
+  }
+}
+
+export default connect(mapStateToProps)(SearchPage)

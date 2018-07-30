@@ -37,7 +37,12 @@ export const BORDER_WIDTH_STANDARD = 1
 
 export const BOX_SHADOW_STANDARD = 2
 
+export const FONT_FAMILY = 'Roboto'
+
 export default StyleSheet.create({
+  /* Font type */
+  ff: { fontFamily: FONT_FAMILY },
+
   /* Color */
   col_primary: { color: COL_PRIMARY },
   col_secondary: { color: COL_SECONDARY },
@@ -182,6 +187,9 @@ export default StyleSheet.create({
   flexAfe: { alignItems: 'flex-end' },
   flexAce: { alignItems: 'center' },
   flexAst: { alignItems: 'stretch' },
+
+  flexWw: { flexWrap: 'wrap' },
+  flexWn: { flexWrap: 'nowrap' },
 
   /* Width */
   w: { width: WIDTH_STANDARD },
