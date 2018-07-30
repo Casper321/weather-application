@@ -183,6 +183,9 @@ export default StyleSheet.create({
   flexAce: { alignItems: 'center' },
   flexAst: { alignItems: 'stretch' },
 
+  flexWw: { flexWrap: 'wrap' },
+  flexWn: { flexWrap: 'nowrap' },
+
   /* Width */
   w: { width: WIDTH_STANDARD },
   w50: { width: '50%' },
