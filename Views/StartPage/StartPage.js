@@ -5,8 +5,9 @@ import Header from '../../Components/Header'
 import CurrentForecast from '../../Components/CurrentForecast'
 import ForecastHours from '../../Components/ForecastHours'
 import Loading from '../../Components/Loading'
+import s from '../../Assets/style'
 
-// import forecastData from '../../Assets/test-api.json'
+import forecastData from '../../Assets/test-api.json'
 import getWeatherCondition from '../../Assets/Functions/getWeatherCondition'
 import getDayFromDayIndex from '../../Assets/Functions/getDayFromDayIndex'
 import { Location, Permissions } from 'expo'
@@ -18,7 +19,7 @@ class StartPage extends Component {
   state = {
     hasLocationPermission: false
   }
-
+  console.log("HEJ")
   async componentDidMount () {
     const { currentLatitude, currentLongitude } = await this.getLocation()
     this.getWeatherForecast('', currentLatitude, currentLongitude)
@@ -74,12 +75,9 @@ class StartPage extends Component {
     }
   }
   getWarningForecast = async () => {
-    const api_call = await fetch(
-      `https://opendata-download-warnings.smhi.se/api/version/2/alerts.json`
-    )
+    const api_call = await fetch(`https://opendata-download-warnings.smhi.se/api/version/2/alerts.json`)
     const warningForecastData = await api_call.json()
     let forecastWarnings = []
-    
 
     warningForecastData.alert.forEach(warning => {
       let warningObj = {}
@@ -87,17 +85,18 @@ class StartPage extends Component {
       warningObj.message = warning.info.description
       warningObj.icon = warning.info.event
       forecastWarnings.push(warningObj)
-      
     })
-    
-    this.props.dispatch(weatherActions.setWeatherWarnings(forecastWarnings))  
+
+    this.props.dispatch(weatherActions.setWeatherWarnings(forecastWarnings))
   }
 
   getWeatherForecast = async (city, latitude, longitude) => {
+    /*
     const api_call = await fetch(
       `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`
     )
     const forecastData = await api_call.json()
+    */
 
     const newForecastResult = {
       city,
@@ -142,21 +141,17 @@ class StartPage extends Component {
     this.props.dispatch(weatherActions.addForecast(newForecastResult))
   }
 
-  updateState = (type, value) => {
-    const state = { ...this.state }
-    state[type] = value
-    this.setState(state)
-  }
-
   render () {
     const { forecasts, currentLocation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
 
+    console.log(currentLocation)
+
     return (
       <Container>
-        <Header navigation={this.props.navigation} />
-        <ScrollView>
+        <Header updateWeather={this.getWeatherForecast} navigation={this.props.navigation} />
+        <ScrollView contentContainerStyle={[s.pb3]}>
           {newestForecastSearch.warning && <Warning message={newestForecastSearch.warning.message} />}
           {newestForecastSearch.hours
             ? <View>

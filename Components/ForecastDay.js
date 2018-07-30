@@ -4,7 +4,7 @@ import getWeatherIcon from '../Assets/Functions/getWeatherIcon'
 import s from '../Assets/style'
 import * as style from '../Assets/style'
 
-const ForecastDay = ({ day, date, tempHigh, tempLow, weatherTypeNumNight, weatherTypeNumDay, totalRain }) => {
+const ForecastDay = ({ day, date, tempHigh, tempLow, weatherTypeNumNight, weatherTypeNumDay, totalRain, hoursLeft }) => {
   const iconNight = getWeatherIcon(parseInt(weatherTypeNumNight), style.ICON_SIZE_MEDIUM)
   const iconDay = getWeatherIcon(parseInt(weatherTypeNumDay), style.ICON_SIZE_MEDIUM)
 
@@ -40,7 +40,7 @@ const ForecastDay = ({ day, date, tempHigh, tempLow, weatherTypeNumNight, weathe
           {totalRain}
         </Text>
         <Text style={[s.fz0, s.col_dark_grey]}>
-          mm/24h
+          mm/{hoursLeft}h
         </Text>
       </View>
     </View>

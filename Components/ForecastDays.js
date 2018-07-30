@@ -1,21 +1,117 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, TouchableHighlight, FlatList } from 'react-native'
+import PropTypes from 'prop-types'
 import ForecastDay from './ForecastDay'
 import BoxContainer from './BoxContainer'
+import * as style from '../Assets/style'
+import s from '../Assets/style'
+import getMonth from '../Assets/Functions/getMonth'
+import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
 
 const ForecastDays = ({ days }) => {
-  // Get today & tomorrow forecast
-  // const todayHours = getDayHoursForecast(0, hours)
-  /* const d = new Date()
-  console.log(days)
-  const daysForecast = days.map(hour => {
-    if (hour.time === 12) {
-      return hour
-    } */
+  
+  // Array holding weather forecast data for 10 days
+
+  const tenDays = [
+    getDayHoursForecast(0, days),
+    getDayHoursForecast(1, days),
+    getDayHoursForecast(2, days),
+    getDayHoursForecast(3, days),
+    getDayHoursForecast(4, days),
+    getDayHoursForecast(5, days),
+    getDayHoursForecast(6, days),
+    getDayHoursForecast(7, days),
+    getDayHoursForecast(8, days),
+    getDayHoursForecast(9, days)
+  ]
+
+  // singleDay holds forecast for each day
+  let key = 0
+  const singleDay = []
+  tenDays.forEach(day => {
+
+    let dayData = {}
+    let totRain = 0
+    let maxTemp = -100
+    let minTemp = 100
+    let hoursLeft = 24
+
+    day.forEach(hour => {
+      totRain += hour.averageRain
+      dayData.date = hour.date
+
+      if (key === 0) {
+        dayData.day = 'Idag'
+        if (hoursLeft === 24) {
+          hoursLeft = 24 - parseInt(hour.time)
+        }
+      } else {
+        // Only display Mån instead of Måndag etc
+        dayData.day = hour.day.slice(0, 3)
+      }
+
+      // Find max and min temperature during the day
+      let hourTemp = hour.temp
+      if (hourTemp > maxTemp) {
+        maxTemp = hourTemp
+      }
+      if (hourTemp < minTemp) {
+        minTemp = hourTemp
+      }
+
+      // Determine day weather by the weather at noon and midnight
+      /* if (parseInt(hour.time) > 10 && parseInt(hour.time) < 14) {
+          dayData.weatherTypeNumDay = hour.weatherTypeNum
+        } else if (parseInt(hour.time) > 21 || parseInt(hour.time) < 3) {
+          dayData.weatherTypeNumNight = hour.weatherTypeNum
+        } */
+      if (parseInt(hour.time) === 12) {
+        dayData.weatherTypeNumDay = hour.weatherTypeNum
+      } else if (parseInt(hour.time) === 0) {
+        dayData.weatherTypeNumNight = hour.weatherTypeNum
+      }
+    })
+    dayData.totalRain = totRain
+    dayData.hoursLeft = hoursLeft
+    dayData.tempHigh = maxTemp
+    dayData.tempLow = minTemp
+    dayData.key = key
+    key += 1
+    singleDay.push(dayData)
+  })
 
   return (
     <BoxContainer>
-      <View>
+      <FlatList
+        data={singleDay}
+        keyExtractor={item => `${item.key}`}
+        renderItem={({ item }) => (
+          <TouchableHighlight
+            underlayColor={style.COL_GREY}
+            activeOpacity={1}
+            onPress={() => this.onHourPressed(item)}
+          >
+            <ForecastDay
+              day={item.day}
+              date={item.date}
+              tempHigh={item.tempHigh}
+              tempLow={item.tempLow}
+              weatherTypeNumNight={item.weatherTypeNumNight}
+              weatherTypeNumDay={item.weatherTypeNumDay}
+              totalRain={item.totalRain}
+              hoursLeft={item.hoursLeft}
+            />
+          </TouchableHighlight>
+        )}
+      />
+
+    </BoxContainer>
+  )
+}
+
+export default ForecastDays
+/*
+<View>
         {days.map(day => {
           return (
             <ForecastDay
@@ -31,8 +127,4 @@ const ForecastDays = ({ days }) => {
           )
         })}
       </View>
-    </BoxContainer>
-  )
-}
-
-export default ForecastDays
+*/

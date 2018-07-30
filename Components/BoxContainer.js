@@ -3,9 +3,9 @@ import { View, StyleSheet } from 'react-native'
 import * as style from '../Assets/style'
 import s from '../Assets/style'
 
-const BoxContainer = ({ children }) => {
+const BoxContainer = ({ children, containerStyle = {} }) => {
   return (
-    <View style={[styles.container, s.mt3, s.w, s.mlA, s.mrA, s.boxSh]}>
+    <View style={[styles.container, s.mt3, s.w, s.mlA, s.mrA, s.boxSh, containerStyle]}>
       {children}
     </View>
   )
