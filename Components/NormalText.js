@@ -5,7 +5,7 @@ import s from '../Assets/style'
 
 const NormalText = ({ children, style = {} }) => {
   return (
-    <Text style={style}>
+    <Text style={{ lineHeight: 20 }}>
       {children}
     </Text>
   )

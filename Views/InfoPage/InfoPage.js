@@ -15,7 +15,7 @@ export default class InfoPage extends Component {
     return (
       <Container>
         <Header navigation={this.props.navigation} />
-        <ScrollView>
+        <ScrollView contentContainerStyle={[s.pb3]}>
 
           <BoxContainer containerStyle={styles.containerStyle}>
             <Title text='Om appen' />
