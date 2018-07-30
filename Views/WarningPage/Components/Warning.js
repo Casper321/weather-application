@@ -1,10 +1,10 @@
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, TouchableHighlight } from 'react-native'
 import { FontAwesome, MaterialCommunityIcons, Feather } from '@expo/vector-icons'
 import * as style from '../../../Assets/style'
 import s from '../../../Assets/style'
 
-const Warning = ({ message = 'Ingen varning utfärdad.', typeOfWarning = 'fire' }) => {
+const Warning = ({ location = '' , typeOfWarning = 'warning', message = "Ingen varning"}) => {
   return (
     <View
       style={[
@@ -28,7 +28,7 @@ const Warning = ({ message = 'Ingen varning utfärdad.', typeOfWarning = 'fire' 
           <FontAwesome name='circle-thin' color={style.COL_WARNING} size={50} />
         </View>
         <View>
-          <MaterialCommunityIcons
+          <FontAwesome //MaterialCommunityIcons sen eller inte xd
             style={[styles.warningFire, s.abs]}
             name={typeOfWarning}
             color={style.COL_PRIMARY}
@@ -37,12 +37,13 @@ const Warning = ({ message = 'Ingen varning utfärdad.', typeOfWarning = 'fire' 
         </View>
       </View>
       <Text style={[s.flex8]}>
-        {message}
+        {location}
       </Text>
       <View style={[s.flexOne, s.flexDr, s.flexJfe, s.flexAce]}>
         <Feather name='chevron-right' color={style.COL_PRIMARY} size={style.ICON_SIZE_MEDIUM} />
       </View>
     </View>
+    
   )
 }
 

@@ -23,6 +23,7 @@ class StartPage extends Component {
     const { currentLatitude, currentLongitude } = await this.getLocation()
     this.getWeatherForecast('', currentLatitude, currentLongitude)
     this.getLocationFromCoordinates(currentLatitude, currentLongitude)
+    this.getWarningForecast()
   }
 
   getLocation = async () => {
@@ -71,6 +72,24 @@ class StartPage extends Component {
       }
       request.send(null)
     }
+  }
+  getWarningForecast = async () => {
+    const api_call = await fetch(
+      `https://opendata-download-warnings.smhi.se/api/version/2/alerts.json`
+    )
+    const warningForecastData = await api_call.json()
+    let forecastWarnings = []
+    
+
+    warningForecastData.alert.forEach(warning => {
+      let warningObj = {}
+      warningObj.location = warning.info.headline
+      warningObj.message = warning.info.description
+      forecastWarnings.push(warningObj)
+      
+    })
+    
+    this.props.dispatch(weatherActions.setWeatherWarnings(forecastWarnings))  
   }
 
   getWeatherForecast = async (city, latitude, longitude) => {
