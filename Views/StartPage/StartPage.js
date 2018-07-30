@@ -19,7 +19,7 @@ class StartPage extends Component {
   state = {
     hasLocationPermission: false
   }
-
+  console.log("HEJ")
   async componentDidMount () {
     const { currentLatitude, currentLongitude } = await this.getLocation()
     this.getWeatherForecast('', currentLatitude, currentLongitude)
