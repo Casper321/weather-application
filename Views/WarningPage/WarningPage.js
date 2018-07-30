@@ -8,7 +8,7 @@ import s from '../../Assets/style'
 import Warning from './Components/Warning'
 import Container from '../../Components/Container'
 import { connect } from 'react-redux'
-
+import { Dropdown } from 'react-native-material-dropdown'
 
 class WarningPage extends Component {
  
@@ -26,9 +26,12 @@ class WarningPage extends Component {
         
      
         renderItem={({ item }) => (
-          <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => console.log(item.message)}>
+         // <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => console.log(item.message)}>
+           
             <Warning
               location = {item.location}
+              typeOfWarning = {item.icon}
+              message = {item.message}
             />
            </TouchableHighlight>
         )}
