@@ -5,8 +5,8 @@ import s from '../Assets/style'
 import * as style from '../Assets/style'
 
 const ForecastDay = ({ day, date, tempHigh, tempLow, weatherTypeNumNight, weatherTypeNumDay, totalRain, hoursLeft }) => {
-  const iconNight = getWeatherIcon(parseInt(weatherTypeNumNight), style.ICON_SIZE_MEDIUM)
-  const iconDay = getWeatherIcon(parseInt(weatherTypeNumDay), style.ICON_SIZE_MEDIUM)
+  const iconNight = getWeatherIcon(parseInt(weatherTypeNumNight), style.ICON_SIZE_MEDIUM, false)
+  const iconDay = getWeatherIcon(parseInt(weatherTypeNumDay), style.ICON_SIZE_MEDIUM, true)
 
   return (
     <View style={[s.flexDr, s.flexJsb, s.flexAce, s.pl2, s.pr2, s.pb0, s.pt0, s.bbw, s.bc]}>
@@ -27,11 +27,11 @@ const ForecastDay = ({ day, date, tempHigh, tempLow, weatherTypeNumNight, weathe
         </Text>
       </View>
       <View style={[s.flexDr, s.flexJsb, s.mr1, s.flex5]}>
-        <View style={[styles.weatherNatt]}>
-          {iconNight}
-        </View>
         <View style={[styles.weatherDag]}>
           {iconDay}
+        </View>
+        <View style={[styles.weatherNatt]}>
+          {iconNight}
         </View>
       </View>
 
@@ -48,10 +48,10 @@ const ForecastDay = ({ day, date, tempHigh, tempLow, weatherTypeNumNight, weathe
 }
 
 const styles = StyleSheet.create({
-  weatherNatt: {
+  weatherDag: {
     left: 6
   },
-  weatherDag: {
+  weatherNatt: {
     right: 10
   },
   tempH: {

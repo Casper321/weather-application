@@ -27,13 +27,6 @@ export default (getDayHoursForecast = (daySearched, hoursForecast) => {
   }
 
   sumDate = `${month}/${day}`
-<<<<<<< HEAD
-  
-=======
-
-  console.log('sumdate:', sumDate)
-
->>>>>>> 7510122706db06e39fe6858c466aef589362c279
   hoursForecast.forEach(hour => {
     // If search is current day don't allow hours before current time
     if (daySearched === 0) {

@@ -22,7 +22,7 @@ class TenDaysForecastPage extends Component {
         <ScrollView>
           <CityHeader city={'Göteborg'} />
           <Header10Days />
-          <ForecastDays days={newestForecastSearch.hours} />
+          <ForecastDays  days={newestForecastSearch.hours} />
         </ScrollView>
         ) : <Loading message={'Laddar din väderdata...'} />}
       </Container>
