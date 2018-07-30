@@ -15,7 +15,6 @@ class TenDaysForecastPage extends Component {
     const { forecasts } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
 
-
     return (
       <Container>
         <Header navigation={this.props.navigation} />
