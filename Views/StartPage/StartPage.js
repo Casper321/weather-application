@@ -6,7 +6,7 @@ import CurrentForecast from '../../Components/CurrentForecast'
 import ForecastHours from '../../Components/ForecastHours'
 import Loading from '../../Components/Loading'
 
-// import forecastData from '../../Assets/test-api.json'
+import forecastData from '../../Assets/test-api.json'
 import getWeatherCondition from '../../Assets/Functions/getWeatherCondition'
 import getDayFromDayIndex from '../../Assets/Functions/getDayFromDayIndex'
 import { Location, Permissions } from 'expo'
@@ -73,11 +73,11 @@ class StartPage extends Component {
     }
   }
 
-  getWeatherForecast = async (city, latitude, longitude) => {
+  getWeatherForecast = async (city, latitude, longitude) => {/*
     const api_call = await fetch(
       `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`
     )
-    const forecastData = await api_call.json()
+    const forecastData = await api_call.json()*/
 
     const newForecastResult = {
       city,

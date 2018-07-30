@@ -4,6 +4,7 @@ export default (getDayHoursForecast = (daySearched, hoursForecast) => {
   const currentHour = date.getHours() + 1
   let month = date.getMonth() + 1
   let day = date.getDate() + daySearched
+  
   let sumDate = ''
 
   if (parseInt(month) <= 9) {
@@ -19,6 +20,9 @@ export default (getDayHoursForecast = (daySearched, hoursForecast) => {
   }
 
   sumDate = `${month}/${day}`
+  if(daySearched === 2) {
+    console.log(sumDate)
+  }
 
   hoursForecast.forEach(hour => {
     // If search is current day don't allow hours before current time
