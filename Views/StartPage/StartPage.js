@@ -145,7 +145,8 @@ class StartPage extends Component {
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
 
-    console.log(currentLocation)
+    console.log('Forecast redux', forecasts)
+    console.log('Location redux', currentLocation)
 
     return (
       <Container>
