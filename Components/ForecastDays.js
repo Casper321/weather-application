@@ -9,7 +9,6 @@ import getMonth from '../Assets/Functions/getMonth'
 import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
 
 const ForecastDays = ({ days }) => {
-  
   // Array holding weather forecast data for 10 days
 
   const tenDays = [
@@ -25,11 +24,13 @@ const ForecastDays = ({ days }) => {
     getDayHoursForecast(9, days)
   ]
 
+  console.log('days variable: ', days)
+  console.log('tenDays variable: ', tenDays)
+
   // singleDay holds forecast for each day
   let key = 0
   const singleDay = []
   tenDays.forEach(day => {
-
     let dayData = {}
     let totRain = 0
     let maxTemp = -100
@@ -65,6 +66,7 @@ const ForecastDays = ({ days }) => {
         } else if (parseInt(hour.time) > 21 || parseInt(hour.time) < 3) {
           dayData.weatherTypeNumNight = hour.weatherTypeNum
         } */
+
       if (parseInt(hour.time) === 12) {
         dayData.weatherTypeNumDay = hour.weatherTypeNum
       } else if (parseInt(hour.time) === 0) {
@@ -80,17 +82,15 @@ const ForecastDays = ({ days }) => {
     singleDay.push(dayData)
   })
 
+  console.log('singleDay variable ', singleDay)
+
   return (
     <BoxContainer>
       <FlatList
         data={singleDay}
         keyExtractor={item => `${item.key}`}
         renderItem={({ item }) => (
-          <TouchableHighlight
-            underlayColor={style.COL_GREY}
-            activeOpacity={1}
-            onPress={() => this.onHourPressed(item)}
-          >
+          <TouchableHighlight underlayColor={style.COL_GREY} activeOpacity={1} onPress={() => this.onHourPressed(item)}>
             <ForecastDay
               day={item.day}
               date={item.date}
