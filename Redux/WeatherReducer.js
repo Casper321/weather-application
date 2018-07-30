@@ -1,7 +1,7 @@
 export const types = {
   ADD_FORECAST: 'ADD_FORECAST',
   SET_CURRENT_COORDINATES: 'SET_CURRENT_COORDINATES',
-  SET_CURRENT_CITY: 'SET_CURRENT_COORDINATES',
+  SET_CURRENT_CITY: 'SET_CURRENT_CITY',
   SET_WEATHER_WARNINGS: 'SET_WEATHER_WARNINGS'
 }
 
@@ -35,9 +35,6 @@ export default function WeatherReducer (state = initialState, action) {
   const { forecasts } = state
   const { type, payload } = action
 
-  // console.log('Current redux state', state)
-  // console.log('Redux add action', payload, type)
-
   switch (type) {
     case types.ADD_FORECAST:
       return {
@@ -59,8 +56,6 @@ export default function WeatherReducer (state = initialState, action) {
       const newLocation = { ...state.currentLocation }
       newLocation.latitude = payload.latitude
       newLocation.longitude = payload.longitude
-
-      console.log('HALLLÅÅÅÅÅÅÅÅÅÅ')
       return {
         ...state,
         currentLocation: newLocation

@@ -44,14 +44,19 @@ class SearchPage extends Component {
   }
 
   onCityPicked = city => {
-    const { latitude, longitude, cityName } = city
+    const { latitude, longitude, cityName, longerLocationName } = city
     this.props.dispatch(
       weatherActions.setCurrentCoordinates({
         latitude,
         longitude
       })
     )
-    this.props.dispatch(weatherActions.setCurrentCity({ cityName }))
+    this.props.dispatch(
+      weatherActions.setCurrentCity({
+        city: cityName,
+        suburb: cityName
+      })
+    )
     this.props.navigation.navigate('Start')
   }
 

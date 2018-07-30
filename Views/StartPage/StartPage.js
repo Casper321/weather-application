@@ -7,7 +7,7 @@ import ForecastHours from '../../Components/ForecastHours'
 import Loading from '../../Components/Loading'
 import s from '../../Assets/style'
 
-import forecastData from '../../Assets/test-api.json'
+// import forecastData from '../../Assets/test-api.json'
 import getWeatherCondition from '../../Assets/Functions/getWeatherCondition'
 import getDayFromDayIndex from '../../Assets/Functions/getDayFromDayIndex'
 import { Location, Permissions } from 'expo'
@@ -71,6 +71,10 @@ class StartPage extends Component {
         )
       }
       request.send(null)
+      return {
+        city: data.address.city,
+        suburb: data.address.suburb
+      }
     }
   }
   getWarningForecast = async () => {
@@ -90,12 +94,10 @@ class StartPage extends Component {
   }
 
   getWeatherForecast = async (city, latitude, longitude) => {
-    /*
     const api_call = await fetch(
       `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`
     )
     const forecastData = await api_call.json()
-    */
 
     const newForecastResult = {
       city,
@@ -138,15 +140,17 @@ class StartPage extends Component {
 
     newForecastResult.hours = [...forecastHours]
     this.props.dispatch(weatherActions.addForecast(newForecastResult))
+    weatherActions.setCurrentCity({
+      city,
+      suburb: city
+    })
   }
 
   render () {
     const { forecasts, currentLocation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
+    console.log(newestForecastSearch)
     const currentHour = new Date().getHours() + 1
-
-    console.log('Forecast redux', forecasts)
-    console.log('Location redux', currentLocation)
 
     return (
       <Container>
