@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, TouchableHighlight } from 'react-native'
 import { FontAwesome, MaterialCommunityIcons, Feather } from '@expo/vector-icons'
 import * as style from '../../../Assets/style'
 import s from '../../../Assets/style'
+import getWarningIcon from '../../../Assets/Functions/getWarningIcon'
 
 const Warning = ({ location = '' , typeOfWarning = 'warning', message = "Ingen varning"}) => {
   return (
@@ -28,12 +29,7 @@ const Warning = ({ location = '' , typeOfWarning = 'warning', message = "Ingen v
           <FontAwesome name='circle-thin' color={style.COL_WARNING} size={50} />
         </View>
         <View>
-          <FontAwesome //MaterialCommunityIcons sen eller inte xd
-            style={[styles.warningFire, s.abs]}
-            name={typeOfWarning}
-            color={style.COL_PRIMARY}
-            size={style.ICON_SIZE_SMALL}
-          />
+        {icon = getWarningIcon(typeOfWarning)}
         </View>
       </View>
       <Text style={[s.flex8]}>
