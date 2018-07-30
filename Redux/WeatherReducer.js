@@ -35,8 +35,8 @@ export default function WeatherReducer (state = initialState, action) {
   const { forecasts } = state
   const { type, payload } = action
 
-  console.log('Current redux state', state)
-  console.log('Redux add action', action, type)
+  // console.log('Current redux state', state)
+  // console.log('Redux add action', payload, type)
 
   switch (type) {
     case types.ADD_FORECAST:
