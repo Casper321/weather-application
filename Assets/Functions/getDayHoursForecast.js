@@ -27,7 +27,6 @@ export default (getDayHoursForecast = (daySearched, hoursForecast) => {
   }
 
   sumDate = `${month}/${day}`
-
   hoursForecast.forEach(hour => {
     // If search is current day don't allow hours before current time
     if (daySearched === 0) {

@@ -73,7 +73,7 @@ const ForecastDays = ({ days }) => {
         dayData.weatherTypeNumNight = hour.weatherTypeNum
       }
     })
-    dayData.totalRain = totRain
+    dayData.totalRain = Math.round( totRain * 10) / 10
     dayData.hoursLeft = hoursLeft
     dayData.tempHigh = maxTemp
     dayData.tempLow = minTemp

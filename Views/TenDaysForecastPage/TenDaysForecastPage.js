@@ -7,7 +7,6 @@ import Header10Days from './Components/Header10Days'
 import ForecastDays from '../../Components/ForecastDays'
 import { connect } from 'react-redux'
 import Loading from '../../Components/Loading'
-import s from '../../Assets/style'
 
 class TenDaysForecastPage extends Component {
   render () {
@@ -18,7 +17,7 @@ class TenDaysForecastPage extends Component {
       <Container>
         <Header navigation={this.props.navigation} />
         {newestForecastSearch.hours
-          ? <ScrollView contentContainerStyle={[s.pb3]}>
+          ? <ScrollView>
             <CityHeader city={'Göteborg'} />
             <Header10Days />
             <ForecastDays days={newestForecastSearch.hours} />

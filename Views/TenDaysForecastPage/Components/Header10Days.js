@@ -31,11 +31,11 @@ const Header10Days = ({}) => {
             VÄDER
           </Text>
           <View style={[s.flexDr, s.flexJsb]}>
-            <Text style={[s.fz0, s.fw0, s.col_dark_grey, styles.weatherNatt]}>
-              Natt
-            </Text>
             <Text style={[s.fz0, s.fw0, s.col_dark_grey, styles.weatherDag]}>
               Dag
+            </Text>
+            <Text style={[s.fz0, s.fw0, s.col_dark_grey, styles.weatherNatt]}>
+              Natt
             </Text>
           </View>
         </View>
@@ -48,10 +48,10 @@ const Header10Days = ({}) => {
 }
 
 const styles = StyleSheet.create({
-  weatherNatt: {
+  weatherDag: {
     left: -10
   },
-  weatherDag: {
+  weatherNatt: {
     right: -10
   },
   tempH: {
