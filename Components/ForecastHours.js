@@ -8,6 +8,7 @@ import ForecastHeader from './ForecastHeader'
 import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
 import getMonth from '../Assets/Functions/getMonth'
 import BoxContainer from './BoxContainer'
+import unformatDayHours from '../Assets/Functions/unformatDayHours'
 
 const ForecastHours = ({ hours, forecastDay }) => {
   // Get today & tomorrow forecast
@@ -22,9 +23,11 @@ const ForecastHours = ({ hours, forecastDay }) => {
 
   renderHeader = () => {
     return (
+      
       <ForecastHeader
         day={dayLabel}
-        date={`${dayHours[0].dayNumber} ${getMonth(dayHours[0].month)}`}
+        //date={`${dayHours[0].dayNumber} ${getMonth(dayHours[0].month)}`}
+        date={`${5} ${'Augusti'}`}
         sunriseTime={'04:47'}
         sunsetTime={'22:58'}
       />
@@ -32,15 +35,17 @@ const ForecastHours = ({ hours, forecastDay }) => {
   }
 
   onHourPressed = item => {
-    console.log(item)
+    console.log(dayHours[0])
   }
 
   return (
+    
     <BoxContainer>
+      
       <FlatList
         data={dayHours}
         keyExtractor={item => `${item.date} ${item.time}`}
-        ListHeaderComponent={() => this.renderHeader()}
+        ListHeaderComponent={() => this.renderHeader() }
         renderItem={({ item }) => (
           <TouchableHighlight underlayColor={style.COL_GREY} activeOpacity={1} onPress={() => this.onHourPressed(item)}>
             <ForecastHour
