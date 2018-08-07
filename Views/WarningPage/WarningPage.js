@@ -14,8 +14,6 @@ import { connect } from 'react-redux'
 class WarningPage extends Component {
   
   _onPress(){
-<<<<<<< HEAD
-=======
     Alert.alert(
       item.location,
       item.message,
@@ -24,7 +22,6 @@ class WarningPage extends Component {
       ],
       { cancelable: false }
     )
->>>>>>> e20d4996ef37a8be44e5852329d5036f6bbe6471
   }
   
   render () {
