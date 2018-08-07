@@ -27,11 +27,11 @@ const ForecastDay = ({ day, date, tempHigh, tempLow, weatherTypeNumNight, weathe
         </Text>
       </View>
       <View style={[s.flexDr, s.flexJsb, s.mr1, s.flex5]}>
-        <View style={[styles.weatherDag]}>
-          {iconDay}
-        </View>
         <View style={[styles.weatherNatt]}>
           {iconNight}
+        </View>
+        <View style={[styles.weatherDag]}>
+          {iconDay}
         </View>
       </View>
 
@@ -48,10 +48,10 @@ const ForecastDay = ({ day, date, tempHigh, tempLow, weatherTypeNumNight, weathe
 }
 
 const styles = StyleSheet.create({
-  weatherDag: {
+  weatherNatt: {
     left: 6
   },
-  weatherNatt: {
+  weatherDag: {
     right: 10
   },
   tempH: {

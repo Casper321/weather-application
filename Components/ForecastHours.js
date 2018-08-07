@@ -26,8 +26,7 @@ const ForecastHours = ({ hours, forecastDay }) => {
       
       <ForecastHeader
         day={dayLabel}
-        //date={`${dayHours[0].dayNumber} ${getMonth(dayHours[0].month)}`}
-        date={`${5} ${'Augusti'}`}
+        date={`${dayHours[0].dayNumber} ${getMonth(dayHours[0].month)}`}
         sunriseTime={'04:47'}
         sunsetTime={'22:58'}
       />
@@ -35,7 +34,6 @@ const ForecastHours = ({ hours, forecastDay }) => {
   }
 
   onHourPressed = item => {
-    console.log(dayHours[0])
   }
 
   return (

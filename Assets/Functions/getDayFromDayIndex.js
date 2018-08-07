@@ -31,7 +31,6 @@ export default (getDayFromDayIndex = index => {
 
     default:
       day = 'Fel dagformat angett (ej mellan 0-6)'
-      console.log('Fel dagformat angett (ej mellan 0-6)')
       break
   }
   return day

@@ -155,7 +155,7 @@ class StartPage extends Component {
 
         // Change day on midnight
         timeObj.time === '00' && activeDayIndex++
-        activeDayIndex === 6 ? (activeDayIndex = 0) : null
+        activeDayIndex === 7 ? (activeDayIndex = 0) : null
         timeObj.day = getDayFromDayIndex(activeDayIndex)
 
         forecastHours.push(timeObj)
@@ -178,10 +178,6 @@ class StartPage extends Component {
     const { forecasts, currentLocation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
-
-    console.log('Current location', currentLocation)
-    console.log('Forecasts', forecasts)
-    console.log('State', currentLocation.state)
 
     return (
       <Container>
