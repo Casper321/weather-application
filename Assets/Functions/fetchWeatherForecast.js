@@ -5,13 +5,10 @@ import forecastData from '../test-api.json'
 
 const fetchWeatherForecast = async (latitude, longitude, city, dispatch) => {
   try {
-    /*
     const api_call = await fetch(
       `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`
     )
-    console.log(api_call)
     const forecastData = await api_call.json()
-    */
 
     const newForecastResult = {
       city,
