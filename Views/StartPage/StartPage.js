@@ -8,14 +8,14 @@ import Loading from '../../Components/Loading'
 import fetchWeatherForecast from '../../Assets/Functions/fetchWeatherForecast'
 import s from '../../Assets/style'
 import FetchFailed from '../../Components/FetchFailed'
-
-import forecastData from '../../Assets/test-api.json'
+import CityHeader from '../../Components/CityHeader'
+// import forecastData from '../../Assets/test-api.json'
 import getWeatherCondition from '../../Assets/Functions/getWeatherCondition'
 import getDayFromDayIndex from '../../Assets/Functions/getDayFromDayIndex'
 import { Location, Permissions } from 'expo'
-
 import { connect } from 'react-redux'
 import { weatherActions } from '../../Redux/WeatherReducer'
+import ForecastHeader from '../../Components/ForecastHeader'
 
 class StartPage extends Component {
   state = {
@@ -27,9 +27,11 @@ class StartPage extends Component {
   async componentDidMount () {
     const { currentLatitude, currentLongitude } = await this.getLocation()
     if (currentLatitude && currentLongitude) {
-      //this.getWeatherForecast('', currentLatitude, currentLongitude)
+      // this.getWeatherForecast('', currentLatitude, currentLongitude)
       const { city, suburb } = this.getLocationFromCoordinates(currentLatitude, currentLongitude)
-      fetchWeatherForecast(currentLatitude, currentLongitude, city || suburb) ? this.setState({ loadingForecastFailed: false }) : this.setState({ loadingForecastFailed: true }) 
+      fetchWeatherForecast(currentLatitude, currentLongitude, city || suburb, this.props.dispatch)
+        ? this.setState({ loadingForecastFailed: false })
+        : this.setState({ loadingForecastFailed: true })
       this.getWarningForecast()
     }
   }
@@ -62,6 +64,7 @@ class StartPage extends Component {
 
   getLocationFromCoordinates = (latitude, longitude) => {
     if (latitude && longitude) {
+      let currentCity, currentSuburb
       const request = new XMLHttpRequest()
       request.open(
         'GET',
@@ -77,16 +80,22 @@ class StartPage extends Component {
         newLocation.suburb = data.address.suburb
 
         this.props.dispatch(
-          weatherActions.setCurrentCity({
+          weatherActions.setCurrentLocation({
+            latitude,
+            longitude,
             city: data.address.city,
-            suburb: data.address.suburb
+            suburb: data.address.suburb,
+            state: data.address.state
           })
         )
+
+        currentCity = data.address.city
+        currentSuburb = data.address.suburb
       }
       request.send(null)
       return {
-        city: data.address.city,
-        suburb: data.address.suburb
+        city: currentCity,
+        suburb: currentSuburb
       }
     }
   }
@@ -163,13 +172,16 @@ class StartPage extends Component {
       this.setState({ loadingForecastFailed: true })
     }
   }
-  
 
   render () {
     const { loadingForecastFailed, hasLocationPermission, loadingCoordinatesFailed } = this.state
     const { forecasts, currentLocation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
+
+    console.log('Current location', currentLocation)
+    console.log('Forecasts', forecasts)
+    console.log('State', currentLocation.state)
 
     return (
       <Container>

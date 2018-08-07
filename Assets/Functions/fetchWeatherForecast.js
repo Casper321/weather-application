@@ -1,12 +1,17 @@
-import { connect } from 'react-redux'
 import { weatherActions } from '../../Redux/WeatherReducer'
+import getWeatherCondition from './getWeatherCondition'
+import getDayFromDayIndex from './getDayFromDayIndex'
+import forecastData from '../test-api.json'
 
-const fetchWeatherForecast = async ({ latitude, longitude, city }) => {
+const fetchWeatherForecast = async (latitude, longitude, city, dispatch) => {
   try {
+    /*
     const api_call = await fetch(
       `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`
     )
+    console.log(api_call)
     const forecastData = await api_call.json()
+    */
 
     const newForecastResult = {
       city,
@@ -38,6 +43,8 @@ const fetchWeatherForecast = async ({ latitude, longitude, city }) => {
       timeObj.weatherType = getWeatherCondition(hour.parameters.find(element => element.name === 'Wsymb2').values[0])
       timeObj.weatherTypeNum = hour.parameters.find(element => element.name === 'Wsymb2').values[0]
 
+      console.log(timeObj)
+
       // Change day on midnight
       timeObj.time === '00' && activeDayIndex++
       activeDayIndex === 6 ? (activeDayIndex = 0) : null
@@ -47,8 +54,8 @@ const fetchWeatherForecast = async ({ latitude, longitude, city }) => {
     })
 
     newForecastResult.hours = [...forecastHours]
-    this.props.dispatch(weatherActions.addForecast(newForecastResult))
-    this.props.dispatch(
+    dispatch(weatherActions.addForecast(newForecastResult))
+    dispatch(
       weatherActions.setCurrentCity({
         city,
         suburb: city
@@ -64,10 +71,4 @@ const fetchWeatherForecast = async ({ latitude, longitude, city }) => {
   }
 }
 
-function mapStateToProps (state) {
-  return {
-    forecasts: state.weather.forecasts
-  }
-}
-
-export default connect(mapStateToProps)(fetchWeatherForecast)
+export default fetchWeatherForecast

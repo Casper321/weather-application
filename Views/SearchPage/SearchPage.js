@@ -39,26 +39,26 @@ class SearchPage extends Component {
 
           this.setState({ citiesAvailable, searchFound: true })
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error)
+      }
     }
     request.send(null)
   }
 
   onCityPicked = city => {
-    const { latitude, longitude, cityName, longerLocationName } = city
+    let { latitude, longitude, cityName, longerLocationName } = city
+    latitude = parseFloat(latitude)
+    longitude = parseFloat(longitude)
     this.props.dispatch(
-      weatherActions.setCurrentCoordinates({
+      weatherActions.setCurrentLocation({
         latitude,
-        longitude
+        longitude,
+        city: city.cityName || '',
+        suburb: city.cityName || ''
       })
     )
-    this.props.dispatch(
-      weatherActions.setCurrentCity({
-        city: cityName,
-        suburb: cityName
-      })
-    )
-    fetchWeatherForecast(latitude, longitude, city || longerLocationName)
+    fetchWeatherForecast(latitude, longitude, city.cityName, this.props.dispatch)
     this.props.navigation.navigate('Start')
   }
 
