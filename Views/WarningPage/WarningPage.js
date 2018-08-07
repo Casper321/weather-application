@@ -13,7 +13,6 @@ import { connect } from 'react-redux'
 class WarningPage extends Component {
 
   _onPress(){
-    console.log('Hej')
   }
   
   render () {

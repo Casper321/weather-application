@@ -35,7 +35,6 @@ const ForecastHours = ({ hours, forecastDay }) => {
   }
 
   onHourPressed = item => {
-    console.log(dayHours[0])
   }
 
   return (
