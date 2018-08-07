@@ -5,6 +5,7 @@ import Header from '../../Components/Header'
 import CurrentForecast from '../../Components/CurrentForecast'
 import ForecastHours from '../../Components/ForecastHours'
 import Loading from '../../Components/Loading'
+import fetchWeatherForecast from '../../Assets/Functions/fetchWeatherForecast'
 import s from '../../Assets/style'
 import FetchFailed from '../../Components/FetchFailed'
 
@@ -26,8 +27,9 @@ class StartPage extends Component {
   async componentDidMount () {
     const { currentLatitude, currentLongitude } = await this.getLocation()
     if (currentLatitude && currentLongitude) {
-      this.getWeatherForecast('', currentLatitude, currentLongitude)
-      this.getLocationFromCoordinates(currentLatitude, currentLongitude)
+      //this.getWeatherForecast('', currentLatitude, currentLongitude)
+      const { city, suburb } = this.getLocationFromCoordinates(currentLatitude, currentLongitude)
+      fetchWeatherForecast(currentLatitude, currentLongitude, city || suburb) ? this.setState({ loadingForecastFailed: false }) : this.setState({ loadingForecastFailed: true }) 
       this.getWarningForecast()
     }
   }
@@ -161,9 +163,10 @@ class StartPage extends Component {
       this.setState({ loadingForecastFailed: true })
     }
   }
+  
 
   render () {
-    const { loadingForecastFailed, hasLocationPermission } = this.state
+    const { loadingForecastFailed, hasLocationPermission, loadingCoordinatesFailed } = this.state
     const { forecasts, currentLocation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
@@ -174,7 +177,7 @@ class StartPage extends Component {
         <ScrollView contentContainerStyle={[s.pb3]}>
           {newestForecastSearch.warning && <Warning message={newestForecastSearch.warning.message} />}
           {hasLocationPermission
-            ? <FetchFailed text='Väderprognosen kunde inte hämtas då vi inte fick tillåtelse till din platsinformation. Du kan istället göra en manuell sökning.' />
+            ? <FetchFailed text='Väderprognosen kunde inte hämtas då vi inte fick tillgång till din platsinformation. Du kan istället göra en manuell sökning.' />
             : loadingCoordinatesFailed
                 ? <FetchFailed text='Din platsinformation kunde inte hämtas. Testa istället att göra en manuell sökning.' />
                 : loadingForecastFailed

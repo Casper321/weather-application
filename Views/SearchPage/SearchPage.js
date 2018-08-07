@@ -9,6 +9,7 @@ import style from '../../Assets/style'
 import * as s from '../../Assets/style'
 import { weatherActions } from '../../Redux/WeatherReducer'
 import { connect } from 'react-redux'
+import fetchWeatherForecast from '../../Assets/Functions/fetchWeatherForecast'
 
 class SearchPage extends Component {
   state = {
@@ -57,6 +58,7 @@ class SearchPage extends Component {
         suburb: cityName
       })
     )
+    fetchWeatherForecast(latitude, longitude, city || longerLocationName)
     this.props.navigation.navigate('Start')
   }
 
@@ -97,6 +99,16 @@ class SearchPage extends Component {
               )}
             />
           : null}
+
+        <TextInput
+          onChangeText={this.onType}
+          value={this.state.citySearch}
+          placeholder='Skriv här...'
+          autoCapitalize='words'
+          autoFocus
+          style={styles.input}
+          underlineColorAndroid='rgba(0,0,0,0)'
+        />
       </Container>
     )
   }
@@ -107,5 +119,16 @@ function mapStateToProps (state) {
     currentLocation: state.weather.currentLocation
   }
 }
+
+const styles = StyleSheet.create({
+  input: {
+    backgroundColor: '#fff'
+  },
+  inputContainer: {
+    borderRadius: s.br,
+    borderWidth: s.bw,
+    borderColor: s.bc
+  }
+})
 
 export default connect(mapStateToProps)(SearchPage)
