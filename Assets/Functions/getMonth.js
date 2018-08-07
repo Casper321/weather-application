@@ -71,7 +71,6 @@ export default (getMonth = monthIndex => {
 
     default:
       month = null
-      console.log('Wrong month format passed to getMonth.js', monthIndex)
       break
   }
 
