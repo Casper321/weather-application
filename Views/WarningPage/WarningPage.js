@@ -11,7 +11,11 @@ import { connect } from 'react-redux'
 
 
 class WarningPage extends Component {
- 
+
+  _onPress(){
+    console.log('Hej')
+  }
+  
   render () {
     const { weatherWarnings } = this.props
 
@@ -26,13 +30,14 @@ class WarningPage extends Component {
         
      
         renderItem={({ item }) => (
-          <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => console.log(item.message)}>
+          
+          <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => this._onPress()}>
             <Warning
               location = {item.location}
               typeOfWarning = {item.icon}
               message = {item.message}
             />
-           </TouchableHighlight>
+          </TouchableHighlight>
         )}
       />
     </BoxContainer>
