@@ -30,7 +30,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
           <FontAwesome
             name='moon-o'
             size={iconSize}
-            color={style.COL_YELLOW_SUN}
+            color={style.COL_DARK_GREY}
           />
         )
       }
@@ -50,7 +50,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
           <FontAwesome
             name='moon-o'
             size={iconSize}
-            color={style.COL_YELLOW_SUN}
+            color={style.COL_DARK_GREY}
           />
         )
       }
@@ -70,7 +70,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
           <Ionicons
             name='ios-cloudy-night-outline'
             size={iconSize}
-            color={style.COL_YELLOW_SUN}
+            color={style.COL_DARK_GREY}
           />
         )
       }
@@ -80,18 +80,18 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
     case 4:
       if (isDay) {
         icon = (
-          <MaterialCommunityIcons
-            name='weather-partlycloudy'
+          <Ionicons
+            name='ios-partly-sunny-outline'
             size={iconSize}
-            color={style.COL_CLOUDY}
+            color={style.COL_YELLOW_SUN}
           />
         )
       } else {
         icon = (
           <Ionicons
-            name='md-cloudy-night'
+            name='ios-cloudy-night-outline'
             size={iconSize}
-            color={style.COL_CLOUDY}
+            color={style.COL_DARK_GREY}
           />
         )
       }
@@ -100,8 +100,8 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
     case 5:
       if (isDay) {
         icon = (
-          <MaterialCommunityIcons
-            name='weather-partlycloudy'
+          <Ionicons
+            name='ios-cloudy'
             size={iconSize}
             color={style.COL_CLOUDY}
           />
@@ -111,7 +111,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
           <Ionicons
             name='md-cloudy-night'
             size={iconSize}
-            color={style.COL_CLOUDY}
+            color={style.COL_DARK_GREY}
           />
         )
       }
@@ -131,231 +131,430 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
           <Ionicons
             name='md-cloudy-night'
             size={iconSize}
-            color={style.COL_CLOUDY}
+            color={style.COL_DARK_GREY}
           />
         )
       }
       break
 
     case 7:
-      // Same icon for day and night
-      icon = (
-        <MaterialCommunityIcons
-          name='weather-fog'
-          size={iconSize}
-          color={style.COL_DARK_GREY}
-        />
-      )
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-fog'
+            size={iconSize}
+            color={style.COL_CLOUDY}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-fog'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     case 8:
-      // Same icon for day and night
-      icon = (
-        <Ionicons name='md-rainy' size={iconSize} color={style.COL_CLOUDY} />
-      )
-
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-rainy'
+            size={iconSize}
+            color={style.COL_WATER_BLUE}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-rainy'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     case 9:
-      // Same icon for day and night
-
-      icon = (
-        <Feather
-          name='cloud-rain'
-          size={iconSize}
-          color={style.COL_WATER_BLUE}
-        />
-      )
-
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-pouring'
+            size={iconSize}
+            color={style.COL_WATER_BLUE}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-pouring'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     case 10:
-      // Same icon for day and night
-      icon = (
-        <Feather
-          name='cloud-rain'
-          size={iconSize}
-          color={style.COL_WATER_BLUE}
-        />
-      )
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-pouring'
+            size={iconSize}
+            color={style.COL_WATER_BLUE}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-pouring'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     case 11:
-      // Same icon for day and night
-      icon = (
-        <Ionicons
-          name='ios-thunderstorm'
-          size={iconSize}
-          color={style.COL_BLACK}
-        />
-      )
-
+      if (isDay) {
+        icon = (
+          <Ionicons
+            name='ios-thunderstorm-outline'
+            size={iconSize}
+            color={style.COL_BLACK}
+          />
+        )
+      } else {
+        icon = (
+          <Ionicons
+            name='ios-thunderstorm-outline'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     case 12:
-      // Same icon for day and night
-      icon = (
-        <MaterialCommunityIcons
-          name='weather-snowy-rain'
-          size={iconSize}
-          color={style.COL_BLACK}
-        />
-      )
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_WATER_BLUE}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     case 13:
-      // Same icon for day and night
-      icon = (
-        <MaterialCommunityIcons
-          name='weather-snowy-rain'
-          size={iconSize}
-          color={style.COL_BLACK}
-        />
-      )
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_WATER_BLUE}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     case 14:
-      // Same icon for day and night
-      icon = (
-        <MaterialCommunityIcons
-          name='weather-snowy-rain'
-          size={iconSize}
-          color={style.COL_BLACK}
-        />
-      )
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_WATER_BLUE}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     case 15:
-      // Same icon for day and night
-      icon = (
-        <MaterialCommunityIcons
-          name='weather-snowy'
-          size={iconSize}
-          color={style.COL_BLACK}
-        />
-      )
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_WATER_BLUE}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     case 16:
-      // Same icon for day and night
-      icon = (
-        <MaterialCommunityIcons
-          name='weather-snowy'
-          size={iconSize}
-          color={style.COL_WATER_BLUE}
-        />
-      )
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_WATER_BLUE}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     case 17:
-      // Same icon for day and night
-      icon = (
-        <MaterialCommunityIcons
-          name='weather-snowy'
-          size={iconSize}
-          color={style.COL_WATER_BLUE}
-        />
-      )
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_WATER_BLUE}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     case 18:
-      // Same icon for day and night
-      icon = (
-        <Ionicons
-          name='md-rainy'
-          size={iconSize}
-          color={style.COL_WATER_BLUE}
-        />
-      )
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-rainy'
+            size={iconSize}
+            color={style.COL_WATER_BLUE}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-rainy'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     case 19:
-    // Same icon for day and night
-      icon = (
-        <Feather
-          name='cloud-rain'
-          size={iconSize}
-          color={style.COL_WATER_BLUE}
-        />
-      )
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-pouring'
+            size={iconSize}
+            color={style.COL_WATER_BLUE}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-pouring'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     case 20:
-    // Same icon for day and night
-      icon = (
-        <Feather
-          name='cloud-rain'
-          size={iconSize}
-          color={style.COL_WATER_BLUE}
-        />
-      )
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-pouring'
+            size={iconSize}
+            color={style.COL_WATER_BLUE}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-pouring'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     case 21:
-    // Same icon for day and night
-      icon = (
-        <Ionicons
-          name='ios-thunderstorm'
-          size={iconSize}
-          color={style.COL_BLACK}
-        />
-      )
+      if (isDay) {
+        icon = (
+          <Ionicons
+            name='ios-thunderstorm-outline'
+            size={iconSize}
+            color={style.COL_BLACK}
+          />
+        )
+      } else {
+        icon = (
+          <Ionicons
+            name='ios-thunderstorm-outline'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     case 22:
-    // Same icon for day and night
-      icon = (
-        <MaterialCommunityIcons
-          name='weather-snowy-rain'
-          size={iconSize}
-          color={style.COL_BLACK}
-        />
-      )
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_WATER_BLUE}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
-
     case 23:
-    // Same icon for day and night
-      icon = (
-        <MaterialCommunityIcons
-          name='weather-snowy-rain'
-          size={iconSize}
-          color={style.COL_BLACK}
-        />
-      )
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_WATER_BLUE}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     case 24:
-    // Same icon for day and night
-      icon = (
-        <MaterialCommunityIcons
-          name='weather-snowy-rain'
-          size={iconSize}
-          color={style.COL_BLACK}
-        />
-      )
-
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_WATER_BLUE}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy-rain'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     case 25:
-    // Same icon for day and night
-      icon = (
-        <MaterialCommunityIcons
-          name='weather-snowy'
-          size={iconSize}
-          color={style.COL_BLACK}
-        />
-      )
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy'
+            size={iconSize}
+            color={style.COL_BLACK}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
+
       break
 
-      case 26:
-    // Same icon for day and night
-      icon = (
-        <MaterialCommunityIcons
-          name='weather-snowy'
-          size={iconSize}
-          color={style.COL_BLACK}
-        />
-      )
+    case 26:
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy'
+            size={iconSize}
+            color={style.COL_BLACK}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
+      break
+
+    case 27:
+      if (isDay) {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy'
+            size={iconSize}
+            color={style.COL_BLACK}
+          />
+        )
+      } else {
+        icon = (
+          <MaterialCommunityIcons
+            name='weather-snowy'
+            size={iconSize}
+            color={style.COL_DARK_GREY}
+          />
+        )
+      }
       break
 
     default:

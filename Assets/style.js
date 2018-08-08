@@ -11,6 +11,7 @@ export const COL_WATER_BLUE = '#40a4df'
 export const COL_BLACK = '#000'
 export const COL_WHITE = '#fff'
 export const COL_CLOUDY = '#9b9b9b'
+export const COL_NIGHT_RIDER = '#332e2e'
 
 export const ICON_SIZE_XS = 16
 export const ICON_SIZE_SMALL = 24
