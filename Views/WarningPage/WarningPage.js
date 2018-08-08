@@ -26,10 +26,39 @@ class WarningPage extends Component {
   
   render () {
     const { weatherWarnings } = this.props
+    const weatherWarningsInDistrict = []
+    const weatherWarningsNotInDistrict = []
+
+    weatherWarnings.forEach(warning => {
+      
+      if (true){
+        let warningData = {}
+        warningData.location = warning.location
+        warningData.icon = warning.icon
+        warningData.message = warning.message
+        weatherWarningsInDistrict.push(warningData)
+      }
+      else {
+        let warningData = {}
+        warningData.location = warning.location
+        warningData.icon = warning.icon
+        warningData.message = warning.message
+        weatherWarningsNotInDistrict.push(warningData)
+      }
+    
+    })
+
+
+
+    const weatherWarningsInDistrictSorted = weatherWarningsInDistrict.sort((a, b) => a.location.localeCompare(b.location))
+    const weatherWarningsNotInDistrictSorted = weatherWarningsNotInDistrict.sort((a, b) => a.location.localeCompare(b.location))
+
+    const weatherWarningsSorted = [...weatherWarningsInDistrictSorted, ...weatherWarningsNotInDistrictSorted]
+
     let key = 0
     const Warnings = []
 
-    weatherWarnings.forEach(warning => {
+    weatherWarningsSorted.forEach(warning => {
       let warningData = {}
       key += 1
       warningData.key = key

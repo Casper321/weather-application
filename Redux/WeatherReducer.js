@@ -1,7 +1,8 @@
 export const types = {
   ADD_FORECAST: 'ADD_FORECAST',
   SET_CURRENT_COORDINATES: 'SET_CURRENT_COORDINATES',
-  SET_CURRENT_CITY: 'SET_CURRENT_COORDINATES',
+  SET_CURRENT_CITY: 'SET_CURRENT_CITY',
+  SET_CURRENT_LOCATION: 'SET_CURRENT_LOCATION',
   SET_WEATHER_WARNINGS: 'SET_WEATHER_WARNINGS'
 }
 
@@ -15,6 +16,9 @@ export const weatherActions = {
   setCurrentCity: item => {
     return { type: types.SET_CURRENT_CITY, payload: item }
   },
+  setCurrentLocation: item => {
+    return { type: types.SET_CURRENT_LOCATION, payload: item }
+  },
   setWeatherWarnings: item => {
     return { type: types.SET_WEATHER_WARNINGS, payload: item }
   }
@@ -26,7 +30,8 @@ const initialState = {
     latitude: '',
     longitude: '',
     city: '',
-    suburb: ''
+    suburb: '',
+    state: ''
   },
   weatherWarnings: []
 }
@@ -56,10 +61,15 @@ export default function WeatherReducer (state = initialState, action) {
       const newLocation = { ...state.currentLocation }
       newLocation.latitude = payload.latitude
       newLocation.longitude = payload.longitude
-
       return {
         ...state,
         currentLocation: newLocation
+      }
+
+    case types.SET_CURRENT_LOCATION:
+      return {
+        ...state,
+        currentLocation: payload
       }
 
     case types.SET_WEATHER_WARNINGS:

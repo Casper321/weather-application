@@ -18,25 +18,10 @@ const CurrentForecast = ({ currentHour, location, getNewLocation }) => {
 
   return (
     <BoxContainer>
-      <View style={[s.flexAce]}>
-        <FontAwesome name='home' size={style.ICON_SIZE_SMALL} color={style.COL_GOOGLE_BLUE} style={[s.mt1]} />
-        <Text style={[s.mt1, s.fz1, s.fw1]}>{location}</Text>
+      <View style={[s.bbw, s.bc, s.flexJce, s.pa1]}>
         <Text
-          style={[s.mt1, s.fz1, s.fw0, s.mb1]}
-        >{`Idag ${unformatDayHours(currentHour.dayNumber)} ${getMonth(currentHour.month)} klockan ${currentHour.time}`}</Text>
-      </View>
-      <View style={[s.bbw, s.btw, s.bc, s.flexDr, s.flexJsa, s.mt1]}>
-        <View style={[s.flexJce, s.flexAce, s.bc, s.flex1, s.pt2, s.pb2]}>
-          <MaterialIcons name='favorite-border' size={style.ICON_SIZE_SMALL + 4} color={'#9b111e'} />
-        </View>
-        <View style={[s.flexJce, s.flexAce, s.bc, s.flex1, s.pt2, s.pb2]}>
-          <TouchableHighlight onPress={getNewLocation} underlayColor={style.COL_GREY}>
-            <MaterialCommunityIcons name='reload' size={style.ICON_SIZE_SMALL + 4} color={style.COL_GOOGLE_BLUE} />
-          </TouchableHighlight>
-        </View>
-        <View style={[s.flexJce, s.flexAce, s.flex1, s.pt2, s.pb2]}>
-          <Entypo name='pin' size={style.ICON_SIZE_SMALL} color={'#008744'} />
-        </View>
+          style={[s.ml1, s.fz1, s.fw1, s.col_black]}
+        >{`Idag ${unformatDayHours(currentHour.month)} ${getMonth(currentHour.month)} klockan ${currentHour.time}`}</Text>
       </View>
       <View style={[s.br0]}>
         <View style={[s.flexDr, s.flexJsb, s.flexAfe, s.pb5]}>
@@ -69,3 +54,27 @@ const styles = StyleSheet.create({
 })
 
 export default CurrentForecast
+
+/*
+<View style={[s.flexAce]}>
+        <FontAwesome name='home' size={style.ICON_SIZE_SMALL} color={style.COL_GOOGLE_BLUE} style={[s.mt1]} />
+        <Text style={[s.mt1, s.fz1, s.fw1]}>{location}</Text>
+        <Text
+          style={[s.mt1, s.fz1, s.fw0, s.mb1]}
+        >{`Idag ${unformatDayHours(currentHour.dayNumber)} ${getMonth(currentHour.month)} klockan ${currentHour.time}`}</Text>
+      </View>
+      <View style={[s.bbw, s.btw, s.bc, s.flexDr, s.flexJsa, s.mt1]}>
+        <View style={[s.flexJce, s.flexAce, s.bc, s.flex1, s.pt2, s.pb2]}>
+          <MaterialIcons name='favorite-border' size={style.ICON_SIZE_SMALL + 4} color={'#9b111e'} />
+        </View>
+        <View style={[s.flexJce, s.flexAce, s.bc, s.flex1, s.pt2, s.pb2]}>
+          <TouchableHighlight onPress={getNewLocation} underlayColor={style.COL_GREY}>
+            <MaterialCommunityIcons name='reload' size={style.ICON_SIZE_SMALL + 4} color={style.COL_GOOGLE_BLUE} />
+          </TouchableHighlight>
+        </View>
+        <View style={[s.flexJce, s.flexAce, s.flex1, s.pt2, s.pb2]}>
+          <Entypo name='pin' size={style.ICON_SIZE_SMALL} color={'#008744'} />
+        </View>
+      </View>
+
+*/
