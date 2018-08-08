@@ -21,7 +21,7 @@ const CurrentForecast = ({ currentHour, location, getNewLocation }) => {
       <View style={[s.bbw, s.bc, s.flexJce, s.pa1]}>
         <Text
           style={[s.ml1, s.fz1, s.fw1, s.col_black]}
-        >{`Idag ${unformatDayHours(currentHour.month)} ${getMonth(currentHour.month)} klockan ${currentHour.time}`}</Text>
+        >{`Idag ${parseInt(currentHour.month)}:e ${getMonth(currentHour.month)} klockan ${currentHour.time}`}</Text>
       </View>
       <View style={[s.br0]}>
         <View style={[s.flexDr, s.flexJsb, s.flexAfe, s.pb5]}>

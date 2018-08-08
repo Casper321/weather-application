@@ -1,7 +1,7 @@
 import { weatherActions } from '../../Redux/WeatherReducer'
 import getWeatherCondition from './getWeatherCondition'
 import getDayFromDayIndex from './getDayFromDayIndex'
-import forecastData from '../test-api.json'
+// import forecastData from '../test-api.json'
 
 const fetchWeatherForecast = async (latitude, longitude, city, dispatch) => {
   try {
