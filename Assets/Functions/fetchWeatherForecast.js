@@ -40,8 +40,6 @@ const fetchWeatherForecast = async (latitude, longitude, city, dispatch) => {
       timeObj.weatherType = getWeatherCondition(hour.parameters.find(element => element.name === 'Wsymb2').values[0])
       timeObj.weatherTypeNum = hour.parameters.find(element => element.name === 'Wsymb2').values[0]
 
-      console.log(timeObj)
-
       // Change day on midnight
       timeObj.time === '00' && activeDayIndex++
       activeDayIndex === 6 ? (activeDayIndex = 0) : null

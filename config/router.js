@@ -1,5 +1,5 @@
 import React from 'react'
-import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
+import { createBottomTabNavigator, createStackNavigator, createDrawerNavigator } from 'react-navigation'
 import StartPage from '../Views/StartPage/StartPage'
 import SearchPage from '../Views/SearchPage/SearchPage'
 import InfoPage from '../Views/InfoPage/InfoPage'
@@ -23,8 +23,7 @@ const TenDaysForecastStack = createStackNavigator(
 const StartStack = createStackNavigator(
   {
     Start: StartPage,
-    Sök: SearchPage,
-    Info: InfoPage
+    Sök: SearchPage
   },
   {
     headerMode: 'none'
@@ -34,8 +33,7 @@ const StartStack = createStackNavigator(
 const WarningStack = createStackNavigator(
   {
     Varningar: WarningPage,
-    Sök: SearchPage,
-    Info: InfoPage
+    Sök: SearchPage
   },
   {
     headerMode: 'none'
@@ -45,8 +43,7 @@ const WarningStack = createStackNavigator(
 const DataAnalysStack = createStackNavigator(
   {
     Dataanalys: AnalysisPage,
-    Sök: SearchPage,
-    Info: InfoPage
+    Sök: SearchPage
   },
   {
     headerMode: 'none'
@@ -111,5 +108,21 @@ export const Tabs = createBottomTabNavigator(
         elevation: 20
       }
     }
+  }
+)
+
+export const Drawer = createDrawerNavigator(
+  {
+    Start: {
+      screen: Tabs
+    },
+    Info: {
+      screen: InfoPage
+    }
+  },
+  {
+    drawerPosition: 'left',
+    initialRouteName: 'Start',
+    drawerWidth: 200
   }
 )
