@@ -9,6 +9,7 @@ import style from '../../Assets/style'
 import * as s from '../../Assets/style'
 import { weatherActions } from '../../Redux/WeatherReducer'
 import { connect } from 'react-redux'
+import fetchWeatherForecast from '../../Assets/Functions/fetchWeatherForecast'
 
 class SearchPage extends Component {
   state = {
@@ -38,20 +39,26 @@ class SearchPage extends Component {
 
           this.setState({ citiesAvailable, searchFound: true })
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error)
+      }
     }
     request.send(null)
   }
 
   onCityPicked = city => {
-    const { latitude, longitude, cityName } = city
+    let { latitude, longitude, cityName, longerLocationName } = city
+    latitude = parseFloat(latitude)
+    longitude = parseFloat(longitude)
     this.props.dispatch(
-      weatherActions.setCurrentCoordinates({
+      weatherActions.setCurrentLocation({
         latitude,
-        longitude
+        longitude,
+        city: city.cityName || '',
+        suburb: city.cityName || ''
       })
     )
-    this.props.dispatch(weatherActions.setCurrentCity({ cityName }))
+    fetchWeatherForecast(latitude, longitude, city.cityName, this.props.dispatch)
     this.props.navigation.navigate('Start')
   }
 
@@ -92,6 +99,16 @@ class SearchPage extends Component {
               )}
             />
           : null}
+
+        <TextInput
+          onChangeText={this.onType}
+          value={this.state.citySearch}
+          placeholder='Skriv här...'
+          autoCapitalize='words'
+          autoFocus
+          style={styles.input}
+          underlineColorAndroid='rgba(0,0,0,0)'
+        />
       </Container>
     )
   }
@@ -102,5 +119,16 @@ function mapStateToProps (state) {
     currentLocation: state.weather.currentLocation
   }
 }
+
+const styles = StyleSheet.create({
+  input: {
+    backgroundColor: '#fff'
+  },
+  inputContainer: {
+    borderRadius: s.br,
+    borderWidth: s.bw,
+    borderColor: s.bc
+  }
+})
 
 export default connect(mapStateToProps)(SearchPage)

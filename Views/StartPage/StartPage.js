@@ -5,25 +5,35 @@ import Header from '../../Components/Header'
 import CurrentForecast from '../../Components/CurrentForecast'
 import ForecastHours from '../../Components/ForecastHours'
 import Loading from '../../Components/Loading'
+import fetchWeatherForecast from '../../Assets/Functions/fetchWeatherForecast'
 import s from '../../Assets/style'
-
-import forecastData from '../../Assets/test-api.json'
+import FetchFailed from '../../Components/FetchFailed'
+import CityHeader from '../../Components/CityHeader'
+// import forecastData from '../../Assets/test-api.json'
 import getWeatherCondition from '../../Assets/Functions/getWeatherCondition'
 import getDayFromDayIndex from '../../Assets/Functions/getDayFromDayIndex'
 import { Location, Permissions } from 'expo'
-
 import { connect } from 'react-redux'
 import { weatherActions } from '../../Redux/WeatherReducer'
+import ForecastHeader from '../../Components/ForecastHeader'
 
 class StartPage extends Component {
   state = {
-    hasLocationPermission: false
+    hasLocationPermission: false,
+    loadingCoordinatesFailed: false,
+    loadingForecastFailed: false
   }
+
   async componentDidMount () {
     const { currentLatitude, currentLongitude } = await this.getLocation()
-    this.getWeatherForecast('', currentLatitude, currentLongitude)
-    this.getLocationFromCoordinates(currentLatitude, currentLongitude)
-    this.getWarningForecast()
+    if (currentLatitude && currentLongitude) {
+      // this.getWeatherForecast('', currentLatitude, currentLongitude)
+      const { city, suburb } = this.getLocationFromCoordinates(currentLatitude, currentLongitude)
+      fetchWeatherForecast(currentLatitude, currentLongitude, city || suburb, this.props.dispatch)
+        ? this.setState({ loadingForecastFailed: false })
+        : this.setState({ loadingForecastFailed: true })
+      this.getWarningForecast()
+    }
   }
 
   getLocation = async () => {
@@ -34,21 +44,27 @@ class StartPage extends Component {
       this.setState({ hasLocationPermissions: true })
     }
 
-    const location = await Location.getCurrentPositionAsync({})
-    const currentLatitude = Number.parseFloat(location.coords.latitude).toPrecision(5)
-    const currentLongitude = Number.parseFloat(location.coords.longitude).toPrecision(5)
+    try {
+      const location = await Location.getCurrentPositionAsync({})
+      const currentLatitude = Number.parseFloat(location.coords.latitude).toPrecision(5)
+      const currentLongitude = Number.parseFloat(location.coords.longitude).toPrecision(5)
 
-    this.props.dispatch(
-      weatherActions.setCurrentCoordinates({
-        latitude: currentLatitude,
-        longitude: currentLongitude
-      })
-    )
-    return { currentLatitude, currentLongitude }
+      this.props.dispatch(
+        weatherActions.setCurrentCoordinates({
+          latitude: currentLatitude,
+          longitude: currentLongitude
+        })
+      )
+      this.setState({ loadingCoordinatesFailed: false })
+      return { currentLatitude, currentLongitude }
+    } catch (error) {
+      this.setState({ loadingCoordinatesFailed: true })
+    }
   }
 
   getLocationFromCoordinates = (latitude, longitude) => {
     if (latitude && longitude) {
+      let currentCity, currentSuburb
       const request = new XMLHttpRequest()
       request.open(
         'GET',
@@ -64,13 +80,23 @@ class StartPage extends Component {
         newLocation.suburb = data.address.suburb
 
         this.props.dispatch(
-          weatherActions.setCurrentCity({
+          weatherActions.setCurrentLocation({
+            latitude,
+            longitude,
             city: data.address.city,
-            suburb: data.address.suburb
+            suburb: data.address.suburb,
+            state: data.address.state
           })
         )
+
+        currentCity = data.address.city
+        currentSuburb = data.address.suburb
       }
       request.send(null)
+      return {
+        city: currentCity,
+        suburb: currentSuburb
+      }
     }
   }
   getWarningForecast = async () => {
@@ -91,57 +117,65 @@ class StartPage extends Component {
   }
 
   getWeatherForecast = async (city, latitude, longitude) => {
-    /*
-    const api_call = await fetch(
-      `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`
-    )
-    const forecastData = await api_call.json()
-    */
+    try {
+      const api_call = await fetch(
+        `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`
+      )
+      const forecastData = await api_call.json()
 
-    const newForecastResult = {
-      city,
-      coordinates: {
-        latitude,
-        longitude
-      },
-      hours: []
+      const newForecastResult = {
+        city,
+        coordinates: {
+          latitude,
+          longitude
+        },
+        hours: []
+      }
+
+      const date = new Date()
+      let activeDayIndex = new Date().getDay()
+      let forecastHours = []
+
+      forecastData.timeSeries.forEach(hour => {
+        let timeObj = {}
+
+        timeObj.time = hour.validTime.slice(11, 13)
+        timeObj.date = hour.validTime.slice(5, 10).replace('-', '/')
+        timeObj.day = hour.validTime.slice(8, 10)
+        timeObj.dayNumber = hour.validTime.slice(8, 10)
+        timeObj.month = hour.validTime.slice(5, 7)
+        timeObj.temp = hour.parameters.find(element => element.name === 't').values[0]
+        timeObj.windSpeed = hour.parameters.find(element => element.name === 'ws').values[0]
+        timeObj.windGust = hour.parameters.find(element => element.name === 'gust').values[0]
+        timeObj.windDirection = hour.parameters.find(element => element.name === 'wd').values[0]
+        timeObj.thunderRisk = hour.parameters.find(element => element.name === 'tstm').values[0]
+        timeObj.airPressure = hour.parameters.find(element => element.name === 'msl').values[0]
+        timeObj.averageRain = hour.parameters.find(element => element.name === 'pmean').values[0]
+        timeObj.weatherType = getWeatherCondition(hour.parameters.find(element => element.name === 'Wsymb2').values[0])
+        timeObj.weatherTypeNum = hour.parameters.find(element => element.name === 'Wsymb2').values[0]
+
+        // Change day on midnight
+        timeObj.time === '00' && activeDayIndex++
+        activeDayIndex === 7 ? (activeDayIndex = 0) : null
+        timeObj.day = getDayFromDayIndex(activeDayIndex)
+
+        forecastHours.push(timeObj)
+      })
+
+      newForecastResult.hours = [...forecastHours]
+      this.props.dispatch(weatherActions.addForecast(newForecastResult))
+      weatherActions.setCurrentCity({
+        city,
+        suburb: city
+      })
+      this.setState({ loadingForecastFailed: false })
+    } catch (error) {
+      this.setState({ loadingForecastFailed: true })
     }
-
-    const date = new Date()
-    let activeDayIndex = new Date().getDay()
-    let forecastHours = []
-
-    forecastData.timeSeries.forEach(hour => {
-      let timeObj = {}
-
-      timeObj.time = hour.validTime.slice(11, 13)
-      timeObj.date = hour.validTime.slice(5, 10).replace('-', '/')
-      timeObj.day = hour.validTime.slice(8, 10)
-      timeObj.dayNumber = hour.validTime.slice(8, 10)
-      timeObj.month = hour.validTime.slice(5, 7)
-      timeObj.temp = hour.parameters.find(element => element.name === 't').values[0]
-      timeObj.windSpeed = hour.parameters.find(element => element.name === 'ws').values[0]
-      timeObj.windGust = hour.parameters.find(element => element.name === 'gust').values[0]
-      timeObj.windDirection = hour.parameters.find(element => element.name === 'wd').values[0]
-      timeObj.thunderRisk = hour.parameters.find(element => element.name === 'tstm').values[0]
-      timeObj.airPressure = hour.parameters.find(element => element.name === 'msl').values[0]
-      timeObj.averageRain = hour.parameters.find(element => element.name === 'pmean').values[0]
-      timeObj.weatherType = getWeatherCondition(hour.parameters.find(element => element.name === 'Wsymb2').values[0])
-      timeObj.weatherTypeNum = hour.parameters.find(element => element.name === 'Wsymb2').values[0]
-
-      // Change day on midnight
-      timeObj.time === '00' && activeDayIndex++
-      activeDayIndex === 7 && (activeDayIndex = 0)
-      timeObj.day = getDayFromDayIndex(activeDayIndex)
-
-      forecastHours.push(timeObj)
-    })
-
-    newForecastResult.hours = [...forecastHours]
-    this.props.dispatch(weatherActions.addForecast(newForecastResult))
   }
 
   render () {
+    const { loadingForecastFailed, hasLocationPermission, loadingCoordinatesFailed } = this.state
     const { forecasts, currentLocation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
@@ -151,20 +185,26 @@ class StartPage extends Component {
         <Header updateWeather={this.getWeatherForecast} navigation={this.props.navigation} />
         <ScrollView contentContainerStyle={[s.pb3]}>
           {newestForecastSearch.warning && <Warning message={newestForecastSearch.warning.message} />}
-          {newestForecastSearch.hours
-            ? <View>
-              <CurrentForecast
-                location={currentLocation.suburb ? currentLocation.suburb : currentLocation.city}
-                getNewLocation={() => this.getLocation()}
-                currentHour={
-                    newestForecastSearch.hours.find(hour => parseInt(hour.time) === currentHour) ||
-                      newestForecastSearch.hours.find(hour => hour)
-                  }
-                />
-              <ForecastHours forecastDay={0} hours={newestForecastSearch.hours} />
-              <ForecastHours forecastDay={1} hours={newestForecastSearch.hours} />
-            </View>
-            : <Loading message={'Laddar din väderdata...'} />}
+          {hasLocationPermission
+            ? <FetchFailed text='Väderprognosen kunde inte hämtas då vi inte fick tillgång till din platsinformation. Du kan istället göra en manuell sökning.' />
+            : loadingCoordinatesFailed
+                ? <FetchFailed text='Din platsinformation kunde inte hämtas. Testa istället att göra en manuell sökning.' />
+                : loadingForecastFailed
+                    ? <FetchFailed text='Din sökning kunde tyvärr inte genomföras då din nuvarande plats är utanför vårt prognosområde.' />
+                    : newestForecastSearch.hours
+                        ? <View>
+                          <CurrentForecast
+                            location={currentLocation.suburb ? currentLocation.suburb : currentLocation.city}
+                            getNewLocation={() => this.getLocation()}
+                            currentHour={
+                                newestForecastSearch.hours.find(hour => parseInt(hour.time) === currentHour) ||
+                                  newestForecastSearch.hours.find(hour => hour)
+                              }
+                            />
+                          <ForecastHours forecastDay={0} hours={newestForecastSearch.hours} />
+                          <ForecastHours forecastDay={1} hours={newestForecastSearch.hours} />
+                        </View>
+                        : <Loading message={'Laddar din väderdata...'} />}
         </ScrollView>
       </Container>
     )
