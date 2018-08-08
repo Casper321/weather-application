@@ -1,5 +1,5 @@
 import React from 'react'
-import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons'
+import { FontAwesome, MaterialCommunityIcons, Entypo} from '@expo/vector-icons'
 import * as style from '../style'
 import { StyleSheet } from 'react-native'
 import s from '../style'
@@ -29,6 +29,17 @@ export default (getWarningIcon = (eventType, iconSize = style.ICON_SIZE_SMALL) =
         icon = <MaterialCommunityIcons style={[styles.warningFire, s.abs]} name={'weather-windy'} color={style.COL_PRIMARY} size={iconSize} />
   
         break
+
+      case 'average wind speed at sea':
+        icon = <MaterialCommunityIcons style={[styles.warningFire, s.abs]} name={'weather-windy'} color={style.COL_PRIMARY} size={iconSize} />
+  
+        break
+
+        case 'thunder SMHI-B':
+        icon = <Entypo style={[styles.warningFire, s.abs]} name={'thunder-cloud'} color={style.COL_PRIMARY} size={iconSize} />
+  
+        break
+        
   
       default:
         icon = <FontAwesome style={[styles.warningFire, s.abs]} name={'warning'} color={style.COL_PRIMARY} size={iconSize} />

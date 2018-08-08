@@ -40,7 +40,7 @@ class SearchPage extends Component {
           this.setState({ citiesAvailable, searchFound: true })
         }
       } catch (error) {
-        console.log(error)
+        //console.log(error)
       }
     }
     request.send(null)
@@ -48,6 +48,31 @@ class SearchPage extends Component {
 
   onCityPicked = city => {
     let { latitude, longitude, cityName, longerLocationName } = city
+    let longerLocationNameList = longerLocationName.split(',')
+    console.log(longerLocationNameList)
+    let longerLocationNameList2 = [[]];
+    let state = ''
+    for(i=0;i<longerLocationNameList.length;i++){
+      longerLocationNameList2[i] = longerLocationNameList[i].split(" ")
+   }
+    console.log(longerLocationNameList2)
+    if(longerLocationNameList2[0][1] === 'län'){ 
+      state = longerLocationNameList2[0][0] + ' ' + longerLocationNameList2[0][1]
+      console.log(longerLocationNameList2[0] + ' ' + longerLocationNameList2[0][1])
+    }
+    for(i=1;i<longerLocationNameList2.length;i++){
+      if(longerLocationNameList2[i][2] === 'län'){ 
+        state = longerLocationNameList2[i][1] + ' ' + longerLocationNameList2[i][2]
+        console.log(longerLocationNameList2[i][1] + ' ' + longerLocationNameList2[i][2])
+      }
+      if(longerLocationNameList2[i][3] === 'län'){ 
+        state = longerLocationNameList2[i][1] + ' ' + longerLocationNameList2[i][2] + ' ' + longerLocationNameList2[i][3]
+        console.log(longerLocationNameList2[i][1] + ' ' + longerLocationNameList2[i][2]+ ' ' + longerLocationNameList2[i][3])
+      }
+    }
+
+    
+
     latitude = parseFloat(latitude)
     longitude = parseFloat(longitude)
     this.props.dispatch(
@@ -55,7 +80,8 @@ class SearchPage extends Component {
         latitude,
         longitude,
         city: city.cityName || '',
-        suburb: city.cityName || ''
+        suburb: city.cityName || '',
+        state: state || ''
       })
     )
     fetchWeatherForecast(latitude, longitude, city.cityName, this.props.dispatch)

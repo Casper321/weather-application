@@ -13,25 +13,25 @@ import { connect } from 'react-redux'
 
 class WarningPage extends Component {
   
-  _onPress(){
-    Alert.alert(
-      item.location,
-      item.message,
-      [
-        {text: 'Cancel', onPress: () => console.log('OK Pressed')},
-      ],
-      { cancelable: false }
-    )
-  }
-  
   render () {
-    const { weatherWarnings } = this.props
+    const { weatherWarnings, currentLocation } = this.props
+
     const weatherWarningsInDistrict = []
     const weatherWarningsNotInDistrict = []
 
     weatherWarnings.forEach(warning => {
+      const locationWords = warning.location.split(" ")
+      let state = ''
       
-      if (true){
+        if(locationWords[1] === 'län'){
+          
+          state = locationWords[0]
+        }
+        else{
+          state = locationWords[0] + ' ' + locationWords[1]
+       }
+       
+      if (state + ' ' + 'län' === currentLocation.state){
         let warningData = {}
         warningData.location = warning.location
         warningData.icon = warning.icon
@@ -86,7 +86,7 @@ class WarningPage extends Component {
             item.location,
             item.message,
             [
-              {text: 'Tillbaka', onPress: () => console.log('Tillbaka Pressed')},
+              {text: 'Tillbaka', onPress: () => console.log(item)},
             ],
             { cancelable: false }
           )}>
@@ -113,7 +113,8 @@ class WarningPage extends Component {
 
 function mapStateToProps (state) {
   return {
-    weatherWarnings: state.weather.weatherWarnings
+    weatherWarnings: state.weather.weatherWarnings,
+    currentLocation: state.weather.currentLocation,
   }
 }
 

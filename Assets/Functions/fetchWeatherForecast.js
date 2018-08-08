@@ -40,7 +40,7 @@ const fetchWeatherForecast = async (latitude, longitude, city, dispatch) => {
       timeObj.weatherType = getWeatherCondition(hour.parameters.find(element => element.name === 'Wsymb2').values[0])
       timeObj.weatherTypeNum = hour.parameters.find(element => element.name === 'Wsymb2').values[0]
 
-      console.log(timeObj)
+      //console.log(timeObj)
 
       // Change day on midnight
       timeObj.time === '00' && activeDayIndex++
@@ -62,7 +62,7 @@ const fetchWeatherForecast = async (latitude, longitude, city, dispatch) => {
     // Successful fetch
     return true
   } catch (error) {
-    console.log(error)
+    //console.log(error)
     // Unsuccesful fetch
     return false
   }
