@@ -21,7 +21,9 @@ export const weatherActions = {
   },
   setWeatherWarnings: item => {
     return { type: types.SET_WEATHER_WARNINGS, payload: item }
-  }
+  },
+  
+
 }
 
 const initialState = {
@@ -33,7 +35,8 @@ const initialState = {
     suburb: '',
     state: ''
   },
-  weatherWarnings: []
+  weatherWarnings: [],
+  
 }
 
 export default function WeatherReducer (state = initialState, action) {

@@ -109,6 +109,7 @@ class StartPage extends Component {
       warningObj.location = warning.info.headline
       warningObj.message = warning.info.description
       warningObj.icon = warning.info.event
+      warningObj.district = warning.info.headline
       forecastWarnings.push(warningObj)
     })
 

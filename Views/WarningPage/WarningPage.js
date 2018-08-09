@@ -13,23 +13,52 @@ import { connect } from 'react-redux'
 
 class WarningPage extends Component {
   
-  _onPress(){
-    Alert.alert(
-      item.location,
-      item.message,
-      [
-        {text: 'Cancel', onPress: () => console.log('OK Pressed')},
-      ],
-      { cancelable: false }
-    )
-  }
-  
   render () {
-    const { weatherWarnings } = this.props
+    const { weatherWarnings, currentLocation } = this.props
+
+    const weatherWarningsInDistrict = []
+    const weatherWarningsNotInDistrict = []
+
+    weatherWarnings.forEach(warning => {
+      const locationWords = warning.location.split(" ")
+      let state = ''
+      
+        if(locationWords[1] === 'län'){
+          
+          state = locationWords[0]
+        }
+        else{
+          state = locationWords[0] + ' ' + locationWords[1]
+       }
+       
+      if (state + ' ' + 'län' === currentLocation.state){
+        let warningData = {}
+        warningData.location = warning.location
+        warningData.icon = warning.icon
+        warningData.message = warning.message
+        weatherWarningsInDistrict.push(warningData)
+      }
+      else {
+        let warningData = {}
+        warningData.location = warning.location
+        warningData.icon = warning.icon
+        warningData.message = warning.message
+        weatherWarningsNotInDistrict.push(warningData)
+      }
+    
+    })
+
+
+
+    const weatherWarningsInDistrictSorted = weatherWarningsInDistrict.sort((a, b) => a.location.localeCompare(b.location))
+    const weatherWarningsNotInDistrictSorted = weatherWarningsNotInDistrict.sort((a, b) => a.location.localeCompare(b.location))
+
+    const weatherWarningsSorted = [...weatherWarningsInDistrictSorted, ...weatherWarningsNotInDistrictSorted]
+
     let key = 0
     const Warnings = []
 
-    weatherWarnings.forEach(warning => {
+    weatherWarningsSorted.forEach(warning => {
       let warningData = {}
       key += 1
       warningData.key = key
@@ -57,7 +86,7 @@ class WarningPage extends Component {
             item.location,
             item.message,
             [
-              {text: 'Tillbaka', onPress: () => console.log('Tillbaka Pressed')},
+              {text: 'Tillbaka', onPress: () => console.log(item)},
             ],
             { cancelable: false }
           )}>
@@ -84,7 +113,8 @@ class WarningPage extends Component {
 
 function mapStateToProps (state) {
   return {
-    weatherWarnings: state.weather.weatherWarnings
+    weatherWarnings: state.weather.weatherWarnings,
+    currentLocation: state.weather.currentLocation,
   }
 }
 

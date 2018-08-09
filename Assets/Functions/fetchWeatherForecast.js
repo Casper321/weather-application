@@ -60,7 +60,7 @@ const fetchWeatherForecast = async (latitude, longitude, city, dispatch) => {
     // Successful fetch
     return true
   } catch (error) {
-    console.log(error)
+    //console.log(error)
     // Unsuccesful fetch
     return false
   }

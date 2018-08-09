@@ -7,6 +7,7 @@ import * as style from '../Assets/style'
 import s from '../Assets/style'
 import getMonth from '../Assets/Functions/getMonth'
 import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
+import getHighestOccurrence from '../Assets/Functions/getHighestOccurrence'
 
 const ForecastDays = ({ days }) => {
   // Array holding weather forecast data for 10 days
@@ -34,6 +35,9 @@ const ForecastDays = ({ days }) => {
     let minTemp = 100
     let hoursLeft = 24
 
+    var iconsDay = [] // Store the amount of times each weatherTypeNum appears during the day (08:00-20:00)
+    var iconsNight = [] // Store the amount of times each weatherTypeNum appears during the night (20:00-08:00)
+
     day.forEach(hour => {
       totRain += hour.averageRain
       dayData.date = hour.date
@@ -57,21 +61,20 @@ const ForecastDays = ({ days }) => {
         minTemp = hourTemp
       }
 
-    
       let curTime = parseInt(hour.time)
-      if (key === 0) {
-        if (curTime < 8 && dayData.weatherTypeNumNight === undefined) 
-          dayData.weatherTypeNumNight = hour.weatherTypeNum
-        if (curTime < 20 && dayData.weatherTypeNumDay === undefined) 
-          dayData.weatherTypeNumDay = hour.weatherTypeNum
+      if (key != 0) {
+        if (curTime < 8) iconsNight.push(hour.weatherTypeNum)
+        else if (curTime < 20) iconsDay.push(hour.weatherTypeNum)
+        else iconsNight.push(hour.weatherTypeNum)
       } else {
-        if (curTime === 12) {
-          dayData.weatherTypeNumDay = hour.weatherTypeNum
-        } else if (curTime === 0) {
-          dayData.weatherTypeNumNight = hour.weatherTypeNum
-        }
+        if (curTime < 8 && dayData.weatherTypeNumNight === undefined) { dayData.weatherTypeNumNight = hour.weatherTypeNum }
+        if (curTime < 20 && dayData.weatherTypeNumDay === undefined) { dayData.weatherTypeNumDay = hour.weatherTypeNum }
       }
     })
+    if (key != 0) {
+      dayData.weatherTypeNumDay = getHighestOccurrence(iconsDay)
+      dayData.weatherTypeNumNight = getHighestOccurrence(iconsNight)
+    }
     dayData.totalRain = Math.round(totRain * 10) / 10
     dayData.hoursLeft = hoursLeft
     dayData.tempHigh = maxTemp
@@ -111,21 +114,3 @@ const ForecastDays = ({ days }) => {
 }
 
 export default ForecastDays
-/*
-<View>
-        {days.map(day => {
-          return (
-            <ForecastDay
-              key={Math.random() * 100}
-              day={day.day}
-              date={day.date}
-              tempHigh={day.tempHigh}
-              tempLow={day.tempLow}
-              weatherTypeNumNight={day.weatherTypeNumNight}
-              weatherTypeNumDay={day.weatherTypeNumDay}
-              totalRain={day.totalRain}
-            />
-          )
-        })}
-      </View>
-*/
