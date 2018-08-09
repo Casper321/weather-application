@@ -8,10 +8,11 @@ const store = configureStore()
 
 export default class App extends React.Component {
   render () {
+    console.log(this.props.navigation)
     return (
       <Provider store={store}>
         <SafeAreaView style={{ flex: 1 }}>
-          <Drawer />
+          <Drawer drawerNavigation={this.props.navigation} />
         </SafeAreaView>
       </Provider>
     )

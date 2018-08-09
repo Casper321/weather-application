@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native'
 
-export const COL_GOOGLE_BLUE = '#4285F4'
+export const COL_GOOGLE_BLUE = '#2196f3'
 export const COL_PRIMARY = '#000'
 export const COL_SECONDARY = '#4885ed'
-export const COL_GREY = '#ddd'
+export const COL_GREY = '#f0f0f0' // ddd
 export const COL_DARK_GREY = '#afafaf'
 export const COL_WARNING = '#8A2BE2'
 export const COL_YELLOW_SUN = '#FDB813'
@@ -36,7 +36,7 @@ export const BORDER_RADIUS_STANDARD = 4
 
 export const BORDER_WIDTH_STANDARD = 1
 
-export const BOX_SHADOW_STANDARD = 2
+export const BOX_SHADOW_STANDARD = 8
 
 export const FONT_FAMILY = 'Roboto'
 
@@ -58,12 +58,13 @@ export default StyleSheet.create({
   /* Background color */
   col_bg_primary: { backgroundColor: COL_PRIMARY },
   col_bg_secondary: { backgroundColor: COL_SECONDARY },
-  col_bg_grey: { backgroundColor: COL_GREY },
+  col_bg_grey: { backgroundColor: '#c2e6fc' /* COL_GREY() */ } /* Caspers favo: c2e6fc */,
   col_bg_dark_grey: { backgroundColor: COL_DARK_GREY },
   col_bg_warning: { backgroundColor: COL_WARNING },
   col_bg_yellow_sun: { backgroundColor: COL_YELLOW_SUN },
   col_bg_water_blue: { backgroundColor: COL_WATER_BLUE },
   col_bg_white: { backgroundColor: COL_WHITE },
+  col_bg_google_blue: { backgroundColor: COL_GOOGLE_BLUE },
 
   /* Margin */
   ma0: { margin: SPACING_XXS },

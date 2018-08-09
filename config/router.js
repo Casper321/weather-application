@@ -80,21 +80,27 @@ export const InfoStack = createStackNavigator(
       navigationOptions: {
         tabBarVisible: false,
         title: 'Information',
-        headerStyle: { backgroundColor: '#2196f3' },
+        headerStyle: { backgroundColor: style.COL_GOOGLE_BLUE },
         headerTintColor: '#fff'
       }
     }
   },
   {
     initialRouteName: 'Information',
-    headerMode: Platform.OS === 'ios' ? 'float' : 'screen'
+    headerMode: Platform.OS === 'ios' ? 'float' : 'screen',
+    headerMode: 'none'
   }
 )
 
-export const Drawer = createDrawerNavigator({
-  Väderprognos: Tabs,
-  Information: InfoStack
-})
+export const Drawer = createDrawerNavigator(
+  {
+    Väderprognos: Tabs,
+    Information: InfoStack
+  },
+  {
+    initialRouteName: 'Väderprognos'
+  }
+)
 
 /*
 const TenDaysForecastStack = createStackNavigator(

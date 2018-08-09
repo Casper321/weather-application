@@ -9,11 +9,15 @@ import s from '../../Assets/style'
 import * as style from '../../Assets/style'
 import Title from '../../Components/Title'
 import NormalText from '../../Components/NormalText'
+import BackHeader from '../../Components/BackHeader'
 
 export default class InfoPage extends Component {
   render () {
+    const { navigation, drawerNavigation } = this.props
+
     return (
-      <Container noPadding>
+      <Container>
+        <BackHeader stackNavigation={navigation} drawerNavigation={drawerNavigation} title='Information' />
         <ScrollView contentContainerStyle={[s.pb3]}>
 
           <BoxContainer containerStyle={styles.containerStyle}>
