@@ -7,7 +7,7 @@ import * as style from '../../Assets/style'
 import s from '../../Assets/style'
 import Warning from './Components/Warning'
 import Container from '../../Components/Container'
-import { connect } from 'react-redux'
+import { connect, weatherActions } from 'react-redux'
 
 
 
@@ -23,14 +23,14 @@ class WarningPage extends Component {
       const locationWords = warning.location.split(" ")
       let state = ''
       
-        if(locationWords[1] === 'län'){
+      if(locationWords[1] === 'län'){
           
           state = locationWords[0]
-        }
-        else{
+      }
+      else {
           state = locationWords[0] + ' ' + locationWords[1]
-       }
-       
+      }
+
       if (state + ' ' + 'län' === currentLocation.state){
         let warningData = {}
         warningData.location = warning.location
@@ -47,14 +47,9 @@ class WarningPage extends Component {
       }
     
     })
-
-
-
     const weatherWarningsInDistrictSorted = weatherWarningsInDistrict.sort((a, b) => a.location.localeCompare(b.location))
     const weatherWarningsNotInDistrictSorted = weatherWarningsNotInDistrict.sort((a, b) => a.location.localeCompare(b.location))
-
     const weatherWarningsSorted = [...weatherWarningsInDistrictSorted, ...weatherWarningsNotInDistrictSorted]
-
     let key = 0
     const Warnings = []
 

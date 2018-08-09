@@ -3,7 +3,8 @@ export const types = {
   SET_CURRENT_COORDINATES: 'SET_CURRENT_COORDINATES',
   SET_CURRENT_CITY: 'SET_CURRENT_CITY',
   SET_CURRENT_LOCATION: 'SET_CURRENT_LOCATION',
-  SET_WEATHER_WARNINGS: 'SET_WEATHER_WARNINGS'
+  SET_WEATHER_WARNINGS: 'SET_WEATHER_WARNINGS',
+  SET_WEATHER_WARNINGS_IN_DISTRICT: 'SET_WEATHER_WARNINGS_IN_DISTRICT'
 }
 
 export const weatherActions = {
@@ -22,8 +23,9 @@ export const weatherActions = {
   setWeatherWarnings: item => {
     return { type: types.SET_WEATHER_WARNINGS, payload: item }
   },
-  
-
+  setWeatherWarningsInDistrict: item => {
+    return { type: types.SET_WEATHER_WARNINGS_IN_DISTRICT, payload: item }
+  },
 }
 
 const initialState = {
@@ -36,6 +38,7 @@ const initialState = {
     state: ''
   },
   weatherWarnings: [],
+  weatherWarningsInDistrict: [],
   
 }
 
@@ -79,6 +82,11 @@ export default function WeatherReducer (state = initialState, action) {
       return {
         ...state,
         weatherWarnings: payload
+      }
+      case types.SET_WEATHER_WARNINGS_IN_DISTRICT:
+      return {
+        ...state,
+        weatherWarningsInDistrict: payload
       }
 
     default:
