@@ -1,14 +1,16 @@
 import { weatherActions } from '../../Redux/WeatherReducer'
 import getWeatherCondition from './getWeatherCondition'
 import getDayFromDayIndex from './getDayFromDayIndex'
-// import forecastData from '../test-api.json'
+import forecastData from '../test-api.json'
 
 const fetchWeatherForecast = async (latitude, longitude, city, dispatch) => {
   try {
+    /*
     const api_call = await fetch(
       `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`
     )
     const forecastData = await api_call.json()
+    */
 
     const newForecastResult = {
       city,
@@ -60,7 +62,7 @@ const fetchWeatherForecast = async (latitude, longitude, city, dispatch) => {
     // Successful fetch
     return true
   } catch (error) {
-    //console.log(error)
+    // console.log(error)
     // Unsuccesful fetch
     return false
   }

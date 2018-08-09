@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tabs, Drawer } from './config/router'
+import { Drawer } from './config/router'
 import { Provider } from 'react-redux'
 import configureStore from './Redux/configureStore'
 
