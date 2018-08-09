@@ -23,7 +23,6 @@ const ForecastHours = ({ hours, forecastDay }) => {
 
   renderHeader = () => {
     return (
-      
       <ForecastHeader
         day={dayLabel}
         date={`${dayHours[0].dayNumber} ${getMonth(dayHours[0].month)}`}
@@ -31,17 +30,15 @@ const ForecastHours = ({ hours, forecastDay }) => {
     )
   }
 
-  onHourPressed = item => {
-  }
+  onHourPressed = item => {}
 
   return (
-    
     <BoxContainer>
-      
+
       <FlatList
         data={dayHours}
         keyExtractor={item => `${item.date} ${item.time}`}
-        ListHeaderComponent={() => this.renderHeader() }
+        ListHeaderComponent={() => this.renderHeader()}
         renderItem={({ item }) => (
           <TouchableHighlight underlayColor={style.COL_GREY} activeOpacity={1} onPress={() => this.onHourPressed(item)}>
             <ForecastHour

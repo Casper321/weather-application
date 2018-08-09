@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, View, TouchableHighlight, Alert } from 'react-native'
+import { ScrollView, View, TouchableHighlight, Alert, Button } from 'react-native'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
 import CurrentForecast from '../../Components/CurrentForecast'

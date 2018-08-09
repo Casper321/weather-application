@@ -5,10 +5,12 @@ import forecastData from '../test-api.json'
 
 const fetchWeatherForecast = async (latitude, longitude, city, dispatch) => {
   try {
+    /*
     const api_call = await fetch(
       `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`
     )
     const forecastData = await api_call.json()
+    */
 
     const newForecastResult = {
       city,
@@ -40,8 +42,6 @@ const fetchWeatherForecast = async (latitude, longitude, city, dispatch) => {
       timeObj.weatherType = getWeatherCondition(hour.parameters.find(element => element.name === 'Wsymb2').values[0])
       timeObj.weatherTypeNum = hour.parameters.find(element => element.name === 'Wsymb2').values[0]
 
-      //console.log(timeObj)
-
       // Change day on midnight
       timeObj.time === '00' && activeDayIndex++
       activeDayIndex === 6 ? (activeDayIndex = 0) : null
@@ -62,7 +62,7 @@ const fetchWeatherForecast = async (latitude, longitude, city, dispatch) => {
     // Successful fetch
     return true
   } catch (error) {
-    //console.log(error)
+    // console.log(error)
     // Unsuccesful fetch
     return false
   }
