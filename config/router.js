@@ -1,4 +1,5 @@
 import React from 'react'
+import { Platform } from 'react-native'
 import { createBottomTabNavigator, createStackNavigator, createDrawerNavigator } from 'react-navigation'
 import StartPage from '../Views/StartPage/StartPage'
 import SearchPage from '../Views/SearchPage/SearchPage'
@@ -72,9 +73,27 @@ export const Tabs = createBottomTabNavigator(
   }
 )
 
+export const InfoStack = createStackNavigator(
+  {
+    Information: {
+      screen: InfoPage,
+      navigationOptions: {
+        tabBarVisible: false,
+        title: 'Information',
+        headerStyle: { backgroundColor: '#2196f3' },
+        headerTintColor: '#fff'
+      }
+    }
+  },
+  {
+    initialRouteName: 'Information',
+    headerMode: Platform.OS === 'ios' ? 'float' : 'screen'
+  }
+)
+
 export const Drawer = createDrawerNavigator({
   Väderprognos: Tabs,
-  Information: InfoPage
+  Information: InfoStack
 })
 
 /*

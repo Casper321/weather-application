@@ -13,8 +13,7 @@ import NormalText from '../../Components/NormalText'
 export default class InfoPage extends Component {
   render () {
     return (
-      <Container>
-        <Header navigation={this.props.navigation} />
+      <Container noPadding>
         <ScrollView contentContainerStyle={[s.pb3]}>
 
           <BoxContainer containerStyle={styles.containerStyle}>
