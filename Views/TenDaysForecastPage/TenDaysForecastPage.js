@@ -18,7 +18,6 @@ class TenDaysForecastPage extends Component {
         <Header navigation={this.props.navigation} />
         {newestForecastSearch.hours
           ? <ScrollView>
-            <CityHeader city={'Göteborg'} />
             <Header10Days />
             <ForecastDays days={newestForecastSearch.hours} />
           </ScrollView>

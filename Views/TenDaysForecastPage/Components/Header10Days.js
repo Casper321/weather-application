@@ -3,13 +3,10 @@ import { View, Text, StyleSheet } from 'react-native'
 import BoxContainer from '../../../Components/BoxContainer'
 import s from '../../../Assets/style'
 
-
-const Header10Days = ({}) => {
+const Header10Days = () => {
   return (
     <BoxContainer>
-      <View
-        style={[s.col_bg_white, s.w, s.flexDr, s.flexJsb, s.mlA, s.mrA]}
-      >
+      <View style={[s.col_bg_white, s.w, s.flexDr, s.flexJsb, s.mlA, s.mrA]}>
         <Text style={[s.pa1, s.fz0, s.fw1, s.maA]}>
           DAG
         </Text>
