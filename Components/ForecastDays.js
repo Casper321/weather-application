@@ -9,7 +9,7 @@ import getMonth from '../Assets/Functions/getMonth'
 import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
 import getHighestOccurrence from '../Assets/Functions/getHighestOccurrence'
 
-const ForecastDays = ({ days }) => {
+const ForecastDays = ({ days, navigation }) => {
   // Array holding weather forecast data for 10 days
 
   const tenDays = [
@@ -93,8 +93,9 @@ const ForecastDays = ({ days }) => {
           <TouchableHighlight
             underlayColor={style.COL_GREY}
             activeOpacity={1}
-            onPress={() => this.onHourPressed(item)}
+            onPress={() => navigation.navigate('AllaTimmar')}
           >
+
             <ForecastDay
               day={item.day}
               date={item.date}
@@ -112,5 +113,7 @@ const ForecastDays = ({ days }) => {
     </BoxContainer>
   )
 }
-
+ForecastDays.propTypes = {
+  navigation: PropTypes.object.isRequired
+}
 export default ForecastDays

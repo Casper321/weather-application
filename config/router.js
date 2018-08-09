@@ -5,6 +5,7 @@ import StartPage from '../Views/StartPage/StartPage'
 import SearchPage from '../Views/SearchPage/SearchPage'
 import InfoPage from '../Views/InfoPage/InfoPage'
 import TenDaysForecastPage from '../Views/TenDaysForecastPage/TenDaysForecastPage'
+import AllHoursForecastPage from '../Views/AllHoursForecastPage/AllHoursForecastPage'
 import WarningPage from '../Views/WarningPage/WarningPage'
 import AnalysisPage from '../Views/AnalysisPage/AnalysisPage'
 import { FontAwesome, SimpleLineIcons, Entypo, MaterialCommunityIcons } from '@expo/vector-icons'
@@ -101,7 +102,8 @@ const TenDaysForecastStack = createStackNavigator(
   {
     Långprognos: TenDaysForecastPage,
     Sök: SearchPage,
-    Info: InfoPage
+    Info: InfoPage,
+    AllaTimmar: AllHoursForecastPage
   },
   {
     headerMode: 'none'

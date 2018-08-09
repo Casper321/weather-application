@@ -44,7 +44,7 @@ const fetchWeatherForecast = async (latitude, longitude, city, dispatch) => {
 
       // Change day on midnight
       timeObj.time === '00' && activeDayIndex++
-      activeDayIndex === 6 ? (activeDayIndex = 0) : null
+      activeDayIndex === 7 ? (activeDayIndex = 0) : null
       timeObj.day = getDayFromDayIndex(activeDayIndex)
 
       forecastHours.push(timeObj)

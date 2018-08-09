@@ -241,7 +241,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       if (isDay) {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_WATER_BLUE}
           />
@@ -249,7 +249,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       } else {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_DARK_GREY}
           />
@@ -261,7 +261,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       if (isDay) {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_WATER_BLUE}
           />
@@ -269,7 +269,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       } else {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_DARK_GREY}
           />
@@ -281,7 +281,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       if (isDay) {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_WATER_BLUE}
           />
@@ -289,7 +289,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       } else {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_DARK_GREY}
           />
@@ -301,7 +301,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       if (isDay) {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_WATER_BLUE}
           />
@@ -309,7 +309,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       } else {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_DARK_GREY}
           />
@@ -321,7 +321,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       if (isDay) {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_WATER_BLUE}
           />
@@ -329,7 +329,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       } else {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_DARK_GREY}
           />
@@ -341,7 +341,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       if (isDay) {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_WATER_BLUE}
           />
@@ -349,7 +349,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       } else {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_DARK_GREY}
           />
@@ -441,7 +441,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       if (isDay) {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_WATER_BLUE}
           />
@@ -449,7 +449,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       } else {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_DARK_GREY}
           />
@@ -460,7 +460,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       if (isDay) {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_WATER_BLUE}
           />
@@ -468,7 +468,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       } else {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_DARK_GREY}
           />
@@ -480,7 +480,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       if (isDay) {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_WATER_BLUE}
           />
@@ -488,7 +488,7 @@ export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
       } else {
         icon = (
           <MaterialCommunityIcons
-            name='weather-snowy-rain'
+            name='weather-snowy-rainy'
             size={iconSize}
             color={style.COL_DARK_GREY}
           />

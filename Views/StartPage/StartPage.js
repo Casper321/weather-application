@@ -215,8 +215,7 @@ class StartPage extends Component {
     const { forecasts, currentLocation, weatherWarningsInDistrict } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
-    
-
+   
     return (
       <Container>
        
