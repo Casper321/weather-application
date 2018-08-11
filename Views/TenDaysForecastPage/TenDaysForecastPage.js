@@ -19,7 +19,7 @@ class TenDaysForecastPage extends Component {
         {newestForecastSearch.hours
           ? <ScrollView>
             <Header10Days />
-            <ForecastDays days={newestForecastSearch.hours} />
+            <ForecastDays days={newestForecastSearch.hours} navigation = {this.props.navigation} />
           </ScrollView>
           : <Loading message={'Laddar din väderdata...'} />}
       </Container>

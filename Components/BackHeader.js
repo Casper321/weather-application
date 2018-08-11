@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 import * as style from '../Assets/style'
 import s from '../Assets/style'
 
-const BackHeader = ({ stackNavigation, drawerNavigation, title }) => {
+const BackHeader = ({ stackNavigation, title }) => {
   const handleBack = () => {
     const { goBack } = stackNavigation
     goBack()
@@ -33,6 +33,10 @@ const BackHeader = ({ stackNavigation, drawerNavigation, title }) => {
       </View>
     </View>
   )
+}
+
+BackHeader.propTypes = {
+  navigation: PropTypes.object.isRequired
 }
 
 export default BackHeader

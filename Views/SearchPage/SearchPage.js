@@ -86,6 +86,8 @@ class SearchPage extends Component {
     )
     fetchWeatherForecast(latitude, longitude, city.cityName, this.props.dispatch)
     this.props.navigation.navigate('Start')
+    
+    
   }
 
   render () {
