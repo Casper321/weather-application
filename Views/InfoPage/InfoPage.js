@@ -13,11 +13,11 @@ import BackHeader from '../../Components/BackHeader'
 
 export default class InfoPage extends Component {
   render () {
-    const { navigation, drawerNavigation } = this.props
+    const { navigation } = this.props
 
     return (
       <Container>
-        <BackHeader stackNavigation={navigation} drawerNavigation={drawerNavigation} title='Information' />
+        <BackHeader stackNavigation={navigation} title='Information' />
         <ScrollView contentContainerStyle={[s.pb3]}>
 
           <BoxContainer containerStyle={styles.containerStyle}>

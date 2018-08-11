@@ -25,19 +25,6 @@ const ForecastDays = ({ days, navigation }) => {
     getDayHoursForecast(9, days)
   ]
 
-  const items = [
-    { name: 'dag0'},
-    { name: 'dag1'},
-    { name: 'dag2'},
-    { name: 'dag3'},
-    { name: 'dag4'},
-    { name: 'dag5'},
-    { name: 'dag6'},
-    { name: 'dag7'},
-    { name: 'dag8'},
-    { name: 'dag9'}
-  ]
-
   // singleDay holds forecast for each day
   let key = 0
   const singleDay = []
@@ -80,8 +67,12 @@ const ForecastDays = ({ days, navigation }) => {
         else if (curTime < 20) iconsDay.push(hour.weatherTypeNum)
         else iconsNight.push(hour.weatherTypeNum)
       } else {
-        if (curTime < 8 && dayData.weatherTypeNumNight === undefined) { dayData.weatherTypeNumNight = hour.weatherTypeNum }
-        if (curTime < 20 && dayData.weatherTypeNumDay === undefined) { dayData.weatherTypeNumDay = hour.weatherTypeNum }
+        if (curTime < 8 && dayData.weatherTypeNumNight === undefined) {
+          dayData.weatherTypeNumNight = hour.weatherTypeNum
+        }
+        if (curTime < 20 && dayData.weatherTypeNumDay === undefined) {
+          dayData.weatherTypeNumDay = hour.weatherTypeNum
+        }
       }
     })
     if (key != 0) {
@@ -97,6 +88,14 @@ const ForecastDays = ({ days, navigation }) => {
     singleDay.push(dayData)
   })
 
+  const handleDayClick = dayNumber => {
+    const currentDay = new Date().getDay()
+    const dayIndex = parseInt(dayNumber) - currentDay
+    console.log(currentDay)
+    console.log(dayNumber)
+    navigation.navigate('Timmar', { dayIndex })
+  }
+
   return (
     <BoxContainer>
       <FlatList
@@ -106,9 +105,8 @@ const ForecastDays = ({ days, navigation }) => {
           <TouchableHighlight
             underlayColor={style.COL_GREY}
             activeOpacity={1}
-            onPress={() => navigation.navigate('AllaTimmar')}
+            onPress={() => handleDayClick(item.dayNumber)}
           >
-
             <ForecastDay
               day={item.day}
               date={item.date}

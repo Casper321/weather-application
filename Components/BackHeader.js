@@ -36,7 +36,7 @@ const BackHeader = ({ stackNavigation, title }) => {
 }
 
 BackHeader.propTypes = {
-  navigation: PropTypes.object.isRequired
+  stackNavigation: PropTypes.object.isRequired
 }
 
 export default BackHeader

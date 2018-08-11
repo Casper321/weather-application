@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView } from 'react-native'
+import { ScrollView, FlatList } from 'react-native'
 import Container from '../../Components/Container'
 import BackHeader from '../../Components/BackHeader'
 import ForecastAllHours from '../../Components/ForecastAllHours'
@@ -7,59 +7,36 @@ import { connect } from 'react-redux'
 import Loading from '../../Components/Loading'
 
 class AllHoursForecastPage extends Component {
-  render () {
-    const { forecasts, currentLocation } = this.props
-    const newestForecastSearch = forecasts[forecasts.length - 1] || {}
+  componentDidMount = () => {}
 
+  render () {
+    const { forecasts, currentLocation, navigation } = this.props
+    const newestForecastSearch = forecasts[forecasts.length - 1] || {}
+    const arr = [
+      { day: 0 },
+      { day: 1 },
+      { day: 2 },
+      { day: 3 },
+      { day: 4 },
+      { day: 5 },
+      { day: 6 },
+      { day: 7 },
+      { day: 8 },
+      { day: 9 }
+    ]
     return (
       <Container>
-        <BackHeader
-          navigation={this.props.navigation}
-          currentLocation={currentLocation}
-        />
+        <BackHeader stackNavigation={navigation} title='Detaljerad prognos' />
         {newestForecastSearch.hours
-          ? <ScrollView>
-            <ForecastAllHours
-              forecastDay={0}
-              hours={newestForecastSearch.hours}
-              />
-            <ForecastAllHours
-              forecastDay={1}
-              hours={newestForecastSearch.hours}
-              />
-              <ForecastAllHours
-              forecastDay={2}
-              hours={newestForecastSearch.hours}
-              />
-              <ForecastAllHours
-              forecastDay={3}
-              hours={newestForecastSearch.hours}
-              />
-              <ForecastAllHours
-              forecastDay={4}
-              hours={newestForecastSearch.hours}
-              />
-              <ForecastAllHours
-              forecastDay={5}
-              hours={newestForecastSearch.hours}
-              />
-              <ForecastAllHours
-              forecastDay={6}
-              hours={newestForecastSearch.hours}
-              />
-               <ForecastAllHours
-              forecastDay={7}
-              hours={newestForecastSearch.hours}
-              />
-              <ForecastAllHours
-              forecastDay={8}
-              hours={newestForecastSearch.hours}
-              />
-               <ForecastAllHours
-              forecastDay={9}
-              hours={newestForecastSearch.hours}
-              />
-          </ScrollView>
+          ? <FlatList
+            ref={ref => {
+              this.flatListRef = ref
+            }}
+            getItemLayout={this.getItemLayout}
+            data={arr}
+            keyExtractor={item => item.day}
+            renderItem={({ item }) => <ForecastAllHours forecastDay={item.day} hours={newestForecastSearch.hours} />}
+            />
           : <Loading message={'Laddar din väderdata...'} />}
       </Container>
     )

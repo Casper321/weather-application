@@ -10,6 +10,7 @@ import TenDaysForecastPage from './Views/TenDaysForecastPage/TenDaysForecastPage
 import StartPage from './Views/StartPage/StartPage'
 import WarningPage from './Views/WarningPage/WarningPage'
 import AnalysisPage from './Views/AnalysisPage/AnalysisPage'
+import AllHoursForecastPage from './Views/AllHoursForecastPage/AllHoursForecastPage'
 
 const store = configureStore()
 
@@ -21,7 +22,8 @@ const RootStack = createStackNavigator(
     Start: { screen: StartPage },
     Långprognos: { screen: TenDaysForecastPage },
     Varningar: { screen: WarningPage },
-    Dataanalys: { screen: AnalysisPage }
+    Dataanalys: { screen: AnalysisPage },
+    Timmar: { screen: AllHoursForecastPage }
   },
   {
     initialRouteName: 'Drawer',

@@ -17,15 +17,14 @@ import { Location, Permissions } from 'expo'
 import { connect } from 'react-redux'
 import { weatherActions } from '../../Redux/WeatherReducer'
 import ForecastHeader from '../../Components/ForecastHeader'
-import BoxContainer from '../../Components/BoxContainer';
+import BoxContainer from '../../Components/BoxContainer'
 import Warning from '../WarningPage/Components/Warning'
 
 class StartPage extends Component {
   state = {
     hasLocationPermission: false,
     loadingCoordinatesFailed: false,
-    loadingForecastFailed: false,
-    
+    loadingForecastFailed: false
   }
 
   async componentDidMount () {
@@ -105,53 +104,51 @@ class StartPage extends Component {
   }
   getWarningForecast = async () => {
     try {
-    const api_call = await fetch(`https://opendata-download-warnings.smhi.se/api/version/2/alerts.json`)
-    const warningForecastData = await api_call.json()
-    const { currentLocation } = this.props
-    let weatherWarnings = []
+      const api_call = await fetch(`https://opendata-download-warnings.smhi.se/api/version/2/alerts.json`)
+      const warningForecastData = await api_call.json()
+      const { currentLocation } = this.props
+      let weatherWarnings = []
 
-    warningForecastData.alert.forEach(warning => {
-      let warningObj = {}
-      warningObj.location = warning.info.headline
-      warningObj.message = warning.info.description
-      warningObj.icon = warning.info.event
-      warningObj.district = warning.info.headline
-      weatherWarnings.push(warningObj)
-    })
-    this.props.dispatch(weatherActions.setWeatherWarnings(weatherWarnings))
+      warningForecastData.alert.forEach(warning => {
+        let warningObj = {}
+        warningObj.location = warning.info.headline
+        warningObj.message = warning.info.description
+        warningObj.icon = warning.info.event
+        warningObj.district = warning.info.headline
+        weatherWarnings.push(warningObj)
+      })
+      this.props.dispatch(weatherActions.setWeatherWarnings(weatherWarnings))
 
-    let weatherWarningsInDistrict = []
+      let weatherWarningsInDistrict = []
 
-    weatherWarnings.forEach(warning => {
-      const locationWords = warning.location.split(" ")
-      let state = ''
-      
-        if(locationWords[1] === 'län'){
-          
+      weatherWarnings.forEach(warning => {
+        const locationWords = warning.location.split(' ')
+        let state = ''
+
+        if (locationWords[1] === 'län') {
           state = locationWords[0]
-        }
-        else{
+        } else {
           state = locationWords[0] + ' ' + locationWords[1]
-       }
-       
-      if (state + ' ' + 'län' === currentLocation.state){
-        let warningData = {}
-        warningData.location = warning.location
-        warningData.icon = warning.icon
-        warningData.message = warning.message
-        weatherWarningsInDistrict.push(warningData)
-      }
-    })
+        }
 
-    const weatherWarningsInDistrictSorted = weatherWarningsInDistrict.sort((a, b) => a.location.localeCompare(b.location))
-    
-    this.props.dispatch(weatherActions.setWeatherWarningsInDistrict(weatherWarningsInDistrictSorted))
-  
+        if (state + ' ' + 'län' === currentLocation.state) {
+          let warningData = {}
+          warningData.location = warning.location
+          warningData.icon = warning.icon
+          warningData.message = warning.message
+          weatherWarningsInDistrict.push(warningData)
+        }
+      })
+
+      const weatherWarningsInDistrictSorted = weatherWarningsInDistrict.sort((a, b) =>
+        a.location.localeCompare(b.location)
+      )
+
+      this.props.dispatch(weatherActions.setWeatherWarningsInDistrict(weatherWarningsInDistrictSorted))
+    } catch (error) {
+      console.log('kan inte hämta varning', error)
+    }
   }
-  catch (error) {
-  console.log('kan inte hämta varning', error)
-  } 
-}
   getWeatherForecast = async (city, latitude, longitude) => {
     try {
       const api_call = await fetch(
@@ -212,13 +209,13 @@ class StartPage extends Component {
 
   render () {
     const { loadingForecastFailed, hasLocationPermission, loadingCoordinatesFailed } = this.state
-    const { forecasts, currentLocation, weatherWarningsInDistrict } = this.props
+    const { forecasts, currentLocation, weatherWarningsInDistrict, navigation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
-   
+
     return (
       <Container>
-       
+
         <Header updateWeather={this.getWeatherForecast} navigation={this.props.navigation} />
         <ScrollView contentContainerStyle={[s.pb3]}>
           {newestForecastSearch.warning && <Warning message={newestForecastSearch.warning.message} />}
@@ -228,19 +225,27 @@ class StartPage extends Component {
                 ? <FetchFailed text='Din platsinformation kunde inte hämtas. Testa istället att göra en manuell sökning.' />
                 : loadingForecastFailed
                     ? <FetchFailed text='Din sökning kunde tyvärr inte genomföras då din nuvarande plats är utanför vårt prognosområde.' />
-                      : newestForecastSearch.hours
+                    : newestForecastSearch.hours
                         ? <View>
-                          {weatherWarningsInDistrict[0] ? (
-                           <BoxContainer>
-                           <TouchableHighlight underlayColor={style.COL_WHITE} onPress={() => console.log('Go WarningPage')}>
-                          <Warning
-                          location = {weatherWarningsInDistrict[0].location + ' (' + weatherWarningsInDistrict.length + ' varningar)'}
-                          //typeOfWarning = {weatherWarningsInDistrict[0].icon}
-                          message = {weatherWarningsInDistrict[0].message}
-                          />
-                          </TouchableHighlight>
-                          </BoxContainer>
-                          ) : null}
+                          {weatherWarningsInDistrict[0]
+                              ? <BoxContainer>
+                                <TouchableHighlight
+                                  underlayColor={style.COL_WHITE}
+                                  onPress={() => navigation.navigate('Varningar')}
+                                  >
+                                  <Warning
+                                    location={
+                                        weatherWarningsInDistrict[0].location +
+                                          ' (' +
+                                          weatherWarningsInDistrict.length +
+                                          ' varningar)'
+                                      }
+                                      // typeOfWarning = {weatherWarningsInDistrict[0].icon}
+                                    message={weatherWarningsInDistrict[0].message}
+                                    />
+                                </TouchableHighlight>
+                              </BoxContainer>
+                              : null}
                           <CurrentForecast
                             location={currentLocation.suburb ? currentLocation.suburb : currentLocation.city}
                             getNewLocation={() => this.getLocation()}

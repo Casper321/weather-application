@@ -16,11 +16,11 @@ export const Tabs = createBottomTabNavigator(
     Start: StartPage,
     Långprognos: TenDaysForecastPage,
     Varningar: WarningPage,
-    Dataanalys: AnalysisPage,
-    AllaTimmar: AllHoursForecastPage
+    Dataanalys: AnalysisPage
+    // AllaTimmar: AllHoursForecastPage
   },
   {
-    order: ['Start', 'Långprognos', 'Varningar', 'Dataanalys', 'AllaTimmar'],
+    order: ['Start', 'Långprognos', 'Varningar', 'Dataanalys'],
     animationEnabled: true,
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor, inactiveTintColor }) => {
@@ -46,7 +46,7 @@ export const Tabs = createBottomTabNavigator(
               color={focused ? tintColor : inactiveTintColor}
             />
           )
-        } else if (routeName === 'AllaTimmar') {
+        } else if (routeName === 'Dataanalys') {
           icon = (
             <Entypo name={'line-graph'} size={style.ICON_SIZE_SMALL} color={focused ? tintColor : inactiveTintColor} />
           )

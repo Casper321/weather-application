@@ -10,16 +10,16 @@ import Loading from '../../Components/Loading'
 
 class TenDaysForecastPage extends Component {
   render () {
-    const { forecasts } = this.props
+    const { forecasts, navigation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
 
     return (
       <Container>
-        <Header navigation={this.props.navigation} />
+        <Header navigation={navigation} />
         {newestForecastSearch.hours
           ? <ScrollView>
             <Header10Days />
-            <ForecastDays days={newestForecastSearch.hours} navigation = {this.props.navigation} />
+            <ForecastDays days={newestForecastSearch.hours} navigation={navigation} />
           </ScrollView>
           : <Loading message={'Laddar din väderdata...'} />}
       </Container>
