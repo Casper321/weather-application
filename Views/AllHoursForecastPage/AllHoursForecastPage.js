@@ -1,24 +1,64 @@
 import React, { Component } from 'react'
-import { Text, ScrollView } from 'react-native'
+import { ScrollView } from 'react-native'
 import Container from '../../Components/Container'
 import BackHeader from '../../Components/BackHeader'
-import CityHeader from '../../Components/CityHeader'
-import ForecastDays from '../../Components/ForecastDays'
+import ForecastAllHours from '../../Components/ForecastAllHours'
 import { connect } from 'react-redux'
 import Loading from '../../Components/Loading'
 
 class AllHoursForecastPage extends Component {
   render () {
-    const { forecasts } = this.props
+    const { forecasts, currentLocation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
 
     return (
       <Container>
-        <BackHeader navigation={this.props.navigation} />
+        <BackHeader
+          navigation={this.props.navigation}
+          currentLocation={currentLocation}
+        />
         {newestForecastSearch.hours
           ? <ScrollView>
-            <CityHeader city={'Göteborg'} />
-            <ForecastDays days={newestForecastSearch.hours} navigation={this.props.navigation} />
+            <ForecastAllHours
+              forecastDay={0}
+              hours={newestForecastSearch.hours}
+              />
+            <ForecastAllHours
+              forecastDay={1}
+              hours={newestForecastSearch.hours}
+              />
+              <ForecastAllHours
+              forecastDay={2}
+              hours={newestForecastSearch.hours}
+              />
+              <ForecastAllHours
+              forecastDay={3}
+              hours={newestForecastSearch.hours}
+              />
+              <ForecastAllHours
+              forecastDay={4}
+              hours={newestForecastSearch.hours}
+              />
+              <ForecastAllHours
+              forecastDay={5}
+              hours={newestForecastSearch.hours}
+              />
+              <ForecastAllHours
+              forecastDay={6}
+              hours={newestForecastSearch.hours}
+              />
+               <ForecastAllHours
+              forecastDay={7}
+              hours={newestForecastSearch.hours}
+              />
+              <ForecastAllHours
+              forecastDay={8}
+              hours={newestForecastSearch.hours}
+              />
+               <ForecastAllHours
+              forecastDay={9}
+              hours={newestForecastSearch.hours}
+              />
           </ScrollView>
           : <Loading message={'Laddar din väderdata...'} />}
       </Container>

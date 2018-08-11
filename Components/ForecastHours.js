@@ -19,7 +19,7 @@ const ForecastHours = ({ hours, forecastDay }) => {
     dayLabel = 'Idag'
   } else if (forecastDay === 1) {
     dayLabel = 'Imorgon'
-  }
+  } 
 
   renderHeader = () => {
     return (

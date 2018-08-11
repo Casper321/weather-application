@@ -25,6 +25,19 @@ const ForecastDays = ({ days, navigation }) => {
     getDayHoursForecast(9, days)
   ]
 
+  const items = [
+    { name: 'dag0'},
+    { name: 'dag1'},
+    { name: 'dag2'},
+    { name: 'dag3'},
+    { name: 'dag4'},
+    { name: 'dag5'},
+    { name: 'dag6'},
+    { name: 'dag7'},
+    { name: 'dag8'},
+    { name: 'dag9'}
+  ]
+
   // singleDay holds forecast for each day
   let key = 0
   const singleDay = []

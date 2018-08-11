@@ -1,6 +1,6 @@
 import React from 'react'
 import { Platform } from 'react-native'
-import { createBottomTabNavigator, createStackNavigator, createDrawerNavigator } from 'react-navigation'
+import { createBottomTabNavigator, createStackNavigator, createDrawerNavigator, StackNavigator } from 'react-navigation'
 import StartPage from '../Views/StartPage/StartPage'
 import SearchPage from '../Views/SearchPage/SearchPage'
 import InfoPage from '../Views/InfoPage/InfoPage'
@@ -16,10 +16,11 @@ export const Tabs = createBottomTabNavigator(
     Start: StartPage,
     Långprognos: TenDaysForecastPage,
     Varningar: WarningPage,
-    Dataanalys: AnalysisPage
+    Dataanalys: AnalysisPage,
+    AllaTimmar: AllHoursForecastPage
   },
   {
-    order: ['Start', 'Långprognos', 'Varningar'],
+    order: ['Start', 'Långprognos', 'Varningar', 'AllaTimmar'],
     animationEnabled: true,
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor, inactiveTintColor }) => {
@@ -45,7 +46,7 @@ export const Tabs = createBottomTabNavigator(
               color={focused ? tintColor : inactiveTintColor}
             />
           )
-        } else if (routeName === 'Dataanalys') {
+        } else if (routeName === 'AllaTimmar') {
           icon = (
             <Entypo name={'line-graph'} size={style.ICON_SIZE_SMALL} color={focused ? tintColor : inactiveTintColor} />
           )
@@ -91,6 +92,34 @@ export const InfoStack = createStackNavigator(
     headerMode: Platform.OS === 'ios' ? 'float' : 'screen'
   }
 )
+
+/*
+export const TenDaysForecastStack = createStackNavigator(
+  {
+    Långprognos: {
+      screen: TenDaysForecastPage,
+      navigationOptions: {
+        tabBarVisible: true,
+        title: 'WeatherPro',
+        headerStyle: { backgroundColor: '#2196f3' },
+        headerTintColor: '#fff'
+      }
+    }, AllaTimmar: {
+      screen: AllHoursForecastPage,
+      navigationOptions: {
+        tabBarVisible: false,
+        title: 'WeatherPro',
+        headerStyle: { backgroundColor: '#2196f3' },
+        headerTintColor: '#fff'
+      }
+    }
+  },
+  {
+    initialRouteName: 'Långprognos',
+    headerMode: Platform.OS === 'ios' ? 'float' : 'screen'
+  }
+)*/
+
 
 export const Drawer = createDrawerNavigator({
   Väderprognos: Tabs,
