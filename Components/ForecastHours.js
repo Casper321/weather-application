@@ -1,19 +1,19 @@
 import React from 'react'
 import { View, StyleSheet, TouchableNativeFeedback, TouchableHighlight, FlatList } from 'react-native'
 import PropTypes from 'prop-types'
+
 import ForecastHour from './ForecastHour'
 import s from '../Assets/style'
 import * as style from '../Assets/style'
-import ForecastHeader from './ForecastHeader'
+import ForecastHeaderSunrise from './ForecastHeaderSunrise'
 import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
 import getMonth from '../Assets/Functions/getMonth'
 import BoxContainer from './BoxContainer'
-import unformatDayHours from '../Assets/Functions/unformatDayHours'
+import computeSunrise from '../Assets/Functions/computeSunrise';
 
-const ForecastHours = ({ hours, forecastDay }) => {
+const ForecastHours = ({ hours, forecastDay, latitude, longitude }) => {
   // Get today & tomorrow forecast
   const dayHours = getDayHoursForecast(forecastDay, hours)
-
   let dayLabel = null
   if (forecastDay === 0) {
     dayLabel = 'Idag'
@@ -21,19 +21,19 @@ const ForecastHours = ({ hours, forecastDay }) => {
     dayLabel = 'Imorgon'
   } 
 
-  renderHeader = () => {
-    return <ForecastHeader day={dayLabel} date={`${dayHours[0].dayNumber}:e ${getMonth(dayHours[0].month)}`} />
-  }
-
   onHourPressed = item => {}
 
   return (
     <BoxContainer>
-
+      <ForecastHeaderSunrise
+        day={dayLabel}
+        date={`${dayHours[0].dayNumber} ${getMonth(dayHours[0].month)}`}
+        sunriseTime = {computeSunrise(longitude, latitude, dayHours[0].dayNumber, dayHours[0].month, dayHours[0].year, true)}
+        sunsetTime = {computeSunrise(longitude, latitude, dayHours[0].dayNumber, dayHours[0].month, dayHours[0].year, false)}
+      />
       <FlatList
         data={dayHours}
         keyExtractor={item => `${item.date} ${item.time}`}
-        ListHeaderComponent={() => this.renderHeader()}
         renderItem={({ item }) => (
           <TouchableHighlight underlayColor={style.COL_GREY} activeOpacity={1} onPress={() => this.onHourPressed(item)}>
             <ForecastHour
@@ -63,5 +63,6 @@ const styles = StyleSheet.create({
 ForecastHours.propTypes = {
   hours: PropTypes.array.isRequired
 }
+
 
 export default ForecastHours

@@ -28,6 +28,7 @@ class AllHoursForecastPage extends Component {
       <Container>
         <BackHeader stackNavigation={navigation} title='Detaljerad prognos' />
         {newestForecastSearch.hours
+<<<<<<< HEAD
           ? <FlatList
             ref={ref => {
               this.flatListRef = ref
@@ -37,6 +38,69 @@ class AllHoursForecastPage extends Component {
             keyExtractor={item => item.day}
             renderItem={({ item }) => <ForecastAllHours forecastDay={item.day} hours={newestForecastSearch.hours} />}
             />
+=======
+          ? <ScrollView>
+            <ForecastAllHours
+              forecastDay={0}
+              hours={newestForecastSearch.hours}
+              longitude={currentLocation.longitude}
+              latitude={currentLocation.latitude}              />
+            <ForecastAllHours
+              forecastDay={1}
+              hours={newestForecastSearch.hours}
+              longitude={currentLocation.longitude}
+              latitude={currentLocation.latitude}
+              />
+              <ForecastAllHours
+              forecastDay={2}
+              hours={newestForecastSearch.hours}
+              longitude={currentLocation.longitude}
+              latitude={currentLocation.latitude}
+              />
+              <ForecastAllHours
+              forecastDay={3}
+              hours={newestForecastSearch.hours}
+              longitude={currentLocation.longitude}
+              latitude={currentLocation.latitude}
+              />
+              <ForecastAllHours
+              forecastDay={4}
+              hours={newestForecastSearch.hours}
+              longitude={currentLocation.longitude}
+              latitude={currentLocation.latitude}
+              />
+              <ForecastAllHours
+              forecastDay={5}
+              hours={newestForecastSearch.hours}
+              longitude={currentLocation.longitude}
+              latitude={currentLocation.latitude}
+              />
+              <ForecastAllHours
+              forecastDay={6}
+              hours={newestForecastSearch.hours}
+              longitude={currentLocation.longitude}
+              latitude={currentLocation.latitude}
+              />
+               <ForecastAllHours
+              forecastDay={7}
+              hours={newestForecastSearch.hours}
+              longitude={currentLocation.longitude}
+              latitude={currentLocation.latitude}
+              />
+              <ForecastAllHours
+              forecastDay={8}
+              hours={newestForecastSearch.hours}
+              longitude={currentLocation.longitude}
+              latitude={currentLocation.latitude}
+              />
+               <ForecastAllHours
+              forecastDay={9}
+              hours={newestForecastSearch.hours}
+              longitude={currentLocation.longitude}
+              latitude={currentLocation.latitude}
+              />
+          </ScrollView>
+>>>>>>> Soluppgång osv
           : <Loading message={'Laddar din väderdata...'} />}
       </Container>
     )
@@ -45,7 +109,8 @@ class AllHoursForecastPage extends Component {
 
 function mapStateToProps (state) {
   return {
-    forecasts: state.weather.forecasts
+    forecasts: state.weather.forecasts,
+    currentLocation: state.weather.currentLocation,
   }
 }
 

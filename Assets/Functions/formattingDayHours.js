@@ -1,4 +1,4 @@
-export default (convertDayHoursString = value => {
+export default (formattingDayHours = value => {
   value = parseInt(value)
 
   if (value <= 9) {

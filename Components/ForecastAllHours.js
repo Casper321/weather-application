@@ -8,9 +8,11 @@ import ForecastHeader from './ForecastHeader'
 import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
 import getMonth from '../Assets/Functions/getMonth'
 import BoxContainer from './BoxContainer'
-import unformatDayHours from '../Assets/Functions/unformatDayHours'
+import ForecastHeaderSunrise from './ForecastHeaderSunrise';
+import computeSunrise from '../Assets/Functions/computeSunrise';
 
-const ForecastAllHours = ({ hours, forecastDay }) => {
+
+const ForecastAllHours = ({ hours, forecastDay, latitude, longitude }) => {
   // Get today & tomorrow forecast
   const dayHours = getDayHoursForecast(forecastDay, hours)
   let dayLabel
@@ -35,14 +37,16 @@ const ForecastAllHours = ({ hours, forecastDay }) => {
     default: dayLabel = ''
       break
   } 
-  
+
   onHourPressed = item => {}
 
   return (
     <BoxContainer>
-      <ForecastHeader
+      <ForecastHeaderSunrise
         day={dayLabel}
         date={`${dayHours[0].dayNumber} ${getMonth(dayHours[0].month)}`}
+        sunriseTime = {computeSunrise(longitude, latitude, dayHours[0].dayNumber, dayHours[0].month, dayHours[0].year, true)}
+        sunsetTime = {computeSunrise(longitude, latitude, dayHours[0].dayNumber, dayHours[0].month, dayHours[0].year, false)}
       />
       <FlatList
         data={dayHours}

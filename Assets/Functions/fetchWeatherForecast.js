@@ -30,6 +30,7 @@ const fetchWeatherForecast = async (latitude, longitude, city, dispatch) => {
       timeObj.day = hour.validTime.slice(8, 10)
       timeObj.dayNumber = hour.validTime.slice(8, 10)
       timeObj.month = hour.validTime.slice(5, 7)
+      timeObj.year = hour.validTime.slice(0, 4)
       timeObj.temp = hour.parameters.find(element => element.name === 't').values[0]
       timeObj.windSpeed = hour.parameters.find(element => element.name === 'ws').values[0]
       timeObj.windGust = hour.parameters.find(element => element.name === 'gust').values[0]
