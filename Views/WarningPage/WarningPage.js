@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, ScrollView, FlatList, TouchableHighlight, Alert} from 'react-native'
+import { Text, View, StyleSheet, ScrollView, FlatList, TouchableHighlight, Alert } from 'react-native'
 import BoxContainer from '../../Components/BoxContainer'
 import Header from '../../Components/Header'
 import { FontAwesome, MaterialCommunityIcons, Feather } from '@expo/vector-icons/'
@@ -8,11 +8,13 @@ import s from '../../Assets/style'
 import Warning from './Components/Warning'
 import Container from '../../Components/Container'
 import { connect, weatherActions } from 'react-redux'
-
-
+import Loading from '../../Components/Loading'
 
 class WarningPage extends Component {
-  
+  itemSeparator = () => {
+    return <View style={[s.boxSh]} />
+  }
+
   render () {
     const { weatherWarnings, currentLocation } = this.props
 
@@ -20,35 +22,35 @@ class WarningPage extends Component {
     const weatherWarningsNotInDistrict = []
 
     weatherWarnings.forEach(warning => {
-      const locationWords = warning.location.split(" ")
+      const locationWords = warning.location.split(' ')
       let state = ''
-      
-      if(locationWords[1] === 'län'){
-          
-          state = locationWords[0]
-      }
-      else {
-          state = locationWords[0] + ' ' + locationWords[1]
+
+      if (locationWords[1] === 'län') {
+        state = locationWords[0]
+      } else {
+        state = locationWords[0] + ' ' + locationWords[1]
       }
 
-      if (state + ' ' + 'län' === currentLocation.state){
+      if (state + ' ' + 'län' === currentLocation.state) {
         let warningData = {}
         warningData.location = warning.location
         warningData.icon = warning.icon
         warningData.message = warning.message
         weatherWarningsInDistrict.push(warningData)
-      }
-      else {
+      } else {
         let warningData = {}
         warningData.location = warning.location
         warningData.icon = warning.icon
         warningData.message = warning.message
         weatherWarningsNotInDistrict.push(warningData)
       }
-    
     })
-    const weatherWarningsInDistrictSorted = weatherWarningsInDistrict.sort((a, b) => a.location.localeCompare(b.location))
-    const weatherWarningsNotInDistrictSorted = weatherWarningsNotInDistrict.sort((a, b) => a.location.localeCompare(b.location))
+    const weatherWarningsInDistrictSorted = weatherWarningsInDistrict.sort((a, b) =>
+      a.location.localeCompare(b.location)
+    )
+    const weatherWarningsNotInDistrictSorted = weatherWarningsNotInDistrict.sort((a, b) =>
+      a.location.localeCompare(b.location)
+    )
     const weatherWarningsSorted = [...weatherWarningsInDistrictSorted, ...weatherWarningsNotInDistrictSorted]
     let key = 0
     const Warnings = []
@@ -64,52 +66,48 @@ class WarningPage extends Component {
     })
 
     return (
-      
       <Container>
         <Header navigation={this.props.navigation} />
-        <ScrollView contentContainerStyle={[s.pb3]}>
-      <BoxContainer>
-      
-      <FlatList
-        //ListHeaderComponent={this.renderHeader}
-        data={Warnings}
-        keyExtractor={item => `${item.key}`}
-    
-        renderItem={({ item }) => (
-          
-          <TouchableHighlight underlayColor={style.COL_WHITE} onPress={() => Alert.alert(
-            item.location,
-            item.message,
-            [
-              {text: 'Tillbaka', onPress: () => console.log(item)},
-            ],
-            { cancelable: false }
-          )}>
 
-            <Warning
-              location = {item.location}
-              typeOfWarning = {item.icon}
-              message = {item.message}
-            />
-          </TouchableHighlight>
-        )}
-      />
-    </BoxContainer>
-    </ScrollView>
-    </Container>
-    
+        {weatherWarnings.length >= 1
+          ? <ScrollView contentContainerStyle={[s.pb3]}>
+            <FlatList
+                // ListHeaderComponent={this.renderHeader}
+              ItemSeparatorComponent={() => this.itemSeparator()}
+              data={Warnings}
+              keyExtractor={item => `${item.key}`}
+              renderItem={({ item }) => (
+                <BoxContainer>
+                  <TouchableHighlight
+                    underlayColor={style.COL_WHITE}
+                    onPress={() =>
+                        Alert.alert(
+                          item.location,
+                          item.message,
+                          [{ text: 'Tillbaka', onPress: () => console.log(item) }],
+                          {
+                            cancelable: false
+                          }
+                        )}
+                    >
+                    <Warning location={item.location} typeOfWarning={item.icon} message={item.message} />
+                  </TouchableHighlight>
+                </BoxContainer>
+                )}
+              />
+          </ScrollView>
+          : <Loading message='Laddar varningar...' />}
+      </Container>
     )
     // <Warning location={'DISPLAY location HERE'} typeOfWarning={'warning'} />
-    // fire, weather-snowy, weather-rainy, weather-windy 
+    // fire, weather-snowy, weather-rainy, weather-windy
   }
 }
-
-
 
 function mapStateToProps (state) {
   return {
     weatherWarnings: state.weather.weatherWarnings,
-    currentLocation: state.weather.currentLocation,
+    currentLocation: state.weather.currentLocation
   }
 }
 

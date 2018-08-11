@@ -215,7 +215,6 @@ class StartPage extends Component {
 
     return (
       <Container>
-
         <Header updateWeather={this.getWeatherForecast} navigation={this.props.navigation} />
         <ScrollView contentContainerStyle={[s.pb3]}>
           {newestForecastSearch.warning && <Warning message={newestForecastSearch.warning.message} />}

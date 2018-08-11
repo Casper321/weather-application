@@ -7,7 +7,11 @@ import { connect } from 'react-redux'
 import Loading from '../../Components/Loading'
 
 class AllHoursForecastPage extends Component {
-  componentDidMount = () => {}
+  componentDidMount = () => {
+    this.flatListRef.scrollToItem({
+      item: { day: 7 }
+    })
+  }
 
   render () {
     const { forecasts, currentLocation, navigation } = this.props
@@ -32,9 +36,8 @@ class AllHoursForecastPage extends Component {
             ref={ref => {
               this.flatListRef = ref
             }}
-            getItemLayout={this.getItemLayout}
             data={arr}
-            keyExtractor={item => item.day}
+            keyExtractor={item => `${item.day}`}
             renderItem={({ item }) => <ForecastAllHours forecastDay={item.day} hours={newestForecastSearch.hours} />}
             />
           : <Loading message={'Laddar din väderdata...'} />}

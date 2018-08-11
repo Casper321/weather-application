@@ -5,31 +5,15 @@ import * as style from '../../../Assets/style'
 import s from '../../../Assets/style'
 import getWarningIcon from '../../../Assets/Functions/getWarningIcon'
 
-const Warning = ({ location = '' , typeOfWarning = 'warning', message = "Ingen varning"}) => {
+const Warning = ({ location = '', typeOfWarning = 'warning' }) => {
   return (
-    <View
-      style={[
-        s.br,
-        s.w,
-        s.mlA,
-        s.mrA,
-        s.pa2,
-        s.mb3,
-        s.mt1,
-        s.col_bg_white,
-        s.flexDr,
-        s.flexJsb,
-        s.flexAce,
-        s.bbw,
-        s.bc
-      ]}
-    >
-      <View style={[styles.warningIconContainer, s.flex2]}>
+    <View style={[s.mlA, s.mrA, s.pa2, s.mb2, s.mt2, s.col_bg_white, s.flexDr, s.flexJsb, s.flexAce]}>
+      <View style={[s.flex2]}>
         <View style={[styles.center, styles.flexOne]}>
           <FontAwesome name='circle-thin' color={style.COL_WARNING} size={50} />
         </View>
         <View>
-        {icon = getWarningIcon(typeOfWarning)}
+          {(icon = getWarningIcon(typeOfWarning))}
         </View>
       </View>
       <Text style={[s.flex8]}>
@@ -39,7 +23,6 @@ const Warning = ({ location = '' , typeOfWarning = 'warning', message = "Ingen v
         <Feather name='chevron-right' color={style.COL_PRIMARY} size={style.ICON_SIZE_MEDIUM} />
       </View>
     </View>
-    
   )
 }
 
@@ -54,7 +37,4 @@ const styles = StyleSheet.create({
   }
 })
 
-/*
-    Behöver ta in en prop "typeOfWarning" som byter icon beroende på vilken varning det är, just nu fungerar den endast för eld.
-    */
 export default Warning

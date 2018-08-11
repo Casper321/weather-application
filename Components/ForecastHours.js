@@ -19,7 +19,7 @@ const ForecastHours = ({ hours, forecastDay }) => {
     dayLabel = 'Idag'
   } else if (forecastDay === 1) {
     dayLabel = 'Imorgon'
-  } 
+  }
 
   renderHeader = () => {
     return <ForecastHeader day={dayLabel} date={`${dayHours[0].dayNumber}:e ${getMonth(dayHours[0].month)}`} />
@@ -29,13 +29,12 @@ const ForecastHours = ({ hours, forecastDay }) => {
 
   return (
     <BoxContainer>
-
       <FlatList
         data={dayHours}
         keyExtractor={item => `${item.date} ${item.time}`}
         ListHeaderComponent={() => this.renderHeader()}
         renderItem={({ item }) => (
-          <TouchableHighlight underlayColor={style.COL_GREY} activeOpacity={1} onPress={() => this.onHourPressed(item)}>
+          <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => this.onHourPressed(item)}>
             <ForecastHour
               time={item.time}
               weatherType={item.weatherType}
