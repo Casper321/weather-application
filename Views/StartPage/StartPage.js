@@ -124,7 +124,6 @@ class StartPage extends Component {
   }
   getWarningForecast = async () => {
     try {
-<<<<<<< HEAD
       const api_call = await fetch(`https://opendata-download-warnings.smhi.se/api/version/2/alerts.json`)
       const warningForecastData = await api_call.json()
       const { currentLocation } = this.props
@@ -140,25 +139,6 @@ class StartPage extends Component {
       })
       this.props.dispatch(weatherActions.setWeatherWarnings(weatherWarnings))
 
-=======
-      const api_call = await fetch(
-        `https://opendata-download-warnings.smhi.se/api/version/2/alerts.json`
-      )
-      const warningForecastData = await api_call.json()
-      const { currentLocation } = this.props
-      let weatherWarnings = []
-
-      warningForecastData.alert.forEach(warning => {
-        let warningObj = {}
-        warningObj.location = warning.info.headline
-        warningObj.message = warning.info.description
-        warningObj.icon = warning.info.event
-        warningObj.district = warning.info.headline
-        weatherWarnings.push(warningObj)
-      })
-      this.props.dispatch(weatherActions.setWeatherWarnings(weatherWarnings))
-
->>>>>>> Soluppgång osv
       let weatherWarningsInDistrict = []
 
       weatherWarnings.forEach(warning => {
@@ -170,7 +150,6 @@ class StartPage extends Component {
         } else {
           state = locationWords[0] + ' ' + locationWords[1]
         }
-<<<<<<< HEAD
 
         if (state + ' ' + 'län' === currentLocation.state) {
           let warningData = {}
@@ -186,27 +165,6 @@ class StartPage extends Component {
       )
 
       this.props.dispatch(weatherActions.setWeatherWarningsInDistrict(weatherWarningsInDistrictSorted))
-=======
-
-        if (state + ' ' + 'län' === currentLocation.state) {
-          let warningData = {}
-          warningData.location = warning.location
-          warningData.icon = warning.icon
-          warningData.message = warning.message
-          weatherWarningsInDistrict.push(warningData)
-        }
-      })
-
-      const weatherWarningsInDistrictSorted = weatherWarningsInDistrict.sort(
-        (a, b) => a.location.localeCompare(b.location)
-      )
-
-      this.props.dispatch(
-        weatherActions.setWeatherWarningsInDistrict(
-          weatherWarningsInDistrictSorted
-        )
-      )
->>>>>>> Soluppgång osv
     } catch (error) {
       console.log('kan inte hämta varning', error)
     }
@@ -289,31 +247,15 @@ class StartPage extends Component {
   }
 
   render () {
-<<<<<<< HEAD
     const { loadingForecastFailed, hasLocationPermission, loadingCoordinatesFailed } = this.state
     const { forecasts, currentLocation, weatherWarningsInDistrict, navigation } = this.props
-=======
-    const {
-      loadingForecastFailed,
-      hasLocationPermission,
-      loadingCoordinatesFailed
-    } = this.state
-    const { forecasts, currentLocation, weatherWarningsInDistrict } = this.props
->>>>>>> Soluppgång osv
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
 
     return (
       <Container>
 
-<<<<<<< HEAD
         <Header updateWeather={this.getWeatherForecast} navigation={this.props.navigation} />
-=======
-        <Header
-          updateWeather={this.getWeatherForecast}
-          navigation={this.props.navigation}
-        />
->>>>>>> Soluppgång osv
         <ScrollView contentContainerStyle={[s.pb3]}>
           {newestForecastSearch.warning &&
             <Warning message={newestForecastSearch.warning.message} />}
@@ -329,12 +271,7 @@ class StartPage extends Component {
                               ? <BoxContainer>
                                 <TouchableHighlight
                                   underlayColor={style.COL_WHITE}
-<<<<<<< HEAD
                                   onPress={() => navigation.navigate('Varningar')}
-=======
-                                  onPress={() =>
-                                      console.log('Go WarningPage')}
->>>>>>> Soluppgång osv
                                   >
                                   <Warning
                                     location={
@@ -343,14 +280,7 @@ class StartPage extends Component {
                                           weatherWarningsInDistrict.length +
                                           ' varningar)'
                                       }
-<<<<<<< HEAD
-                                      // typeOfWarning = {weatherWarningsInDistrict[0].icon}
                                     message={weatherWarningsInDistrict[0].message}
-=======
-                                    message={
-                                        weatherWarningsInDistrict[0].message
-                                      }
->>>>>>> Soluppgång osv
                                     />
                                 </TouchableHighlight>
                               </BoxContainer>
