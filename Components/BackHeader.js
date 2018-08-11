@@ -7,8 +7,8 @@ import s from '../Assets/style'
 
 const BackHeader = ({ stackNavigation, drawerNavigation, title }) => {
   const handleBack = () => {
-    stackNavigation.navigate('Start')
-    drawerNavigation.navigate('DrawerOpen')
+    const { goBack } = stackNavigation
+    goBack()
   }
 
   return (

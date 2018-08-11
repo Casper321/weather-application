@@ -15,10 +15,11 @@ export const Tabs = createBottomTabNavigator(
     Start: StartPage,
     Långprognos: TenDaysForecastPage,
     Varningar: WarningPage,
-    Dataanalys: AnalysisPage
+    Dataanalys: AnalysisPage,
+    Sök: SearchPage
   },
   {
-    order: ['Start', 'Långprognos', 'Varningar'],
+    order: ['Start', 'Långprognos', 'Varningar', 'Dataanalys'],
     animationEnabled: true,
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor, inactiveTintColor }) => {
@@ -95,7 +96,7 @@ export const InfoStack = createStackNavigator(
 export const Drawer = createDrawerNavigator(
   {
     Väderprognos: Tabs,
-    Information: InfoStack
+    Information: InfoPage
   },
   {
     initialRouteName: 'Väderprognos'

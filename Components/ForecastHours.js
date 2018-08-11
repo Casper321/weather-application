@@ -22,12 +22,7 @@ const ForecastHours = ({ hours, forecastDay }) => {
   }
 
   renderHeader = () => {
-    return (
-      <ForecastHeader
-        day={dayLabel}
-        date={`${dayHours[0].dayNumber} ${getMonth(dayHours[0].month)}`}
-      />
-    )
+    return <ForecastHeader day={dayLabel} date={`${dayHours[0].dayNumber}:e ${getMonth(dayHours[0].month)}`} />
   }
 
   onHourPressed = item => {}

@@ -12,7 +12,8 @@ import unformatDayHours from '../Assets/Functions/unformatDayHours'
 import BoxContainer from './BoxContainer'
 
 const CurrentForecast = ({ currentHour, location, getNewLocation }) => {
-  const { day, temp, weatherType, weatherTypeNum, averageRain, windSpeed, windGust } = currentHour
+  console.log(currentHour)
+  const { dayNumber, temp, weatherType, weatherTypeNum, averageRain, windSpeed, windGust } = currentHour
   const icon = getWeatherIcon(parseInt(weatherTypeNum), style.ICON_SIZE_LARGE)
   const month = new Date().getMonth()
 
@@ -21,7 +22,7 @@ const CurrentForecast = ({ currentHour, location, getNewLocation }) => {
       <View style={[s.bbw, s.bc, s.flexJce, s.pa1]}>
         <Text
           style={[s.ml1, s.fz1, s.fw1, s.col_black]}
-        >{`Idag ${parseInt(currentHour.month)}:e ${getMonth(currentHour.month)} klockan ${currentHour.time}`}</Text>
+        >{`Idag ${parseInt(dayNumber)}:e ${getMonth(currentHour.month)} klockan ${currentHour.time}`}</Text>
       </View>
       <View style={[s.br0]}>
         <View style={[s.flexDr, s.flexJsb, s.flexAfe, s.pb5]}>

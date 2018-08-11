@@ -20,8 +20,8 @@ class Header extends Component {
         <View style={[s.flex4, s.mrA, s.flexJce, s.ml2]}>
           <Text style={[s.flex1, s.fz2, s.fw1, s.col_white]}>{currentLocation.city || currentLocation.suburb}</Text>
         </View>
-        <View style={[s.mr3, s.flex3, s.flexDr, s.flexJfe]}>
-          <View style={[s.mr2]}>
+        <View style={[s.flex3, s.flexDr, s.flexJfe]}>
+          <View style={[s.mr3]}>
             <TouchableHighlight
               onPress={() => navigation.navigate('Sök', { navigation, updateWeather })}
               underlayColor={style.COL_GREY}
@@ -29,40 +29,16 @@ class Header extends Component {
               <FontAwesome style={[s.mr3]} name='search' color={style.COL_WHITE} size={style.ICON_SIZE_SMALL} />
             </TouchableHighlight>
           </View>
+          {/*
           <View style={[s.mr2]}>
-            <FontAwesome name='map-marker' color={style.COL_WHITE} size={style.ICON_SIZE_SMALL} />
+              <FontAwesome name='map-marker' color={style.COL_WHITE} size={style.ICON_SIZE_SMALL} />
           </View>
+          */}
         </View>
       </View>
     )
   }
 }
-
-/*
-const Header = ({ navigation, updateWeather, currentLocation = '' }) => {
-  return (
-    <View style={[s.pt2, s.pb2, s.col_bg_white, s.flexDr, s.flexJsb, s.flexAce, s.boxSh]}>
-      <View style={[s.flex1, s.ml3]}>
-        <TouchableHighlight onPress={() => navigation.openDrawer()} underlayColor={style.COL_GREY}>
-          <Entypo name='menu' size={style.ICON_SIZE_MEDIUM} color={style.COL_PRIMARY} />
-        </TouchableHighlight>
-      </View>
-      <View>
-        <Text style={[s.flex1, s.fz2, s.fw2, s.col_primary]}>{currentLocation.city}</Text>
-      </View>
-      <View style={[s.mr3, s.flex1, s.flexDr, s.flexJfe]}>
-        <TouchableHighlight
-          onPress={() => navigation.navigate('Sök', { navigation, updateWeather })}
-          underlayColor={style.COL_GREY}
-        >
-          <FontAwesome style={[s.mr3]} name='search' color={style.COL_PRIMARY} size={style.ICON_SIZE_SMALL} />
-        </TouchableHighlight>
-        <FontAwesome name='map-marker' color={style.COL_PRIMARY} size={style.ICON_SIZE_SMALL} />
-      </View>
-    </View>
-  )
-}
-*/
 
 Header.propTypes = {
   navigation: PropTypes.object.isRequired
