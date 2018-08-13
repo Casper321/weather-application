@@ -1,11 +1,5 @@
 import React, { Component } from 'react'
-import {
-  ScrollView,
-  View,
-  TouchableHighlight,
-  Alert,
-  Button
-} from 'react-native'
+import { ScrollView, View, TouchableHighlight, Alert, Button, RefreshControl } from 'react-native'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
 import CurrentForecast from '../../Components/CurrentForecast'
@@ -13,7 +7,6 @@ import ForecastHours from '../../Components/ForecastHours'
 import Loading from '../../Components/Loading'
 import fetchWeatherForecast from '../../Assets/Functions/fetchWeatherForecast'
 import computeSunrise from '../../Assets/Functions/computeSunrise'
-
 import s from '../../Assets/style'
 import * as style from '../../Assets/style'
 import FetchFailed from '../../Components/FetchFailed'
@@ -32,10 +25,22 @@ class StartPage extends Component {
   state = {
     hasLocationPermission: false,
     loadingCoordinatesFailed: false,
-    loadingForecastFailed: false
+    loadingForecastFailed: false,
+    refreshing: false
   }
 
-  async componentDidMount () {
+  componentDidMount () {
+    this.fetchData()
+  }
+
+  _onRefresh = async () => {
+    this.setState({ refreshing: true })
+    this.fetchData().then(() => {
+      this.setState({ refreshing: false })
+    })
+  }
+
+  fetchData = async () => {
     const { currentLatitude, currentLongitude } = await this.getLocation()
     if (currentLatitude && currentLongitude) {
       // this.getWeatherForecast('', currentLatitude, currentLongitude)
@@ -57,12 +62,8 @@ class StartPage extends Component {
 
     try {
       const location = await Location.getCurrentPositionAsync({})
-      const currentLatitude = Number.parseFloat(
-        location.coords.latitude
-      ).toPrecision(5)
-      const currentLongitude = Number.parseFloat(
-        location.coords.longitude
-      ).toPrecision(5)
+      const currentLatitude = Number.parseFloat(location.coords.latitude).toPrecision(5)
+      const currentLongitude = Number.parseFloat(location.coords.longitude).toPrecision(5)
 
       this.props.dispatch(
         weatherActions.setCurrentCoordinates({
@@ -189,33 +190,15 @@ class StartPage extends Component {
         timeObj.dayNumber = hour.validTime.slice(8, 10)
         timeObj.month = hour.validTime.slice(5, 7)
         timeObj.year = hour.validTime.slice(0, 4)
-        timeObj.temp = hour.parameters.find(
-          element => element.name === 't'
-        ).values[0]
-        timeObj.windSpeed = hour.parameters.find(
-          element => element.name === 'ws'
-        ).values[0]
-        timeObj.windGust = hour.parameters.find(
-          element => element.name === 'gust'
-        ).values[0]
-        timeObj.windDirection = hour.parameters.find(
-          element => element.name === 'wd'
-        ).values[0]
-        timeObj.thunderRisk = hour.parameters.find(
-          element => element.name === 'tstm'
-        ).values[0]
-        timeObj.airPressure = hour.parameters.find(
-          element => element.name === 'msl'
-        ).values[0]
-        timeObj.averageRain = hour.parameters.find(
-          element => element.name === 'pmean'
-        ).values[0]
-        timeObj.weatherType = getWeatherCondition(
-          hour.parameters.find(element => element.name === 'Wsymb2').values[0]
-        )
-        timeObj.weatherTypeNum = hour.parameters.find(
-          element => element.name === 'Wsymb2'
-        ).values[0]
+        timeObj.temp = hour.parameters.find(element => element.name === 't').values[0]
+        timeObj.windSpeed = hour.parameters.find(element => element.name === 'ws').values[0]
+        timeObj.windGust = hour.parameters.find(element => element.name === 'gust').values[0]
+        timeObj.windDirection = hour.parameters.find(element => element.name === 'wd').values[0]
+        timeObj.thunderRisk = hour.parameters.find(element => element.name === 'tstm').values[0]
+        timeObj.airPressure = hour.parameters.find(element => element.name === 'msl').values[0]
+        timeObj.averageRain = hour.parameters.find(element => element.name === 'pmean').values[0]
+        timeObj.weatherType = getWeatherCondition(hour.parameters.find(element => element.name === 'Wsymb2').values[0])
+        timeObj.weatherTypeNum = hour.parameters.find(element => element.name === 'Wsymb2').values[0]
 
         // Change day on midnight
         timeObj.time === '00' && activeDayIndex++
@@ -246,9 +229,11 @@ class StartPage extends Component {
     return (
       <Container>
         <Header updateWeather={this.getWeatherForecast} navigation={this.props.navigation} />
-        <ScrollView contentContainerStyle={[s.pb3]}>
-          {newestForecastSearch.warning &&
-            <Warning message={newestForecastSearch.warning.message} />}
+        <ScrollView
+          contentContainerStyle={[s.pb3]}
+          refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh} />}
+        >
+          {newestForecastSearch.warning && <Warning message={newestForecastSearch.warning.message} />}
           {hasLocationPermission
             ? <FetchFailed text='Väderprognosen kunde inte hämtas då vi inte fick tillgång till din platsinformation. Du kan istället göra en manuell sökning.' />
             : loadingCoordinatesFailed
@@ -276,16 +261,10 @@ class StartPage extends Component {
                               </BoxContainer>
                               : null}
                           <CurrentForecast
-                            location={
-                                currentLocation.suburb
-                                  ? currentLocation.suburb
-                                  : currentLocation.city
-                              }
+                            location={currentLocation.suburb ? currentLocation.suburb : currentLocation.city}
                             getNewLocation={() => this.getLocation()}
                             currentHour={
-                                newestForecastSearch.hours.find(
-                                  hour => parseInt(hour.time) === currentHour
-                                ) ||
+                                newestForecastSearch.hours.find(hour => parseInt(hour.time) === currentHour) ||
                                   newestForecastSearch.hours.find(hour => hour)
                               }
                             />
