@@ -31,11 +31,11 @@ class StartPage extends Component {
     const { currentLatitude, currentLongitude } = await this.getLocation()
     if (currentLatitude && currentLongitude) {
       // this.getWeatherForecast('', currentLatitude, currentLongitude)
-      const { city, suburb } = this.getLocationFromCoordinates(currentLatitude, currentLongitude)
+      const { city, suburb, state } = this.getLocationFromCoordinates(currentLatitude, currentLongitude)
       fetchWeatherForecast(currentLatitude, currentLongitude, city || suburb, this.props.dispatch)
         ? this.setState({ loadingForecastFailed: false })
         : this.setState({ loadingForecastFailed: true })
-      this.getWarningForecast()
+      this.getWarningForecast(state)
     }
   }
 
@@ -102,11 +102,10 @@ class StartPage extends Component {
       }
     }
   }
-  getWarningForecast = async () => {
+  getWarningForecast = async currentState => {
     try {
       const api_call = await fetch(`https://opendata-download-warnings.smhi.se/api/version/2/alerts.json`)
       const warningForecastData = await api_call.json()
-      const { currentLocation } = this.props
       let weatherWarnings = []
 
       warningForecastData.alert.forEach(warning => {
@@ -131,7 +130,7 @@ class StartPage extends Component {
           state = locationWords[0] + ' ' + locationWords[1]
         }
 
-        if (state + ' ' + 'län' === currentLocation.state) {
+        if (state + ' ' + 'län' === currentState) {
           let warningData = {}
           warningData.location = warning.location
           warningData.icon = warning.icon
