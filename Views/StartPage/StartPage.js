@@ -24,16 +24,19 @@ import { weatherActions } from '../../Redux/WeatherReducer'
 import ForecastHeader from '../../Components/ForecastHeader'
 import BoxContainer from '../../Components/BoxContainer'
 import Warning from '../WarningPage/Components/Warning'
+import TimerMixin from 'react-timer-mixin'
 
 class StartPage extends Component {
   state = {
     hasLocationPermission: false,
     loadingCoordinatesFailed: false,
     loadingForecastFailed: false,
-    refreshing: false
+    refreshing: false,
+    timesUp: false
   }
 
   componentDidMount () {
+    setTimeout(this.timesUpF, 15000)
     this.fetchData()
   }
 
@@ -147,11 +150,16 @@ class StartPage extends Component {
     this.setState(state)
   }
 
+  timesUpF = () => {
+    this.setState({ timesUp: true })
+  }
+
   render () {
     const { loadingForecastFailed, hasLocationPermission, loadingCoordinatesFailed } = this.state
     const { forecasts, currentLocation, weatherWarningsInDistrict, navigation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
+    let { timesUp } = this.state
 
     return (
       <Container>
@@ -208,7 +216,9 @@ class StartPage extends Component {
                             latitude={currentLocation.latitude}
                             />
                         </View>
-                        : <Loading message={'Laddar din väderdata...'} />}
+                        : timesUp
+                            ? <FetchFailed text='Kunde inte ladda din väderdata, kontrollera att du är ansluten till internet.' />
+                            : <Loading message={'Laddar din väderdata...'} />}
         </ScrollView>
       </Container>
     )
