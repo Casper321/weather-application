@@ -68,7 +68,6 @@ class WarningPage extends Component {
     return (
       <Container>
         <Header navigation={this.props.navigation} />
-
         {weatherWarnings.length >= 1
           ? <ScrollView contentContainerStyle={[s.pb3]}>
             <FlatList
@@ -77,9 +76,10 @@ class WarningPage extends Component {
               data={Warnings}
               keyExtractor={item => `${item.key}`}
               renderItem={({ item }) => (
-                <BoxContainer>
+                <BoxContainer containerStyle={{ marginBottom: style.SPACING_S }}>
                   <TouchableHighlight
-                    underlayColor={style.COL_WHITE}
+                    style={{ borderRadius: 14 }}
+                    underlayColor={style.COL_GREY}
                     onPress={() =>
                         Alert.alert(
                           item.location,

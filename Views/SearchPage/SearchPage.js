@@ -11,6 +11,8 @@ import { weatherActions } from '../../Redux/WeatherReducer'
 import { connect } from 'react-redux'
 import fetchWeatherForecast from '../../Assets/Functions/fetchWeatherForecast'
 
+const allowedCountries = ['Sweden', 'Sverige', 'Norge', 'Norway', 'Finland']
+
 class SearchPage extends Component {
   state = {
     citySearch: '',
@@ -29,12 +31,18 @@ class SearchPage extends Component {
       try {
         const cities = JSON.parse(request.response)
         if (cities && cities !== undefined) {
-          const citiesAvailable = cities.map(city => {
-            let cityObj = {}
-            cityObj.city = city.display_name
-            cityObj.latitude = city.lat
-            cityObj.longitude = city.lon
-            return cityObj
+          const citiesAvailable = []
+          cities.map(city => {
+            const wordArr = city.display_name.split(' ')
+            const country = wordArr[wordArr.length - 1]
+
+            if (allowedCountries.find(allowedCountry => allowedCountry === country)) {
+              let cityObj = {}
+              cityObj.city = city.display_name
+              cityObj.latitude = city.lat
+              cityObj.longitude = city.lon
+              citiesAvailable.push(cityObj)
+            }
           })
 
           this.setState({ citiesAvailable, searchFound: true })
@@ -118,8 +126,12 @@ class SearchPage extends Component {
             data={citiesList}
             keyExtractor={() => Math.random() * 1000}
             renderItem={({ item }) => (
-              <BoxContainer>
-                <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => this.onCityPicked(item)}>
+              <BoxContainer containerStyle={{ marginBottom: s.SPACING_S }}>
+                <TouchableHighlight
+                  style={{ borderRadius: 14 }}
+                  underlayColor={style.COL_GREY}
+                  onPress={() => this.onCityPicked(item)}
+                  >
                   <SearchItem city={item.cityName} longerLocationName={item.longerLocationName} />
                 </TouchableHighlight>
               </BoxContainer>

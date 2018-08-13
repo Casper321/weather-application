@@ -9,7 +9,7 @@ import getMonth from '../Assets/Functions/getMonth'
 import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
 import getHighestOccurrence from '../Assets/Functions/getHighestOccurrence'
 
-const ForecastDays = ({ days, navigation }) => {
+const ForecastDays = ({ days, navigation, setScrollIndex }) => {
   // Array holding weather forecast data for 10 days
 
   const tenDays = [
@@ -41,6 +41,7 @@ const ForecastDays = ({ days, navigation }) => {
     day.forEach(hour => {
       totRain += hour.averageRain
       dayData.date = hour.date
+      dayData.dayNumber = hour.dayNumber
 
       if (key === 0) {
         dayData.day = 'Idag'
@@ -89,9 +90,9 @@ const ForecastDays = ({ days, navigation }) => {
   })
 
   const handleDayClick = dayNumber => {
-    const currentDay = new Date().getDay()
-    const dayIndex = parseInt(dayNumber) - currentDay
-    navigation.navigate('Timmar', { dayIndex })
+    const index = parseInt(dayNumber) - new Date().getDate()
+    setScrollIndex(index)
+    navigation.navigate('Timmar')
   }
 
   const renderSeparator = () => {
@@ -124,7 +125,9 @@ const ForecastDays = ({ days, navigation }) => {
     </BoxContainer>
   )
 }
+
 ForecastDays.propTypes = {
   navigation: PropTypes.object.isRequired
 }
+
 export default ForecastDays

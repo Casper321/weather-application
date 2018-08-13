@@ -52,7 +52,7 @@ export default class InfoPage extends Component {
                 style={[s.mt1, s.mb1, s.ml3]}
                 underlayColor={style.COL_GREY}
                 activeOpacity={1}
-                onPress={() => Linking.openURL('https://www.facebook.com/carl.claesson.1')}
+                onPress={() => Linking.openURL('https://www.linkedin.com/in/carl-claesson-29145a16a/')}
               >
                 <View style={[s.flexDr, s.flexAce]}>
 

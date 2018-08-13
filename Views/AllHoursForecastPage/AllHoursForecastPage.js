@@ -7,12 +7,6 @@ import { connect } from 'react-redux'
 import Loading from '../../Components/Loading'
 
 class AllHoursForecastPage extends Component {
-  componentDidMount = () => {
-    this.flatListRef.scrollToItem({
-      item: { day: 7 }
-    })
-  }
-
   render () {
     const { forecasts, currentLocation, navigation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
@@ -28,26 +22,22 @@ class AllHoursForecastPage extends Component {
       { day: 8 },
       { day: 9 }
     ]
+
     return (
       <Container>
         <BackHeader stackNavigation={navigation} title='Detaljerad prognos' />
-        {newestForecastSearch.hours
-          ? <FlatList
-            ref={ref => {
-              this.flatListRef = ref
-            }}
-            data={arr}
-            keyExtractor={item => item.day}
-            renderItem={({ item }) => (
-              <ForecastAllHours
-                forecastDay={item.day}
-                hours={newestForecastSearch.hours}
-                longitude={currentLocation.longitude}
-                latitude={currentLocation.latitude}
-                />
-              )}
+        <FlatList
+          data={arr}
+          keyExtractor={item => item.day}
+          renderItem={({ item }) => (
+            <ForecastAllHours
+              forecastDay={item.day}
+              hours={newestForecastSearch.hours}
+              longitude={currentLocation.longitude}
+              latitude={currentLocation.latitude}
             />
-          : <Loading message={'Laddar din väderdata...'} />}
+          )}
+        />
       </Container>
     )
   }
@@ -56,7 +46,8 @@ class AllHoursForecastPage extends Component {
 function mapStateToProps (state) {
   return {
     forecasts: state.weather.forecasts,
-    currentLocation: state.weather.currentLocation
+    currentLocation: state.weather.currentLocation,
+    setScrollIndexAllHoursPage: state.weather.setScrollIndexAllHoursPage
   }
 }
 

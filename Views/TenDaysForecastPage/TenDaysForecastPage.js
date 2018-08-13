@@ -8,8 +8,14 @@ import ForecastDays from '../../Components/ForecastDays'
 import { connect } from 'react-redux'
 import Loading from '../../Components/Loading'
 import s from '../../Assets/style'
+import { weatherActions } from '../../Redux/WeatherReducer'
 
 class TenDaysForecastPage extends Component {
+  setScrollIndex = index => {
+    console.log(index)
+    weatherActions.setScrollIndexAllHoursPage(index)
+  }
+
   render () {
     const { forecasts, navigation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
@@ -21,7 +27,11 @@ class TenDaysForecastPage extends Component {
           {newestForecastSearch.hours
             ? <View>
               <Header10Days />
-              <ForecastDays days={newestForecastSearch.hours} navigation={navigation} />
+              <ForecastDays
+                setScrollIndex={index => this.setScrollIndex(index)}
+                days={newestForecastSearch.hours}
+                navigation={navigation}
+                />
             </View>
             : <Loading message={'Laddar din väderdata...'} />}
         </ScrollView>
@@ -32,7 +42,8 @@ class TenDaysForecastPage extends Component {
 
 function mapStateToProps (state) {
   return {
-    forecasts: state.weather.forecasts
+    forecasts: state.weather.forecasts,
+    setScrollIndexAllHoursPage: state.weather.forecasts
   }
 }
 
