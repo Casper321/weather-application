@@ -1,5 +1,29 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "name": "Vackert Väder",
+    "icon": "./Assets/Images/app_icon.png",
+    "version": "1.0.0",
+    "slug": "vackert-vader",
+    "sdkVersion": "27.0.0",
+    "privacy": "public",
+    "primaryColor": "#2196f3",
+    "githubUrl": "https://github.com/Casper321/weather-application",
+    "splash": {
+      "backgroundColor": "#2196f3",
+      "resizeMode": "contain",
+      "image": "./Assets/Images/app_icon.png"
+    },
+    "ios": {
+      "bundleIdentifier": "com.swenativedevs.vackertvader",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.swenativedevs.vackertvader",
+      "versionCode": 1,
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ]
+    }
   }
 }
