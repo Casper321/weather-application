@@ -283,9 +283,7 @@ class StartPage extends Component {
         <ScrollView contentContainerStyle={[s.pb3]}>
           {newestForecastSearch.warning &&
             <Warning message={newestForecastSearch.warning.message} />}
-          {timesUp
-            ? <FetchFailed text='Kunde inte ladda din väderdata, kontrollera att du är ansluten till internet.' />
-            : hasLocationPermission
+          {hasLocationPermission
                 ? <FetchFailed text='Väderprognosen kunde inte hämtas då vi inte fick tillgång till din platsinformation. Du kan istället göra en manuell sökning.' />
                 : loadingCoordinatesFailed
                     ? <FetchFailed text='Din platsinformation kunde inte hämtas. Testa istället att göra en manuell sökning.' />
@@ -345,6 +343,8 @@ class StartPage extends Component {
                                 latitude={currentLocation.latitude}
                                 />
                             </View>
+                            :timesUp
+                            ? <FetchFailed text='Kunde inte ladda din väderdata, kontrollera att du är ansluten till internet.' />
                             : <Loading message={'Laddar din väderdata...'} />}
         </ScrollView>
       </Container>
