@@ -49,29 +49,28 @@ class SearchPage extends Component {
   onCityPicked = city => {
     let { latitude, longitude, cityName, longerLocationName } = city
     let longerLocationNameList = longerLocationName.split(',')
-    console.log(longerLocationNameList)
+    //console.log(longerLocationNameList)
     let longerLocationNameList2 = [[]];
     let state = ''
     for(i=0;i<longerLocationNameList.length;i++){
       longerLocationNameList2[i] = longerLocationNameList[i].split(" ")
    }
-    console.log(longerLocationNameList2)
+    //console.log(longerLocationNameList2)
     if(longerLocationNameList2[0][1] === 'län'){ 
       state = longerLocationNameList2[0][0] + ' ' + longerLocationNameList2[0][1]
-      console.log(longerLocationNameList2[0] + ' ' + longerLocationNameList2[0][1])
+     // console.log(longerLocationNameList2[0] + ' ' + longerLocationNameList2[0][1])
     }
     for(i=1;i<longerLocationNameList2.length;i++){
       if(longerLocationNameList2[i][2] === 'län'){ 
         state = longerLocationNameList2[i][1] + ' ' + longerLocationNameList2[i][2]
-        console.log(longerLocationNameList2[i][1] + ' ' + longerLocationNameList2[i][2])
+       // console.log(longerLocationNameList2[i][1] + ' ' + longerLocationNameList2[i][2])
       }
       if(longerLocationNameList2[i][3] === 'län'){ 
         state = longerLocationNameList2[i][1] + ' ' + longerLocationNameList2[i][2] + ' ' + longerLocationNameList2[i][3]
-        console.log(longerLocationNameList2[i][1] + ' ' + longerLocationNameList2[i][2]+ ' ' + longerLocationNameList2[i][3])
+        //console.log(longerLocationNameList2[i][1] + ' ' + longerLocationNameList2[i][2]+ ' ' + longerLocationNameList2[i][3])
       }
     }
-
-    
+   
 
     latitude = parseFloat(latitude)
     longitude = parseFloat(longitude)
@@ -84,6 +83,39 @@ class SearchPage extends Component {
         state: state || ''
       })
     )
+
+    let { weatherWarnings} = this.props
+
+    let weatherWarningsInDistrict = []
+
+      weatherWarnings.forEach(warning => {
+        const locationWords = warning.location.split(' ')
+        let thisstate = ''
+
+        if (locationWords[1] === 'län') {
+          thisstate = locationWords[0]
+        } else {
+          thisstate = locationWords[0] + ' ' + locationWords[1]
+        }
+
+        if (thisstate + ' län' === state) {
+          let warningData = {}
+          warningData.location = warning.location
+          warningData.icon = warning.icon
+          warningData.message = warning.message
+          weatherWarningsInDistrict.push(warningData)
+        }
+      })
+
+      const weatherWarningsInDistrictSorted = weatherWarningsInDistrict.sort(
+        (a, b) => a.location.localeCompare(b.location)
+      )
+      console.log(weatherWarningsInDistrictSorted)
+      this.props.dispatch(
+        weatherActions.setWeatherWarningsInDistrict(
+          weatherWarningsInDistrictSorted
+        )
+      )
     fetchWeatherForecast(latitude, longitude, city.cityName, this.props.dispatch)
     this.props.navigation.navigate('Start')
     
@@ -144,7 +176,9 @@ class SearchPage extends Component {
 
 function mapStateToProps (state) {
   return {
-    currentLocation: state.weather.currentLocation
+    currentLocation: state.weather.currentLocation,
+    weatherWarningsInDistrict: state.weather.weatherWarningsInDistrict,
+    weatherWarnings: state.weather.weatherWarnings
   }
 }
 
