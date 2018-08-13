@@ -5,7 +5,11 @@ import Header from '../../Components/Header'
 import CurrentForecast from '../../Components/CurrentForecast'
 import ForecastHours from '../../Components/ForecastHours'
 import Loading from '../../Components/Loading'
+
 import fetchWeatherForecast from '../../Assets/Functions/fetchWeatherForecast'
+import getLocationFromCoordinates from '../../Assets/Functions/getLocationFromCoordinates'
+import getWarningForecast from '../../Assets/Functions/getWarningForecast'
+
 import computeSunrise from '../../Assets/Functions/computeSunrise'
 import s from '../../Assets/style'
 import * as style from '../../Assets/style'
@@ -44,11 +48,11 @@ class StartPage extends Component {
     const { currentLatitude, currentLongitude } = await this.getLocation()
     if (currentLatitude && currentLongitude) {
       // this.getWeatherForecast('', currentLatitude, currentLongitude)
-      const { city, suburb, state } = this.getLocationFromCoordinates(currentLatitude, currentLongitude)
+      const { city, suburb, state } = getLocationFromCoordinates(currentLatitude, currentLongitude, this.props.dispatch)
       fetchWeatherForecast(currentLatitude, currentLongitude, city || suburb, this.props.dispatch)
         ? this.setState({ loadingForecastFailed: false })
         : this.setState({ loadingForecastFailed: true })
-      this.getWarningForecast(state)
+      getWarningForecast(state, this.props.dispatch)
     }
   }
 
@@ -78,89 +82,6 @@ class StartPage extends Component {
     }
   }
 
-  getLocationFromCoordinates = (latitude, longitude) => {
-    if (latitude && longitude) {
-      let currentCity, currentSuburb
-      const request = new XMLHttpRequest()
-      request.open(
-        'GET',
-        `https://eu1.locationiq.org/v1/reverse.php?key=102c0e44882475&lat=${latitude}&lon=${longitude}&format=json`,
-        true
-      )
-      request.onload = () => {
-        var data = JSON.parse(request.response)
-        const newLocation = {}
-        newLocation.latitude = data.lat
-        newLocation.longitude = data.lon
-        newLocation.city = data.address.city
-        newLocation.suburb = data.address.suburb
-
-        this.props.dispatch(
-          weatherActions.setCurrentLocation({
-            latitude,
-            longitude,
-            city: data.address.city,
-            suburb: data.address.suburb,
-            state: data.address.state
-          })
-        )
-
-        currentCity = data.address.city
-        currentSuburb = data.address.suburb
-      }
-      request.send(null)
-      return {
-        city: currentCity,
-        suburb: currentSuburb
-      }
-    }
-  }
-  getWarningForecast = async currentState => {
-    try {
-      const api_call = await fetch(`https://opendata-download-warnings.smhi.se/api/version/2/alerts.json`)
-      const warningForecastData = await api_call.json()
-      let weatherWarnings = []
-
-      warningForecastData.alert.forEach(warning => {
-        let warningObj = {}
-        warningObj.location = warning.info.headline
-        warningObj.message = warning.info.description
-        warningObj.icon = warning.info.event
-        warningObj.district = warning.info.headline
-        weatherWarnings.push(warningObj)
-      })
-      this.props.dispatch(weatherActions.setWeatherWarnings(weatherWarnings))
-
-      let weatherWarningsInDistrict = []
-
-      weatherWarnings.forEach(warning => {
-        const locationWords = warning.location.split(' ')
-        let state = ''
-
-        if (locationWords[1] === 'län') {
-          state = locationWords[0]
-        } else {
-          state = locationWords[0] + ' ' + locationWords[1]
-        }
-
-        if (state + ' ' + 'län' === currentState) {
-          let warningData = {}
-          warningData.location = warning.location
-          warningData.icon = warning.icon
-          warningData.message = warning.message
-          weatherWarningsInDistrict.push(warningData)
-        }
-      })
-
-      const weatherWarningsInDistrictSorted = weatherWarningsInDistrict.sort((a, b) =>
-        a.location.localeCompare(b.location)
-      )
-
-      this.props.dispatch(weatherActions.setWeatherWarningsInDistrict(weatherWarningsInDistrictSorted))
-    } catch (error) {
-      console.log('kan inte hämta varning', error)
-    }
-  }
   getWeatherForecast = async (city, latitude, longitude) => {
     try {
       const api_call = await fetch(
@@ -218,6 +139,12 @@ class StartPage extends Component {
     } catch (error) {
       this.setState({ loadingForecastFailed: true })
     }
+  }
+
+  updateState = (type, value) => {
+    const state = { ...this.state }
+    state[type] = value
+    this.setState(state)
   }
 
   render () {
