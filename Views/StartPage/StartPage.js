@@ -27,15 +27,18 @@ import { weatherActions } from '../../Redux/WeatherReducer'
 import ForecastHeader from '../../Components/ForecastHeader'
 import BoxContainer from '../../Components/BoxContainer'
 import Warning from '../WarningPage/Components/Warning'
+import TimerMixin from 'react-timer-mixin'
 
 class StartPage extends Component {
   state = {
     hasLocationPermission: false,
     loadingCoordinatesFailed: false,
-    loadingForecastFailed: false
+    loadingForecastFailed: false,
+    timesUp: false
   }
 
   async componentDidMount () {
+    setTimeout(this.timesUpF, 15000)
     const { currentLatitude, currentLongitude } = await this.getLocation()
     if (currentLatitude && currentLongitude) {
       // this.getWeatherForecast('', currentLatitude, currentLongitude)
@@ -124,7 +127,9 @@ class StartPage extends Component {
   }
   getWarningForecast = async () => {
     try {
-      const api_call = await fetch(`https://opendata-download-warnings.smhi.se/api/version/2/alerts.json`)
+      const api_call = await fetch(
+        `https://opendata-download-warnings.smhi.se/api/version/2/alerts.json`
+      )
       const warningForecastData = await api_call.json()
       const { currentLocation } = this.props
       let weatherWarnings = []
@@ -160,11 +165,15 @@ class StartPage extends Component {
         }
       })
 
-      const weatherWarningsInDistrictSorted = weatherWarningsInDistrict.sort((a, b) =>
-        a.location.localeCompare(b.location)
+      const weatherWarningsInDistrictSorted = weatherWarningsInDistrict.sort(
+        (a, b) => a.location.localeCompare(b.location)
       )
 
-      this.props.dispatch(weatherActions.setWeatherWarningsInDistrict(weatherWarningsInDistrictSorted))
+      this.props.dispatch(
+        weatherActions.setWeatherWarningsInDistrict(
+          weatherWarningsInDistrictSorted
+        )
+      )
     } catch (error) {
       console.log('kan inte hämta varning', error)
     }
@@ -245,74 +254,98 @@ class StartPage extends Component {
       this.setState({ loadingForecastFailed: true })
     }
   }
-
+  timesUpF = () => {
+    this.setState({ timesUp: true })
+  }
   render () {
-    const { loadingForecastFailed, hasLocationPermission, loadingCoordinatesFailed } = this.state
-    const { forecasts, currentLocation, weatherWarningsInDistrict, navigation } = this.props
+    const {
+      loadingForecastFailed,
+      hasLocationPermission,
+      loadingCoordinatesFailed
+    } = this.state
+    const {
+      forecasts,
+      currentLocation,
+      weatherWarningsInDistrict,
+      navigation
+    } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
+    let { timesUp } = this.state
 
     return (
       <Container>
 
-        <Header updateWeather={this.getWeatherForecast} navigation={this.props.navigation} />
+        <Header
+          updateWeather={this.getWeatherForecast}
+          navigation={this.props.navigation}
+        />
         <ScrollView contentContainerStyle={[s.pb3]}>
           {newestForecastSearch.warning &&
             <Warning message={newestForecastSearch.warning.message} />}
-          {hasLocationPermission
-            ? <FetchFailed text='Väderprognosen kunde inte hämtas då vi inte fick tillgång till din platsinformation. Du kan istället göra en manuell sökning.' />
-            : loadingCoordinatesFailed
-                ? <FetchFailed text='Din platsinformation kunde inte hämtas. Testa istället att göra en manuell sökning.' />
-                : loadingForecastFailed
-                    ? <FetchFailed text='Din sökning kunde tyvärr inte genomföras då din nuvarande plats är utanför vårt prognosområde.' />
-                    : newestForecastSearch.hours
-                        ? <View>
-                          {weatherWarningsInDistrict[0]
-                              ? <BoxContainer>
-                                <TouchableHighlight
-                                  underlayColor={style.COL_WHITE}
-                                  onPress={() => navigation.navigate('Varningar')}
-                                  >
-                                  <Warning
-                                    location={
-                                        weatherWarningsInDistrict[0].location +
-                                          ' (' +
-                                          weatherWarningsInDistrict.length +
-                                          ' varningar)'
-                                      }
-                                    message={weatherWarningsInDistrict[0].message}
-                                    />
-                                </TouchableHighlight>
-                              </BoxContainer>
-                              : null}
-                          <CurrentForecast
-                            location={
-                                currentLocation.suburb
-                                  ? currentLocation.suburb
-                                  : currentLocation.city
-                              }
-                            getNewLocation={() => this.getLocation()}
-                            currentHour={
-                                newestForecastSearch.hours.find(
-                                  hour => parseInt(hour.time) === currentHour
-                                ) ||
-                                  newestForecastSearch.hours.find(hour => hour)
-                              }
-                            />
-                          <ForecastHours
-                            forecastDay={0}
-                            hours={newestForecastSearch.hours}
-                            longitude={currentLocation.longitude}
-                            latitude={currentLocation.latitude}
-                            />
-                          <ForecastHours
-                            forecastDay={1}
-                            hours={newestForecastSearch.hours}
-                            longitude={currentLocation.longitude}
-                            latitude={currentLocation.latitude}
-                            />
-                        </View>
-                        : <Loading message={'Laddar din väderdata...'} />}
+          {timesUp
+            ? <FetchFailed text='Kunde inte ladda din väderdata, kontrollera att du är ansluten till internet.' />
+            : hasLocationPermission
+                ? <FetchFailed text='Väderprognosen kunde inte hämtas då vi inte fick tillgång till din platsinformation. Du kan istället göra en manuell sökning.' />
+                : loadingCoordinatesFailed
+                    ? <FetchFailed text='Din platsinformation kunde inte hämtas. Testa istället att göra en manuell sökning.' />
+                    : loadingForecastFailed
+                        ? <FetchFailed text='Din sökning kunde tyvärr inte genomföras då din nuvarande plats är utanför vårt prognosområde.' />
+                        : newestForecastSearch.hours
+                            ? <View>
+                              {weatherWarningsInDistrict[0]
+                                  ? <BoxContainer>
+                                    <TouchableHighlight
+                                      underlayColor={style.COL_WHITE}
+                                      onPress={() =>
+                                          navigation.navigate('Varningar')}
+                                      >
+                                      <Warning
+                                        location={
+                                            weatherWarningsInDistrict[0]
+                                              .location +
+                                              ' (' +
+                                              weatherWarningsInDistrict.length +
+                                              ' varningar)'
+                                          }
+                                        message={
+                                            weatherWarningsInDistrict[0].message
+                                          }
+                                        />
+                                    </TouchableHighlight>
+                                  </BoxContainer>
+                                  : null}
+                              <CurrentForecast
+                                location={
+                                    currentLocation.suburb
+                                      ? currentLocation.suburb
+                                      : currentLocation.city
+                                  }
+                                getNewLocation={() => this.getLocation()}
+                                currentHour={
+                                    newestForecastSearch.hours.find(
+                                      hour =>
+                                        parseInt(hour.time) === currentHour
+                                    ) ||
+                                      newestForecastSearch.hours.find(
+                                        hour => hour
+                                      )
+                                  }
+                                />
+                              <ForecastHours
+                                forecastDay={0}
+                                hours={newestForecastSearch.hours}
+                                longitude={currentLocation.longitude}
+                                latitude={currentLocation.latitude}
+                                />
+                              <ForecastHours
+                                forecastDay={1}
+                                hours={newestForecastSearch.hours}
+                                longitude={currentLocation.longitude}
+                                latitude={currentLocation.latitude}
+                                />
+                            </View>
+                            : <Loading message={'Laddar din väderdata...'} />}
         </ScrollView>
       </Container>
     )
