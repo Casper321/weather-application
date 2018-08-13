@@ -37,8 +37,15 @@ class AllHoursForecastPage extends Component {
               this.flatListRef = ref
             }}
             data={arr}
-            keyExtractor={item => `${item.day}`}
-            renderItem={({ item }) => <ForecastAllHours forecastDay={item.day} hours={newestForecastSearch.hours} />}
+            keyExtractor={item => item.day}
+            renderItem={({ item }) => (
+              <ForecastAllHours
+                forecastDay={item.day}
+                hours={newestForecastSearch.hours}
+                longitude={currentLocation.longitude}
+                latitude={currentLocation.latitude}
+                />
+              )}
             />
           : <Loading message={'Laddar din väderdata...'} />}
       </Container>
@@ -48,7 +55,8 @@ class AllHoursForecastPage extends Component {
 
 function mapStateToProps (state) {
   return {
-    forecasts: state.weather.forecasts
+    forecasts: state.weather.forecasts,
+    currentLocation: state.weather.currentLocation
   }
 }
 
