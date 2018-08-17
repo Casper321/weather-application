@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "Vackert Väder",
+    "name": "Nordens Väder",
     "icon": "./Assets/Images/app_icon.png",
     "version": "1.0.0",
-    "slug": "vackert-vader",
+    "slug": "nordens-vader",
     "sdkVersion": "27.0.0",
     "privacy": "public",
     "primaryColor": "#2196f3",
@@ -14,11 +14,11 @@
       "image": "./Assets/Images/app_icon.png"
     },
     "ios": {
-      "bundleIdentifier": "com.swenativedevs.vackertvader",
+      "bundleIdentifier": "com.swenativedevs.nordensvader",
       "supportsTablet": true
     },
     "android": {
-      "package": "com.swenativedevs.vackertvader",
+      "package": "com.swenativedevs.nordensvader",
       "versionCode": 1,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
