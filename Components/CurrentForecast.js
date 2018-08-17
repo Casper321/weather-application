@@ -30,7 +30,7 @@ const CurrentForecast = ({ currentHour, location, getNewLocation }) => {
             <Text style={[s.tac, s.fz2, s.col_black, s.mt2, s.mb2]}>{weatherType}</Text>
             {icon}
           </View>
-          <View style={[s.flex1, s.flexJsb, s.flexAfs]}>
+          <View style={[s.flex1, s.flexJsb, s.flexAfs, s.mr2]}>
             <Rain amountRain={averageRain} />
             <View style={[s.mt1]}>
               <Wind windSpeed={windSpeed} windGust={windGust} />
