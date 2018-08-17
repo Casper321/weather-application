@@ -6,39 +6,41 @@ import s from '../../../Assets/style'
 const Header10Days = () => {
   return (
     <BoxContainer>
-      <View style={[s.col_bg_white, s.w, s.flexDr, s.flexJsb, s.mlA, s.mrA]}>
-        <Text style={[s.pa1, s.fz0, s.fw1, s.maA]}>
-          DAG
-        </Text>
-        <View style={[s.pa1, s.flexDc]}>
-          <Text style={[s.fz0, s.fw1, s.tac]}>
-            TEMP.
+      <View>
+        <View style={[s.w, s.flexDr, s.flexJsb, s.mlA, s.mrA]}>
+          <Text style={[s.pa1, s.fz0, s.fw1, s.maA]}>
+            DAG
           </Text>
-          <View style={[s.flexDr, s.flexJsb]}>
-            <Text style={[s.fz0, s.fw0, s.col_dark_grey, styles.tempH]}>
-              H
+          <View style={[s.pa1, s.flexDc]}>
+            <Text style={[s.fz0, s.fw1, s.tac]}>
+              TEMP.
             </Text>
-            <Text style={[s.fz0, s.fw0, s.col_dark_grey, styles.tempL]}>
-              L
-            </Text>
+            <View style={[s.flexDr, s.flexJsb]}>
+              <Text style={[s.fz0, s.fw0, s.col_dark_grey, styles.tempH]}>
+                H
+              </Text>
+              <Text style={[s.fz0, s.fw0, s.col_dark_grey, styles.tempL]}>
+                L
+              </Text>
+            </View>
           </View>
-        </View>
-        <View style={[s.pa1, s.flexDc]}>
-          <Text style={[s.fz0, s.fw1, s.tac]}>
-            VÄDER
+          <View style={[s.pa1, s.flexDc]}>
+            <Text style={[s.fz0, s.fw1, s.tac]}>
+              VÄDER
+            </Text>
+            <View style={[s.flexDr, s.flexJsb]}>
+              <Text style={[s.fz0, s.fw0, s.col_dark_grey, styles.weatherNatt]}>
+                Natt
+              </Text>
+              <Text style={[s.fz0, s.fw0, s.col_dark_grey, styles.weatherDag]}>
+                Dag
+              </Text>
+            </View>
+          </View>
+          <Text style={[s.pa1, s.fz0, s.fw1]}>
+            NEDERB.
           </Text>
-          <View style={[s.flexDr, s.flexJsb]}>
-            <Text style={[s.fz0, s.fw0, s.col_dark_grey, styles.weatherNatt]}>
-              Natt
-            </Text>
-            <Text style={[s.fz0, s.fw0, s.col_dark_grey, styles.weatherDag]}>
-              Dag
-            </Text>
-          </View>
         </View>
-        <Text style={[s.pa1, s.fz0, s.fw1]}>
-          NEDERB.
-        </Text>
       </View>
     </BoxContainer>
   )

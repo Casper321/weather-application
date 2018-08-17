@@ -9,7 +9,7 @@ import getMonth from '../Assets/Functions/getMonth'
 import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
 import getHighestOccurrence from '../Assets/Functions/getHighestOccurrence'
 
-const ForecastDays = ({ days, navigation }) => {
+const ForecastDays = ({ days, navigation, setScrollIndex }) => {
   // Array holding weather forecast data for 10 days
 
   const tenDays = [
@@ -41,6 +41,7 @@ const ForecastDays = ({ days, navigation }) => {
     day.forEach(hour => {
       totRain += hour.averageRain
       dayData.date = hour.date
+      dayData.dayNumber = hour.dayNumber
 
       if (key === 0) {
         dayData.day = 'Idag'
@@ -89,42 +90,44 @@ const ForecastDays = ({ days, navigation }) => {
   })
 
   const handleDayClick = dayNumber => {
-    const currentDay = new Date().getDay()
-    const dayIndex = parseInt(dayNumber) - currentDay
-    console.log(currentDay)
-    console.log(dayNumber)
-    navigation.navigate('Timmar', { dayIndex })
+    const index = parseInt(dayNumber) - new Date().getDate()
+    setScrollIndex(index)
+    navigation.navigate('Timmar')
+  }
+
+  const renderSeparator = () => {
+    return <View style={[s.bbw, s.bc]} />
   }
 
   return (
     <BoxContainer>
-      <FlatList
-        data={singleDay}
-        keyExtractor={item => `${item.key}`}
-        renderItem={({ item }) => (
-          <TouchableHighlight
-            underlayColor={style.COL_GREY}
-            activeOpacity={1}
-            onPress={() => handleDayClick(item.dayNumber)}
-          >
-            <ForecastDay
-              day={item.day}
-              date={item.date}
-              tempHigh={item.tempHigh}
-              tempLow={item.tempLow}
-              weatherTypeNumNight={item.weatherTypeNumNight}
-              weatherTypeNumDay={item.weatherTypeNumDay}
-              totalRain={item.totalRain}
-              hoursLeft={item.hoursLeft}
-            />
-          </TouchableHighlight>
-        )}
-      />
-
+      <View>
+        <FlatList
+          ItemSeparatorComponent={renderSeparator}
+          data={singleDay}
+          keyExtractor={item => `${item.key}`}
+          renderItem={({ item }) => (
+            <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => handleDayClick(item.dayNumber)}>
+              <ForecastDay
+                day={item.day}
+                date={item.date}
+                tempHigh={item.tempHigh}
+                tempLow={item.tempLow}
+                weatherTypeNumNight={item.weatherTypeNumNight}
+                weatherTypeNumDay={item.weatherTypeNumDay}
+                totalRain={item.totalRain}
+                hoursLeft={item.hoursLeft}
+              />
+            </TouchableHighlight>
+          )}
+        />
+      </View>
     </BoxContainer>
   )
 }
+
 ForecastDays.propTypes = {
   navigation: PropTypes.object.isRequired
 }
+
 export default ForecastDays

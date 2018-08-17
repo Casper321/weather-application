@@ -11,6 +11,8 @@ import { weatherActions } from '../../Redux/WeatherReducer'
 import { connect } from 'react-redux'
 import fetchWeatherForecast from '../../Assets/Functions/fetchWeatherForecast'
 
+const allowedCountries = ['Sweden', 'Sverige', 'Norge', 'Norway', 'Finland']
+
 class SearchPage extends Component {
   state = {
     citySearch: '',
@@ -29,18 +31,24 @@ class SearchPage extends Component {
       try {
         const cities = JSON.parse(request.response)
         if (cities && cities !== undefined) {
-          const citiesAvailable = cities.map(city => {
-            let cityObj = {}
-            cityObj.city = city.display_name
-            cityObj.latitude = city.lat
-            cityObj.longitude = city.lon
-            return cityObj
+          const citiesAvailable = []
+          cities.map(city => {
+            const wordArr = city.display_name.split(' ')
+            const country = wordArr[wordArr.length - 1]
+
+            if (allowedCountries.find(allowedCountry => allowedCountry === country)) {
+              let cityObj = {}
+              cityObj.city = city.display_name
+              cityObj.latitude = city.lat
+              cityObj.longitude = city.lon
+              citiesAvailable.push(cityObj)
+            }
           })
 
           this.setState({ citiesAvailable, searchFound: true })
         }
       } catch (error) {
-        //console.log(error)
+        // console.log(error)
       }
     }
     request.send(null)
@@ -49,28 +57,23 @@ class SearchPage extends Component {
   onCityPicked = city => {
     let { latitude, longitude, cityName, longerLocationName } = city
     let longerLocationNameList = longerLocationName.split(',')
-    //console.log(longerLocationNameList)
-    let longerLocationNameList2 = [[]];
+    let longerLocationNameList2 = [[]]
     let state = ''
-    for(i=0;i<longerLocationNameList.length;i++){
-      longerLocationNameList2[i] = longerLocationNameList[i].split(" ")
-   }
-    //console.log(longerLocationNameList2)
-    if(longerLocationNameList2[0][1] === 'län'){ 
+    for (i = 0; i < longerLocationNameList.length; i++) {
+      longerLocationNameList2[i] = longerLocationNameList[i].split(' ')
+    }
+    if (longerLocationNameList2[0][1] === 'län') {
       state = longerLocationNameList2[0][0] + ' ' + longerLocationNameList2[0][1]
-     // console.log(longerLocationNameList2[0] + ' ' + longerLocationNameList2[0][1])
     }
-    for(i=1;i<longerLocationNameList2.length;i++){
-      if(longerLocationNameList2[i][2] === 'län'){ 
+    for (i = 1; i < longerLocationNameList2.length; i++) {
+      if (longerLocationNameList2[i][2] === 'län') {
         state = longerLocationNameList2[i][1] + ' ' + longerLocationNameList2[i][2]
-       // console.log(longerLocationNameList2[i][1] + ' ' + longerLocationNameList2[i][2])
       }
-      if(longerLocationNameList2[i][3] === 'län'){ 
-        state = longerLocationNameList2[i][1] + ' ' + longerLocationNameList2[i][2] + ' ' + longerLocationNameList2[i][3]
-        //console.log(longerLocationNameList2[i][1] + ' ' + longerLocationNameList2[i][2]+ ' ' + longerLocationNameList2[i][3])
+      if (longerLocationNameList2[i][3] === 'län') {
+        state =
+          longerLocationNameList2[i][1] + ' ' + longerLocationNameList2[i][2] + ' ' + longerLocationNameList2[i][3]
       }
     }
-   
 
     latitude = parseFloat(latitude)
     longitude = parseFloat(longitude)
@@ -84,42 +87,36 @@ class SearchPage extends Component {
       })
     )
 
-    let { weatherWarnings} = this.props
+    let { weatherWarnings } = this.props
 
     let weatherWarningsInDistrict = []
 
-      weatherWarnings.forEach(warning => {
-        const locationWords = warning.location.split(' ')
-        let thisstate = ''
+    weatherWarnings.forEach(warning => {
+      const locationWords = warning.location.split(' ')
+      let thisstate = ''
 
-        if (locationWords[1] === 'län') {
-          thisstate = locationWords[0]
-        } else {
-          thisstate = locationWords[0] + ' ' + locationWords[1]
-        }
+      if (locationWords[1] === 'län') {
+        thisstate = locationWords[0]
+      } else {
+        thisstate = locationWords[0] + ' ' + locationWords[1]
+      }
 
-        if (thisstate + ' län' === state) {
-          let warningData = {}
-          warningData.location = warning.location
-          warningData.icon = warning.icon
-          warningData.message = warning.message
-          weatherWarningsInDistrict.push(warningData)
-        }
-      })
+      if (thisstate + ' län' === state) {
+        let warningData = {}
+        warningData.location = warning.location
+        warningData.icon = warning.icon
+        warningData.message = warning.message
+        weatherWarningsInDistrict.push(warningData)
+      }
+    })
 
-      const weatherWarningsInDistrictSorted = weatherWarningsInDistrict.sort(
-        (a, b) => a.location.localeCompare(b.location)
-      )
-      console.log(weatherWarningsInDistrictSorted)
-      this.props.dispatch(
-        weatherActions.setWeatherWarningsInDistrict(
-          weatherWarningsInDistrictSorted
-        )
-      )
+    const weatherWarningsInDistrictSorted = weatherWarningsInDistrict.sort((a, b) =>
+      a.location.localeCompare(b.location)
+    )
+    console.log(weatherWarningsInDistrictSorted)
+    this.props.dispatch(weatherActions.setWeatherWarningsInDistrict(weatherWarningsInDistrictSorted))
     fetchWeatherForecast(latitude, longitude, city.cityName, this.props.dispatch)
     this.props.navigation.navigate('Start')
-    
-    
   }
 
   render () {
@@ -151,24 +148,18 @@ class SearchPage extends Component {
             data={citiesList}
             keyExtractor={() => Math.random() * 1000}
             renderItem={({ item }) => (
-              <BoxContainer>
-                <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => this.onCityPicked(item)}>
+              <BoxContainer containerStyle={{ marginBottom: s.SPACING_S }}>
+                <TouchableHighlight
+                  style={{ borderRadius: 14 }}
+                  underlayColor={style.COL_GREY}
+                  onPress={() => this.onCityPicked(item)}
+                  >
                   <SearchItem city={item.cityName} longerLocationName={item.longerLocationName} />
                 </TouchableHighlight>
               </BoxContainer>
               )}
             />
           : null}
-
-        <TextInput
-          onChangeText={this.onType}
-          value={this.state.citySearch}
-          placeholder='Skriv här...'
-          autoCapitalize='words'
-          autoFocus
-          style={styles.input}
-          underlineColorAndroid='rgba(0,0,0,0)'
-        />
       </Container>
     )
   }
