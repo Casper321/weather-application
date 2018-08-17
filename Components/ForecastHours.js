@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, TouchableNativeFeedback, TouchableHighlight, FlatList } from 'react-native'
+import { View, ScrollView, StyleSheet, TouchableNativeFeedback, TouchableHighlight, FlatList } from 'react-native'
 import PropTypes from 'prop-types'
 
 import ForecastHour from './ForecastHour'
@@ -11,7 +11,15 @@ import getMonth from '../Assets/Functions/getMonth'
 import BoxContainer from './BoxContainer'
 import computeSunrise from '../Assets/Functions/computeSunrise'
 
-const ForecastHours = ({ hours, forecastDay, latitude, longitude }) => {
+const ForecastHours = ({
+  hours,
+  forecastDay,
+  latitude,
+  longitude,
+  hideHeader = false,
+  useBoxcontainer = true,
+  showDate = true
+}) => {
   // Get today & tomorrow forecast
   const dayHours = getDayHoursForecast(forecastDay, hours)
   let dayLabel = null
@@ -19,34 +27,39 @@ const ForecastHours = ({ hours, forecastDay, latitude, longitude }) => {
     dayLabel = 'Idag'
   } else if (forecastDay === 1) {
     dayLabel = 'Imorgon'
+  } else if (forecastDay === 2) {
+    dayLabel = 'Övermorgon'
+  } else {
+    dayLabel = ''
   }
 
   const itemSeperator = () => {
     return <View style={[s.bc, s.bbw]} />
   }
 
-  return (
-    <BoxContainer>
-      <ForecastHeaderSunrise
-        day={dayLabel}
-        date={`${dayHours[0].dayNumber} ${getMonth(dayHours[0].month)}`}
-        sunriseTime={computeSunrise(
-          longitude,
-          latitude,
-          dayHours[0].dayNumber,
-          dayHours[0].month,
-          dayHours[0].year,
-          true
-        )}
-        sunsetTime={computeSunrise(
-          longitude,
-          latitude,
-          dayHours[0].dayNumber,
-          dayHours[0].month,
-          dayHours[0].year,
-          false
-        )}
-      />
+  const content = (
+    <ScrollView>
+      {!hideHeader &&
+        <ForecastHeaderSunrise
+          day={showDate ? dayLabel : ''}
+          date={showDate ? `${dayHours[0].dayNumber} ${getMonth(dayHours[0].month)}` : ''}
+          sunriseTime={computeSunrise(
+            longitude,
+            latitude,
+            dayHours[0].dayNumber,
+            dayHours[0].month,
+            dayHours[0].year,
+            true
+          )}
+          sunsetTime={computeSunrise(
+            longitude,
+            latitude,
+            dayHours[0].dayNumber,
+            dayHours[0].month,
+            dayHours[0].year,
+            false
+          )}
+        />}
       <FlatList
         data={dayHours}
         ItemSeparatorComponent={() => itemSeperator()}
@@ -67,8 +80,14 @@ const ForecastHours = ({ hours, forecastDay, latitude, longitude }) => {
           />
         )}
       />
-    </BoxContainer>
+    </ScrollView>
   )
+
+  return useBoxcontainer
+    ? <BoxContainer>
+      {content}
+    </BoxContainer>
+    : content
 }
 
 ForecastHours.propTypes = {

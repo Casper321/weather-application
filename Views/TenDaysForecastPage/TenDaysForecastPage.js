@@ -17,7 +17,7 @@ class TenDaysForecastPage extends Component {
   }
 
   render () {
-    const { forecasts, navigation } = this.props
+    const { forecasts, navigation, currentLocation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
 
     return (
@@ -28,6 +28,7 @@ class TenDaysForecastPage extends Component {
             ? <View>
               <Header10Days />
               <ForecastDays
+                currentLocation={currentLocation}
                 setScrollIndex={index => this.setScrollIndex(index)}
                 days={newestForecastSearch.hours}
                 navigation={navigation}
@@ -43,7 +44,8 @@ class TenDaysForecastPage extends Component {
 function mapStateToProps (state) {
   return {
     forecasts: state.weather.forecasts,
-    setScrollIndexAllHoursPage: state.weather.forecasts
+    setScrollIndexAllHoursPage: state.weather.forecasts,
+    currentLocation: state.weather.currentLocation
   }
 }
 

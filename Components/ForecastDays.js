@@ -9,7 +9,7 @@ import getMonth from '../Assets/Functions/getMonth'
 import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
 import getHighestOccurrence from '../Assets/Functions/getHighestOccurrence'
 
-const ForecastDays = ({ days, navigation, setScrollIndex }) => {
+const ForecastDays = ({ days, navigation, setScrollIndexm, currentLocation }) => {
   // Array holding weather forecast data for 10 days
 
   const tenDays = [
@@ -107,18 +107,19 @@ const ForecastDays = ({ days, navigation, setScrollIndex }) => {
           data={singleDay}
           keyExtractor={item => `${item.key}`}
           renderItem={({ item }) => (
-            <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => handleDayClick(item.dayNumber)}>
-              <ForecastDay
-                day={item.day}
-                date={item.date}
-                tempHigh={item.tempHigh}
-                tempLow={item.tempLow}
-                weatherTypeNumNight={item.weatherTypeNumNight}
-                weatherTypeNumDay={item.weatherTypeNumDay}
-                totalRain={item.totalRain}
-                hoursLeft={item.hoursLeft}
-              />
-            </TouchableHighlight>
+            <ForecastDay
+              day={item.day}
+              date={item.date}
+              tempHigh={item.tempHigh}
+              tempLow={item.tempLow}
+              weatherTypeNumNight={item.weatherTypeNumNight}
+              weatherTypeNumDay={item.weatherTypeNumDay}
+              totalRain={item.totalRain}
+              hoursLeft={item.hoursLeft}
+              dayIndex={parseInt(item.dayNumber) - new Date().getDate()}
+              hours={days}
+              currentLocation={currentLocation}
+            />
           )}
         />
       </View>
