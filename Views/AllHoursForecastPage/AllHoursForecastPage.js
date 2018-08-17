@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { ScrollView, FlatList } from 'react-native'
+import { View, FlatList } from 'react-native'
 import Container from '../../Components/Container'
 import BackHeader from '../../Components/BackHeader'
 import ForecastAllHours from '../../Components/ForecastAllHours'
 import { connect } from 'react-redux'
-import Loading from '../../Components/Loading'
 
 class AllHoursForecastPage extends Component {
   render () {
@@ -28,7 +27,7 @@ class AllHoursForecastPage extends Component {
         <BackHeader stackNavigation={navigation} title='Detaljerad prognos' />
         <FlatList
           data={arr}
-          keyExtractor={item => item.day}
+          keyExtractor={item => `${item.day}`}
           renderItem={({ item }) => (
             <ForecastAllHours
               forecastDay={item.day}

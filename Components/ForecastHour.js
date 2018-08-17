@@ -23,9 +23,7 @@ class ForecastHour extends Component {
     return (
       <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => this.onPress()}>
         <View>
-          <View
-            style={[s.flexDr, s.flexJce, s.flexAce, s.pl1, s.pr1, s.pb0, s.pt0, s.bc, parseInt(time) !== 23 && s.bbw]}
-          >
+          <View style={[s.flexDr, s.flexJce, s.flexAce, s.pl1, s.pr1, s.pb0, s.pt0]}>
             <View style={[s.flex2]}>
               <Text style={[s.col_black, s.fw1, s.fz1]}>
                 kl. {time}

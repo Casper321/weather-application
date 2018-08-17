@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableHighlight, FlatList } from 'react-native'
+import { View, FlatList } from 'react-native'
 import PropTypes from 'prop-types'
 import ForecastHour from './ForecastHour'
 import s from '../Assets/style'
@@ -8,9 +8,8 @@ import ForecastHeader from './ForecastHeader'
 import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
 import getMonth from '../Assets/Functions/getMonth'
 import BoxContainer from './BoxContainer'
-import ForecastHeaderSunrise from './ForecastHeaderSunrise';
-import computeSunrise from '../Assets/Functions/computeSunrise';
-
+import ForecastHeaderSunrise from './ForecastHeaderSunrise'
+import computeSunrise from '../Assets/Functions/computeSunrise'
 
 const ForecastAllHours = ({ hours, forecastDay, latitude, longitude }) => {
   // Get today & tomorrow forecast
@@ -34,39 +33,51 @@ const ForecastAllHours = ({ hours, forecastDay, latitude, longitude }) => {
     case 9:
       dayLabel = dayHours[0].day
       break
-    default: dayLabel = ''
+    default:
+      dayLabel = ''
       break
-  } 
+  }
 
-  onHourPressed = item => {}
+  const itemSeperator = () => {
+    return <View style={[s.bc, s.bbw]} />
+  }
 
   return (
-    <BoxContainer containerStyle={{ marginBottom: style.SPACING_S}} >
+    <BoxContainer containerStyle={{ marginBottom: style.SPACING_S }}>
       <ForecastHeaderSunrise
         day={dayLabel}
         date={`${dayHours[0].dayNumber} ${getMonth(dayHours[0].month)}`}
-        sunriseTime = {computeSunrise(longitude, latitude, dayHours[0].dayNumber, dayHours[0].month, dayHours[0].year, true)}
-        sunsetTime = {computeSunrise(longitude, latitude, dayHours[0].dayNumber, dayHours[0].month, dayHours[0].year, false)}
+        sunriseTime={computeSunrise(
+          longitude,
+          latitude,
+          dayHours[0].dayNumber,
+          dayHours[0].month,
+          dayHours[0].year,
+          true
+        )}
+        sunsetTime={computeSunrise(
+          longitude,
+          latitude,
+          dayHours[0].dayNumber,
+          dayHours[0].month,
+          dayHours[0].year,
+          false
+        )}
       />
       <FlatList
         data={dayHours}
         keyExtractor={item => `${item.date} ${item.time}`}
+        ItemSeparatorComponent={() => itemSeperator()}
         renderItem={({ item }) => (
-          <TouchableHighlight
-            underlayColor={style.COL_GREY}
-            activeOpacity={1}
-            onPress={() => this.onHourPressed(item)}
-          >
-            <ForecastHour
-              time={item.time}
-              weatherType={item.weatherType}
-              weatherTypeNum={item.weatherTypeNum}
-              temperature={item.temp}
-              rain={item.averageRain}
-              windSpeed={item.windSpeed}
-              windGust={item.windGust}
-            />
-          </TouchableHighlight>
+          <ForecastHour
+            time={item.time}
+            weatherType={item.weatherType}
+            weatherTypeNum={item.weatherTypeNum}
+            temperature={item.temp}
+            rain={item.averageRain}
+            windSpeed={item.windSpeed}
+            windGust={item.windGust}
+          />
         )}
       />
     </BoxContainer>

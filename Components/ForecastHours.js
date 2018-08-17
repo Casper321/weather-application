@@ -21,6 +21,10 @@ const ForecastHours = ({ hours, forecastDay, latitude, longitude }) => {
     dayLabel = 'Imorgon'
   }
 
+  const itemSeperator = () => {
+    return <View style={[s.bc, s.bbw]} />
+  }
+
   return (
     <BoxContainer>
       <ForecastHeaderSunrise
@@ -45,6 +49,7 @@ const ForecastHours = ({ hours, forecastDay, latitude, longitude }) => {
       />
       <FlatList
         data={dayHours}
+        ItemSeparatorComponent={() => itemSeperator()}
         keyExtractor={item => `${item.date} ${item.time}`}
         renderItem={({ item }) => (
           <ForecastHour
