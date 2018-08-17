@@ -21,8 +21,6 @@ const ForecastHours = ({ hours, forecastDay, latitude, longitude }) => {
     dayLabel = 'Imorgon'
   }
 
-  onHourPressed = item => {}
-
   return (
     <BoxContainer>
       <ForecastHeaderSunrise
@@ -49,30 +47,20 @@ const ForecastHours = ({ hours, forecastDay, latitude, longitude }) => {
         data={dayHours}
         keyExtractor={item => `${item.date} ${item.time}`}
         renderItem={({ item }) => (
-          <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => this.onHourPressed(item)}>
-            <ForecastHour
-              time={item.time}
-              weatherType={item.weatherType}
-              weatherTypeNum={item.weatherTypeNum}
-              temperature={item.temp}
-              rain={item.averageRain}
-              windSpeed={item.windSpeed}
-              windGust={item.windGust}
-            />
-          </TouchableHighlight>
+          <ForecastHour
+            time={item.time}
+            weatherType={item.weatherType}
+            weatherTypeNum={item.weatherTypeNum}
+            temperature={item.temp}
+            rain={item.averageRain}
+            windSpeed={item.windSpeed}
+            windGust={item.windGust}
+          />
         )}
       />
     </BoxContainer>
   )
 }
-
-const styles = StyleSheet.create({
-  seperator: {
-    height: style.BORDER_WIDTH_STANDARD,
-    backgroundColor: style.COL_GREY,
-    width: '100%'
-  }
-})
 
 ForecastHours.propTypes = {
   hours: PropTypes.array.isRequired
