@@ -16,14 +16,12 @@ class Header extends Component {
             <Ionicons name='ios-menu' size={style.ICON_SIZE_MEDIUM} color={style.COL_WHITE} />
           </TouchableWithoutFeedback>
         </View>
-        <View style={[s.col_dark_grey, s.flex4, s.mrA, s.flexJce, s.ml2]}>
+        <View style={[s.flex4, s.mrA, s.flexJce, s.ml2]}>
           <Text style={[s.flex1, s.fz2, s.fw1, s.col_white]}>{currentLocation.city || currentLocation.suburb}</Text>
         </View>
         <View style={[s.flex3, s.flexDr, s.flexJfe]}>
           <View style={[s.mr3]}>
-            <TouchableWithoutFeedback
-              onPress={() => navigation.navigate('Sök', { navigation, updateWeather })}
-            >
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('Sök', { navigation, updateWeather })}>
               <FontAwesome style={[s.mr3]} name='search' color={style.COL_WHITE} size={style.ICON_SIZE_SMALL} />
             </TouchableWithoutFeedback>
           </View>

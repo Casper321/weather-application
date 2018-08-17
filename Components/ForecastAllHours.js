@@ -77,6 +77,10 @@ const ForecastAllHours = ({ hours, forecastDay, latitude, longitude }) => {
             rain={item.averageRain}
             windSpeed={item.windSpeed}
             windGust={item.windGust}
+            thunderRisk={item.thunderRisk}
+            airPressure={item.airPressure}
+            windDirection={item.windDirection}
+            relativeHumidity={item.relativeHumidity}
           />
         )}
       />

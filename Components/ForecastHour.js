@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TouchableHighlight } from 'react-native'
+import { Text, View, TouchableHighlight, StyleSheet } from 'react-native'
 import Wind from './Wind'
 import getWeatherIcon from '../Assets/Functions/getWeatherIcon'
 import s from '../Assets/style'
@@ -10,14 +10,39 @@ class ForecastHour extends Component {
     dropdownActive: false
   }
 
+  styles = StyleSheet.create({
+    itemDesc: {
+      fontSize: style.FONT_SIZE_S,
+      marginLeft: style.SPACING_M
+    },
+    itemValue: {
+      fontSize: style.FONT_SIZE_S,
+      marginLeft: 'auto',
+      textAlign: 'right',
+      fontWeight: '500'
+    }
+  })
+
   onPress = () => {
     const prevDropDownState = this.state.dropdownActive
     this.setState({ dropdownActive: !prevDropDownState })
   }
 
   render () {
+    const {
+      time,
+      weatherType,
+      weatherTypeNum,
+      temperature,
+      rain,
+      windSpeed,
+      windGust,
+      thunderRisk,
+      airPressure,
+      windDirection,
+      relativeHumidity
+    } = this.props
     const icon = getWeatherIcon(parseInt(weatherTypeNum), style.ICON_SIZE_MEDIUM)
-    const { time, weatherType, weatherTypeNum, temperature, rain, windSpeed, windGust } = this.props
     const { dropdownActive } = this.state
 
     return (
@@ -48,13 +73,25 @@ class ForecastHour extends Component {
               </Text>
             </View>
           </View>
-          {/* dropdownActive &&
-            <View>
-              <Text>Dropdown text!!!</Text>
-              <Text>Dropdown text!!!</Text>
-              <Text>Dropdown text!!!</Text>
-              <Text>Dropdown text!!!</Text>
-          </View> */}
+          {dropdownActive &&
+            <View style={[s.mt2, s.mb2, { paddingRight: '30%' }]}>
+              <View style={[s.flexDr, s.mb1]}>
+                <Text style={this.styles.itemDesc}>Risk för åska: </Text>
+                <Text style={this.styles.itemValue}>{thunderRisk}%</Text>
+              </View>
+              <View style={[s.flexDr, s.mb1]}>
+                <Text style={this.styles.itemDesc}>Lufttryck: </Text>
+                <Text style={this.styles.itemValue}>{airPressure} hPa</Text>
+              </View>
+              <View style={[s.flexDr, s.mb1]}>
+                <Text style={this.styles.itemDesc}>Windriktning: </Text>
+                <Text style={this.styles.itemValue}>{windDirection}°</Text>
+              </View>
+              <View style={[s.flexDr]}>
+                <Text style={this.styles.itemDesc}>Relativ fuktighet: </Text>
+                <Text style={this.styles.itemValue}>{relativeHumidity}%</Text>
+              </View>
+            </View>}
         </View>
       </TouchableHighlight>
     )
