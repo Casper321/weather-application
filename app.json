@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "Nordens Väder",
+    "name": "Väder Norden",
     "icon": "./Assets/Images/app_icon.png",
     "version": "1.0.0",
-    "slug": "nordens-vader",
+    "slug": "vader-norden",
     "sdkVersion": "27.0.0",
     "privacy": "public",
     "primaryColor": "#2196f3",
@@ -14,11 +14,11 @@
       "image": "./Assets/Images/app_icon.png"
     },
     "ios": {
-      "bundleIdentifier": "com.swenativedevs.nordensvader",
+      "bundleIdentifier": "com.swenativedevs.vadernorden",
       "supportsTablet": true
     },
     "android": {
-      "package": "com.swenativedevs.nordensvader",
+      "package": "com.swenativedevs.vadernorden",
       "versionCode": 1,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
