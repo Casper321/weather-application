@@ -19,6 +19,10 @@ const ForecastHours = ({ hours, forecastDay, latitude, longitude }) => {
     dayLabel = 'Idag'
   } else if (forecastDay === 1) {
     dayLabel = 'Imorgon'
+  } else if (forecastDay === 2) {
+    dayLabel = 'Övermorgon'
+  } else {
+    dayLabel = ''
   }
 
   const itemSeperator = () => {

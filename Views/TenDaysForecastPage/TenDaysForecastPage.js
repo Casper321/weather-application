@@ -12,7 +12,6 @@ import { weatherActions } from '../../Redux/WeatherReducer'
 
 class TenDaysForecastPage extends Component {
   setScrollIndex = index => {
-    console.log(index)
     weatherActions.setScrollIndexAllHoursPage(index)
   }
 

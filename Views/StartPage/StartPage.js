@@ -147,13 +147,13 @@ class StartPage extends Component {
                               }
                             />
                           <ForecastHours
-                            forecastDay={0}
+                            forecastDay={new Date().getHours() === 23 ? 1 : 0}
                             hours={newestForecastSearch.hours}
                             longitude={currentLocation.longitude}
                             latitude={currentLocation.latitude}
                             />
                           <ForecastHours
-                            forecastDay={1}
+                            forecastDay={new Date().getHours() === 23 ? 2 : 1}
                             hours={newestForecastSearch.hours}
                             longitude={currentLocation.longitude}
                             latitude={currentLocation.latitude}

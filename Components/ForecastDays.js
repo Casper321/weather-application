@@ -13,16 +13,15 @@ const ForecastDays = ({ days, navigation, setScrollIndex }) => {
   // Array holding weather forecast data for 10 days
 
   const tenDays = [
-    getDayHoursForecast(0, days),
-    getDayHoursForecast(1, days),
-    getDayHoursForecast(2, days),
-    getDayHoursForecast(3, days),
-    getDayHoursForecast(4, days),
-    getDayHoursForecast(5, days),
-    getDayHoursForecast(6, days),
-    getDayHoursForecast(7, days),
-    getDayHoursForecast(8, days),
-    getDayHoursForecast(9, days)
+    getDayHoursForecast(new Date().getHours() === 23 ? 1 : 0, days),
+    getDayHoursForecast(new Date().getHours() === 23 ? 2 : 1, days),
+    getDayHoursForecast(new Date().getHours() === 23 ? 3 : 2, days),
+    getDayHoursForecast(new Date().getHours() === 23 ? 4 : 3, days),
+    getDayHoursForecast(new Date().getHours() === 23 ? 5 : 4, days),
+    getDayHoursForecast(new Date().getHours() === 23 ? 6 : 5, days),
+    getDayHoursForecast(new Date().getHours() === 23 ? 7 : 6, days),
+    getDayHoursForecast(new Date().getHours() === 23 ? 8 : 7, days),
+    getDayHoursForecast(new Date().getHours() === 23 ? 9 : 8, days),
   ]
 
   // singleDay holds forecast for each day

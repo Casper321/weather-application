@@ -10,16 +10,16 @@ class AllHoursForecastPage extends Component {
     const { forecasts, currentLocation, navigation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const arr = [
-      { day: 0 },
-      { day: 1 },
-      { day: 2 },
-      { day: 3 },
-      { day: 4 },
-      { day: 5 },
-      { day: 6 },
-      { day: 7 },
-      { day: 8 },
-      { day: 9 }
+
+      { day: new Date().getHours() === 23 ? 1 : 0 },
+      { day: new Date().getHours() === 23 ? 2 : 1 },
+      { day: new Date().getHours() === 23 ? 3 : 2 },
+      { day: new Date().getHours() === 23 ? 4 : 3 },
+      { day: new Date().getHours() === 23 ? 5 : 4 },
+      { day: new Date().getHours() === 23 ? 6 : 5 },
+      { day: new Date().getHours() === 23 ? 7 : 6 },
+      { day: new Date().getHours() === 23 ? 8 : 7 },
+      { day: new Date().getHours() === 23 ? 9 : 8 },
     ]
 
     return (
