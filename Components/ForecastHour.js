@@ -30,7 +30,7 @@ const ForecastHour = ({ time, weatherType, weatherTypeNum, temperature, rain, wi
         <Text style={[s.col_black, s.fw1, s.fz1]}>
           {rain}
         </Text>
-        <Text style={[s.fz0, s.col_dark_grey]}>
+        <Text style={[s.fz0, s.col_black]}>
           mm/h
         </Text>
       </View>
