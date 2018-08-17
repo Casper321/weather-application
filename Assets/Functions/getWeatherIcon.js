@@ -9,7 +9,6 @@ import * as style from '../style'
 
 export default (getWeatherIcon = (num, iconSize = 30, isDay = true) => {
   let icon = null
-  num++
   switch (num) {
     case 1:
       if (isDay) {
