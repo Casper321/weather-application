@@ -151,7 +151,8 @@ class SearchPage extends Component {
               <BoxContainer containerStyle={{ marginBottom: s.SPACING_S }}>
                 <TouchableHighlight
                   style={{ borderRadius: 14 }}
-                  underlayColor={style.COL_GREY}
+                  activeOpacity={s.COL_YELLOW_SUN}
+                  underlayColor={s.COL_YELLOW_SUN}
                   onPress={() => this.onCityPicked(item)}
                   >
                   <SearchItem city={item.cityName} longerLocationName={item.longerLocationName} />
