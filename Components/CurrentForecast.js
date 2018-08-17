@@ -12,8 +12,8 @@ import unformatDayHours from '../Assets/Functions/unformatDayHours'
 import BoxContainer from './BoxContainer'
 
 const CurrentForecast = ({ currentHour, location, getNewLocation }) => {
-  const { dayNumber, temp, weatherType, weatherTypeNum, averageRain, windSpeed, windGust } = currentHour
-  const icon = getWeatherIcon(parseInt(weatherTypeNum), style.ICON_SIZE_LARGE)
+  const { dayNumber, temp, weatherType, weatherTypeNum, averageRain, windSpeed, windGust, time } = currentHour
+  const icon = getWeatherIcon(parseInt(weatherTypeNum), style.ICON_SIZE_LARGE, (parseInt(time) > 20 || parseInt(time) < 7) ? false : true)
   const month = new Date().getMonth()
 
   return (

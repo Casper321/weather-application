@@ -16,8 +16,8 @@ class ForecastHour extends Component {
   }
 
   render () {
-    const icon = getWeatherIcon(parseInt(weatherTypeNum), style.ICON_SIZE_MEDIUM)
     const { time, weatherType, weatherTypeNum, temperature, rain, windSpeed, windGust } = this.props
+    const icon = getWeatherIcon(parseInt(weatherTypeNum), style.ICON_SIZE_MEDIUM, (parseInt(time) > 20  || parseInt(time) < 7) ? false : true)
     const { dropdownActive } = this.state
 
     return (
