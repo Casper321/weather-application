@@ -51,12 +51,6 @@ const fetchWeatherForecast = async (latitude, longitude, city, dispatch) => {
 
     newForecastResult.hours = [...forecastHours]
     dispatch(weatherActions.addForecast(newForecastResult))
-    dispatch(
-      weatherActions.setCurrentCity({
-        city,
-        suburb: city
-      })
-    )
 
     // Successful fetch
     return true

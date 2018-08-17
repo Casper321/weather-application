@@ -77,9 +77,15 @@ export default function WeatherReducer (state = initialState, action) {
       }
 
     case types.SET_CURRENT_LOCATION:
-      return {
-        ...state,
-        currentLocation: payload
+      if (payload.city || payload.suburb) {
+        return {
+          ...state,
+          currentLocation: payload
+        }
+      } else {
+        return {
+          ...state
+        }
       }
 
     case types.SET_WEATHER_WARNINGS:

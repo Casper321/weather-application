@@ -9,7 +9,6 @@ import s from '../Assets/style'
 class Header extends Component {
   render () {
     const { navigation, updateWeather, currentLocation } = this.props
-
     return (
       <View style={[s.pt2, s.pb2, s.col_bg_google_blue, s.flexDr, s.flexJsb, s.flexAce, s.boxSh]}>
         <View style={[s.flex1, s.ml3, s.flexJce, s.flexAce]}>
@@ -29,11 +28,6 @@ class Header extends Component {
               <FontAwesome style={[s.mr3]} name='search' color={style.COL_WHITE} size={style.ICON_SIZE_SMALL} />
             </TouchableHighlight>
           </View>
-          {/*
-          <View style={[s.mr2]}>
-              <FontAwesome name='map-marker' color={style.COL_WHITE} size={style.ICON_SIZE_SMALL} />
-          </View>
-          */}
         </View>
       </View>
     )

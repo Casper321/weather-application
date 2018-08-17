@@ -17,11 +17,13 @@ const getLocationFromCoordinates = (latitude, longitude, dispatch) => {
       newLocation.city = data.address.city
       newLocation.suburb = data.address.suburb
 
+      console.log(data.address)
+
       dispatch(
         weatherActions.setCurrentLocation({
           latitude,
           longitude,
-          city: data.address.city,
+          city: data.address.city || data.address.town,
           suburb: data.address.suburb,
           state: data.address.state
         })

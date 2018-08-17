@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, StyleSheet, ScrollView, FlatList, TouchableHighlight, Button } from 'react-native'
+import { Text, View, StyleSheet, ScrollView, FlatList, TouchableHighlight, Button } from 'react-native'
 import { SearchBar } from 'react-native-elements'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
@@ -164,54 +164,57 @@ class SearchPage extends Component {
           placeholder='Skriv din ort här...'
           returnKeyType='search'
           onSubmitEditing={this.onSubmit}
+          style={[s.pt2, s.pb2, s.boxSh]}
         />
-        {isSearching
-          ? <Loading message='Hämtar ortsdata...' />
-          : invalidSearch
-              ? <View>
-                <FetchFailed
-                  style={[s.mb3]}
-                  text='Kunde inte hämta ortsdata. Vänligen kontrollera att du stavade rätt och har internetanslutning.'
-                  />
-                {searchButton}
-              </View>
-              : citiesList.length >= 1
-                  ? <View>
-                    <FlatList
-                      data={citiesList}
-                      keyExtractor={() => Math.random() * 1000}
-                      renderItem={({ item }) => (
-                        <BoxContainer containerStyle={{ marginBottom: style.SPACING_S }}>
-                          <TouchableHighlight
-                            style={{ borderRadius: 14 }}
-                            activeOpacity={style.COL_YELLOW_SUN}
-                            underlayColor={style.COL_YELLOW_SUN}
-                            onPress={() => this.onCityPicked(item)}
-                            >
-                            <SearchItem city={item.cityName} longerLocationName={item.longerLocationName} />
-                          </TouchableHighlight>
-                        </BoxContainer>
-                        )}
-                      />
-                    <View style={[s.w, s.mlA, s.mrA, s.mt3]}>
-                      <Button
-                        disabled={!citySearch}
-                        style={[s.col_water_blue]}
-                        onPress={this.onSubmit}
-                        title={citySearch ? 'SÖK IGEN!' : 'Skriv ortsnamn för att söka'}
+        <ScrollView contentContainerStyle={[s.pb3]}>
+          {isSearching
+            ? <Loading message='Hämtar ortsdata...' />
+            : invalidSearch
+                ? <View>
+                  <FetchFailed
+                    style={[s.mb3]}
+                    text='Kunde inte hämta ortsdata. Vänligen kontrollera att du stavade rätt och har internetanslutning.'
+                    />
+                  {searchButton}
+                </View>
+                : citiesList.length >= 1
+                    ? <View>
+                      <FlatList
+                        data={citiesList}
+                        keyExtractor={() => Math.random() * 1000}
+                        renderItem={({ item }) => (
+                          <BoxContainer containerStyle={{ marginBottom: style.SPACING_S }}>
+                            <TouchableHighlight
+                              style={{ borderRadius: 14 }}
+                              activeOpacity={style.COL_YELLOW_SUN}
+                              underlayColor={style.COL_YELLOW_SUN}
+                              onPress={() => this.onCityPicked(item)}
+                              >
+                              <SearchItem city={item.cityName} longerLocationName={item.longerLocationName} />
+                            </TouchableHighlight>
+                          </BoxContainer>
+                          )}
                         />
+                      <View style={[s.w, s.mlA, s.mrA, s.mt3]}>
+                        <Button
+                          disabled={!citySearch}
+                          style={[s.col_water_blue]}
+                          onPress={this.onSubmit}
+                          title={citySearch ? 'SÖK IGEN!' : 'Skriv ortsnamn för att söka'}
+                          />
+                      </View>
                     </View>
-                  </View>
-                  : hasSearched
-                      ? <BoxContainer paddingize>
-                        <NormalText>
-                            Ingen platser matchade din sökning. Skriv du in det rätt?
-                          </NormalText>
-                        {searchButton}
-                      </BoxContainer>
-                      : <View style={[s.mt3, s.w, s.mrA, s.mlA]}>
-                        {searchButton}
-                      </View>}
+                    : hasSearched
+                        ? <BoxContainer paddingize>
+                          <NormalText>
+                              Ingen platser matchade din sökning. Skriv du in det rätt?
+                            </NormalText>
+                          {searchButton}
+                        </BoxContainer>
+                        : <View style={[s.mt3, s.w, s.mrA, s.mlA]}>
+                          {searchButton}
+                        </View>}
+        </ScrollView>
       </Container>
     )
   }

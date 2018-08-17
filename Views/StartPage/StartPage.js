@@ -61,11 +61,13 @@ class StartPage extends Component {
   }
 
   getLocation = async () => {
-    const { status } = await Permissions.askAsync(Permissions.LOCATION)
-    if (status !== 'granted') {
-      this.setState({ hasLocationPermission: false })
-    } else {
-      this.setState({ hasLocationPermissions: true })
+    if (!this.state.hasLocationPermission) {
+      const { status } = await Permissions.askAsync(Permissions.LOCATION)
+      if (status !== 'granted') {
+        this.setState({ hasLocationPermission: false })
+      } else {
+        this.setState({ hasLocationPermissions: true })
+      }
     }
 
     try {
@@ -83,65 +85,6 @@ class StartPage extends Component {
       return { currentLatitude, currentLongitude }
     } catch (error) {
       this.setState({ loadingCoordinatesFailed: true })
-    }
-  }
-
-  getWeatherForecast = async (city, latitude, longitude) => {
-    try {
-      const api_call = await fetch(
-        `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`
-      )
-      const forecastData = await api_call.json()
-
-      const newForecastResult = {
-        city,
-        coordinates: {
-          latitude,
-          longitude
-        },
-        hours: []
-      }
-
-      const date = new Date()
-      let activeDayIndex = new Date().getDay()
-      let forecastHours = []
-
-      forecastData.timeSeries.forEach(hour => {
-        let timeObj = {}
-
-        timeObj.time = hour.validTime.slice(11, 13)
-        timeObj.date = hour.validTime.slice(5, 10).replace('-', '/')
-        timeObj.day = hour.validTime.slice(8, 10)
-        timeObj.dayNumber = hour.validTime.slice(8, 10)
-        timeObj.month = hour.validTime.slice(5, 7)
-        timeObj.year = hour.validTime.slice(0, 4)
-        timeObj.temp = hour.parameters.find(element => element.name === 't').values[0]
-        timeObj.windSpeed = hour.parameters.find(element => element.name === 'ws').values[0]
-        timeObj.windGust = hour.parameters.find(element => element.name === 'gust').values[0]
-        timeObj.windDirection = hour.parameters.find(element => element.name === 'wd').values[0]
-        timeObj.thunderRisk = hour.parameters.find(element => element.name === 'tstm').values[0]
-        timeObj.airPressure = hour.parameters.find(element => element.name === 'msl').values[0]
-        timeObj.averageRain = hour.parameters.find(element => element.name === 'pmean').values[0]
-        timeObj.weatherType = getWeatherCondition(hour.parameters.find(element => element.name === 'Wsymb2').values[0])
-        timeObj.weatherTypeNum = hour.parameters.find(element => element.name === 'Wsymb2').values[0]
-
-        // Change day on midnight
-        timeObj.time === '00' && activeDayIndex++
-        activeDayIndex === 7 ? (activeDayIndex = 0) : null
-        timeObj.day = getDayFromDayIndex(activeDayIndex)
-
-        forecastHours.push(timeObj)
-      })
-
-      newForecastResult.hours = [...forecastHours]
-      this.props.dispatch(weatherActions.addForecast(newForecastResult))
-      weatherActions.setCurrentCity({
-        city,
-        suburb: city
-      })
-      this.setState({ loadingForecastFailed: false })
-    } catch (error) {
-      this.setState({ loadingForecastFailed: true })
     }
   }
 
@@ -235,14 +178,3 @@ function mapStateToProps (state) {
 }
 
 export default connect(mapStateToProps)(StartPage)
-
-/* API KEY locationiq.com --> 102c0e44882475
-  Convert location to coordinates: https://eu1.locationiq.org/v1/search.php?key=102c0e44882475&q=Göteborg&format=json
-  Convert coordinates to location: https://eu1.locationiq.org/v1/reverse.php?key=102c0e44882475&lat=LATITUDE&lon=LONGITUDE&format=json
-*/
-
-/*
-IDEAS:
-- Kunna swipea CurrentForecast och få ett nytt card med morgondagens övermorgons forecast? Sen kunna trycka på em dag och få upp alla timmarna på den?
-
-*/
