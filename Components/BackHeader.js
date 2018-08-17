@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, TouchableHighlight, Text } from 'react-native'
+import { View, TouchableWithoutFeedback, TouchableHighlight, Text } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import * as style from '../Assets/style'
 import s from '../Assets/style'
@@ -14,9 +14,9 @@ const BackHeader = ({ stackNavigation, title }) => {
   return (
     <View style={[s.pt2, s.pb2, s.col_bg_google_blue, s.flexDr, s.flexJsb, s.flexAce, s.boxSh]}>
       <View style={[s.ml3]}>
-        <TouchableHighlight onPress={() => handleBack()} underlayColor={style.COL_GREY}>
+        <TouchableWithoutFeedback onPress={() => handleBack()}>
           <MaterialIcons name='keyboard-backspace' size={style.ICON_SIZE_MEDIUM} color={style.COL_WHITE} />
-        </TouchableHighlight>
+        </TouchableWithoutFeedback>
       </View>
       <View
         style={{

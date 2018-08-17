@@ -47,7 +47,7 @@ const ForecastAllHours = ({ hours, forecastDay, latitude, longitude }) => {
     <BoxContainer containerStyle={{ marginBottom: style.SPACING_S }}>
       <ForecastHeaderSunrise
         day={dayLabel}
-        date={`${dayHours[0].dayNumber} ${getMonth(dayHours[currentDay].month)}`}
+        date={`${dayHours[currentDay].dayNumber} ${getMonth(dayHours[currentDay].month)}`}
         sunriseTime={computeSunrise(
           longitude,
           latitude,
