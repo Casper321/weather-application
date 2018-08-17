@@ -24,7 +24,8 @@ import { weatherActions } from '../../Redux/WeatherReducer'
 import ForecastHeader from '../../Components/ForecastHeader'
 import BoxContainer from '../../Components/BoxContainer'
 import Warning from '../WarningPage/Components/Warning'
-import TimerMixin from 'react-timer-mixin'
+
+const timeOutSearchLimit = 15000
 
 class StartPage extends Component {
   state = {
@@ -36,7 +37,7 @@ class StartPage extends Component {
   }
 
   componentDidMount () {
-    setTimeout(this.timesUpF, 15000)
+    setTimeout(this.timesUpF, timeOutSearchLimit)
     this.fetchData()
   }
 
@@ -155,11 +156,10 @@ class StartPage extends Component {
   }
 
   render () {
-    const { loadingForecastFailed, hasLocationPermission, loadingCoordinatesFailed } = this.state
+    const { loadingForecastFailed, hasLocationPermission, loadingCoordinatesFailed, timesUp } = this.state
     const { forecasts, currentLocation, weatherWarningsInDistrict, navigation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
-    let { timesUp } = this.state
 
     return (
       <Container>

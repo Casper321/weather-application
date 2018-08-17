@@ -1,27 +1,38 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, StyleSheet, ScrollView, FlatList, TouchableHighlight } from 'react-native'
+import { Text, View, TextInput, StyleSheet, ScrollView, FlatList, TouchableHighlight, Button } from 'react-native'
 import { SearchBar } from 'react-native-elements'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
 import SearchItem from './Components/SearchItem'
 import BoxContainer from '../../Components/BoxContainer'
-import style from '../../Assets/style'
-import * as s from '../../Assets/style'
+import * as style from '../../Assets/style'
+import s from '../../Assets/style'
 import { weatherActions } from '../../Redux/WeatherReducer'
 import { connect } from 'react-redux'
 import fetchWeatherForecast from '../../Assets/Functions/fetchWeatherForecast'
+import NormalText from '../../Components/NormalText'
+import Loading from '../../Components/Loading'
+import FetchFailed from '../../Components/FetchFailed'
 
 const allowedCountries = ['Sweden', 'Sverige', 'Norge', 'Norway', 'Finland']
+const timeOutSearchLimit = 8000
 
 class SearchPage extends Component {
   state = {
     citySearch: '',
-    citiesAvailable: []
+    citiesAvailable: [],
+    hasSearched: false,
+    isSearching: false,
+    invalidSearch: false
   }
 
   onType = city => {
-    this.searchCities(city)
     this.setState({ citySearch: city })
+  }
+
+  onSubmit = () => {
+    this.setState({ isSearching: true })
+    this.searchCities(this.state.citySearch)
   }
 
   searchCities = city => {
@@ -45,10 +56,11 @@ class SearchPage extends Component {
             }
           })
 
-          this.setState({ citiesAvailable, searchFound: true })
+          this.setState({ citiesAvailable, hasSearched: true, isSearching: false, invalidSearch: false })
         }
       } catch (error) {
-        // console.log(error)
+        console.log(error)
+        this.setState({ invalidSearch: true })
       }
     }
     request.send(null)
@@ -113,14 +125,13 @@ class SearchPage extends Component {
     const weatherWarningsInDistrictSorted = weatherWarningsInDistrict.sort((a, b) =>
       a.location.localeCompare(b.location)
     )
-    console.log(weatherWarningsInDistrictSorted)
     this.props.dispatch(weatherActions.setWeatherWarningsInDistrict(weatherWarningsInDistrictSorted))
     fetchWeatherForecast(latitude, longitude, city.cityName, this.props.dispatch)
     this.props.navigation.navigate('Start')
   }
 
   render () {
-    const { citiesAvailable } = this.state
+    const { citiesAvailable, citySearch, hasSearched, invalidSearch, isSearching } = this.state
     let citiesList = []
 
     if (citiesAvailable.length >= 1) {
@@ -136,31 +147,71 @@ class SearchPage extends Component {
       citiesList = []
     }
 
+    const searchButton = (
+      <Button
+        disabled={!citySearch}
+        style={[s.col_water_blue]}
+        onPress={this.onSubmit}
+        title={citySearch ? 'SÖK NU!' : 'Skriv ortsnamn för att söka'}
+      />
+    )
+
     return (
       <Container>
         <SearchBar
           onChangeText={this.onType}
           icon={{ type: 'font-awesome', name: 'search' }}
           placeholder='Skriv din ort här...'
+          returnKeyType='search'
+          onSubmitEditing={this.onSubmit}
         />
-        {citiesList.length >= 1
-          ? <FlatList
-            data={citiesList}
-            keyExtractor={() => Math.random() * 1000}
-            renderItem={({ item }) => (
-              <BoxContainer containerStyle={{ marginBottom: s.SPACING_S }}>
-                <TouchableHighlight
-                  style={{ borderRadius: 14 }}
-                  activeOpacity={s.COL_YELLOW_SUN}
-                  underlayColor={s.COL_YELLOW_SUN}
-                  onPress={() => this.onCityPicked(item)}
-                  >
-                  <SearchItem city={item.cityName} longerLocationName={item.longerLocationName} />
-                </TouchableHighlight>
-              </BoxContainer>
-              )}
-            />
-          : null}
+        {isSearching
+          ? <Loading message='Hämtar ortsdata...' />
+          : invalidSearch
+              ? <View>
+                <FetchFailed
+                  style={[s.mb3]}
+                  text='Kunde inte hämta ortsdata. Vänligen kontrollera att du stavade rätt och har internetanslutning.'
+                  />
+                {searchButton}
+              </View>
+              : citiesList.length >= 1
+                  ? <View>
+                    <FlatList
+                      data={citiesList}
+                      keyExtractor={() => Math.random() * 1000}
+                      renderItem={({ item }) => (
+                        <BoxContainer containerStyle={{ marginBottom: style.SPACING_S }}>
+                          <TouchableHighlight
+                            style={{ borderRadius: 14 }}
+                            activeOpacity={style.COL_YELLOW_SUN}
+                            underlayColor={style.COL_YELLOW_SUN}
+                            onPress={() => this.onCityPicked(item)}
+                            >
+                            <SearchItem city={item.cityName} longerLocationName={item.longerLocationName} />
+                          </TouchableHighlight>
+                        </BoxContainer>
+                        )}
+                      />
+                    <View style={[s.w, s.mlA, s.mrA, s.mt3]}>
+                      <Button
+                        disabled={!citySearch}
+                        style={[s.col_water_blue]}
+                        onPress={this.onSubmit}
+                        title={citySearch ? 'SÖK IGEN!' : 'Skriv ortsnamn för att söka'}
+                        />
+                    </View>
+                  </View>
+                  : hasSearched
+                      ? <BoxContainer paddingize>
+                        <NormalText>
+                            Ingen platser matchade din sökning. Skriv du in det rätt?
+                          </NormalText>
+                        {searchButton}
+                      </BoxContainer>
+                      : <View style={[s.mt3, s.w, s.mrA, s.mlA]}>
+                        {searchButton}
+                      </View>}
       </Container>
     )
   }
