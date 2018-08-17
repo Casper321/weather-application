@@ -33,6 +33,8 @@ const ForecastHours = ({
     dayLabel = ''
   }
 
+  let currentDay = new Date().getHours() === 23 ? 1 : 0
+
   const itemSeperator = () => {
     return <View style={[s.bc, s.bbw]} />
   }
@@ -46,17 +48,17 @@ const ForecastHours = ({
           sunriseTime={computeSunrise(
             longitude,
             latitude,
-            dayHours[0].dayNumber,
-            dayHours[0].month,
-            dayHours[0].year,
+            dayHours[currentDay].dayNumber,
+            dayHours[currentDay].month,
+            dayHours[currentDay].year,
             true
           )}
           sunsetTime={computeSunrise(
             longitude,
             latitude,
-            dayHours[0].dayNumber,
-            dayHours[0].month,
-            dayHours[0].year,
+            dayHours[currentDay].dayNumber,
+            dayHours[currentDay].month,
+            dayHours[currentDay].year,
             false
           )}
         />}

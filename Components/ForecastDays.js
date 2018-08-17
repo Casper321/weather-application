@@ -11,19 +11,33 @@ import getHighestOccurrence from '../Assets/Functions/getHighestOccurrence'
 
 const ForecastDays = ({ days, navigation, setScrollIndexm, currentLocation }) => {
   // Array holding weather forecast data for 10 days
-
-  const tenDays = [
-    getDayHoursForecast(0, days),
-    getDayHoursForecast(1, days),
-    getDayHoursForecast(2, days),
-    getDayHoursForecast(3, days),
-    getDayHoursForecast(4, days),
-    getDayHoursForecast(5, days),
-    getDayHoursForecast(6, days),
-    getDayHoursForecast(7, days),
-    getDayHoursForecast(8, days),
-    getDayHoursForecast(9, days)
-  ]
+    let tenDays
+    if (new Date().getHours() === 23) {
+      tenDays = [
+        getDayHoursForecast(1, days),
+        getDayHoursForecast(2, days),
+        getDayHoursForecast(3, days),
+        getDayHoursForecast(4, days),
+        getDayHoursForecast(5, days),
+        getDayHoursForecast(6, days),
+        getDayHoursForecast(7, days),
+        getDayHoursForecast(8, days),
+        getDayHoursForecast(9, days),
+      ]
+    } else {
+      tenDays = [
+        getDayHoursForecast(0, days),
+        getDayHoursForecast(1, days),
+        getDayHoursForecast(2, days),
+        getDayHoursForecast(3, days),
+        getDayHoursForecast(4, days),
+        getDayHoursForecast(5, days),
+        getDayHoursForecast(6, days),
+        getDayHoursForecast(7, days),
+        getDayHoursForecast(8, days),
+        getDayHoursForecast(9, days),
+      ]
+    }
 
   // singleDay holds forecast for each day
   let key = 0

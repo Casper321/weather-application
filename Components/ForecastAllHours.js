@@ -15,6 +15,7 @@ const ForecastAllHours = ({ hours, forecastDay, latitude, longitude }) => {
   // Get today & tomorrow forecast
   const dayHours = getDayHoursForecast(forecastDay, hours)
   let dayLabel
+  let currentDay = new Date().getHours() === 23 ? 1 : 0
 
   switch (forecastDay) {
     case 0:
@@ -31,7 +32,7 @@ const ForecastAllHours = ({ hours, forecastDay, latitude, longitude }) => {
     case 7:
     case 8:
     case 9:
-      dayLabel = dayHours[0].day
+      dayLabel = dayHours[currentDay].day
       break
     default:
       dayLabel = ''
@@ -46,21 +47,21 @@ const ForecastAllHours = ({ hours, forecastDay, latitude, longitude }) => {
     <BoxContainer containerStyle={{ marginBottom: style.SPACING_S }}>
       <ForecastHeaderSunrise
         day={dayLabel}
-        date={`${dayHours[0].dayNumber} ${getMonth(dayHours[0].month)}`}
+        date={`${dayHours[currentDay].dayNumber} ${getMonth(dayHours[currentDay].month)}`}
         sunriseTime={computeSunrise(
           longitude,
           latitude,
-          dayHours[0].dayNumber,
-          dayHours[0].month,
-          dayHours[0].year,
+          dayHours[currentDay].dayNumber,
+          dayHours[currentDay].month,
+          dayHours[currentDay].year,
           true
         )}
         sunsetTime={computeSunrise(
           longitude,
           latitude,
-          dayHours[0].dayNumber,
-          dayHours[0].month,
-          dayHours[0].year,
+          dayHours[currentDay].dayNumber,
+          dayHours[currentDay].month,
+          dayHours[currentDay].year,
           false
         )}
       />

@@ -42,7 +42,11 @@ class ForecastHour extends Component {
       windDirection,
       relativeHumidity
     } = this.props
-    const icon = getWeatherIcon(parseInt(weatherTypeNum), style.ICON_SIZE_MEDIUM)
+    const icon = getWeatherIcon(
+      parseInt(weatherTypeNum),
+      style.ICON_SIZE_MEDIUM,
+      !(parseInt(time) > 20 || parseInt(time) < 7)
+    )
     const { dropdownActive } = this.state
 
     return (
