@@ -76,9 +76,9 @@ class WarningPage extends Component {
               data={Warnings}
               keyExtractor={item => `${item.key}`}
               renderItem={({ item }) => (
-                <BoxContainer containerStyle={{ marginBottom: style.SPACING_S }}>
+                <BoxContainer containerStyle={{ marginBottom: style.SPACING_S}}>
                   <TouchableHighlight
-                    style={{ borderRadius: 14 }}
+                    style={{ borderRadius: 14}}
                     underlayColor={style.COL_GREY}
                     onPress={() =>
                         Alert.alert(
