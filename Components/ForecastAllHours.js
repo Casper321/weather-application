@@ -41,7 +41,7 @@ const ForecastAllHours = ({ hours, forecastDay, latitude, longitude }) => {
   onHourPressed = item => {}
 
   return (
-    <BoxContainer>
+    <BoxContainer containerStyle={{ marginBottom: style.SPACING_S}} >
       <ForecastHeaderSunrise
         day={dayLabel}
         date={`${dayHours[0].dayNumber} ${getMonth(dayHours[0].month)}`}

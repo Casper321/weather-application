@@ -7,7 +7,7 @@ import getWarningIcon from '../../../Assets/Functions/getWarningIcon'
 
 const Warning = ({ location = '', typeOfWarning = 'warning' }) => {
   return (
-    <View style={[s.mlA, s.mrA, s.pa2, s.mb2, s.mt2, s.col_bg_white, s.flexDr, s.flexJsb, s.flexAce]}>
+    <View style={[s.pa2, s.w, s.flexDr, s.flexJsb, s.flexAce]}>
       <View style={[s.flex2]}>
         <View style={[styles.center, styles.flexOne]}>
           <FontAwesome name='circle-thin' color={style.COL_WARNING} size={50} />
