@@ -181,7 +181,7 @@ class SearchPage extends Component {
                     ? <View>
                       <FlatList
                         data={citiesList}
-                        keyExtractor={() => Math.random() * 1000}
+                        keyExtractor={() => `${Math.random() * 1000}`}
                         renderItem={({ item }) => (
                           <BoxContainer containerStyle={{ marginBottom: style.SPACING_S }}>
                             <TouchableHighlight

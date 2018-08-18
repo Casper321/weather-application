@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, View, TouchableHighlight, RefreshControl } from 'react-native'
+import { ScrollView, View, TouchableHighlight, RefreshControl, AppState } from 'react-native'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
 import CurrentForecast from '../../Components/CurrentForecast'
@@ -27,12 +27,27 @@ class StartPage extends Component {
     loadingCoordinatesFailed: false,
     loadingForecastFailed: false,
     refreshing: false,
-    timesUp: false
+    timesUp: false,
+    appState: AppState.currentState
   }
 
   componentDidMount () {
+    AppState.addEventListener('change', this.handleAppStateChange)
     setTimeout(this.timesUpF, timeOutSearchLimit)
     this.fetchData()
+  }
+
+  componentWillUnmount () {
+    AppState.removeEventListener('change', this.handleAppStateChange)
+  }
+
+  handleAppStateChange = nextAppState => {
+    const prevAppState = this.state.appState
+    if ((prevAppState === 'background' || prevAppState === 'inactive') && nextAppState === 'active') {
+      this.onRefresh()
+      this.fetchData()
+    }
+    this.setState({ appState: nextAppState })
   }
 
   onRefresh = async () => {
@@ -103,7 +118,13 @@ class StartPage extends Component {
         <Header updateWeather={this.getWeatherForecast} navigation={this.props.navigation} />
         <ScrollView
           contentContainerStyle={[s.pb3]}
-          refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />}
+          refreshControl={
+            <RefreshControl
+              colors={[style.COL_GOOGLE_BLUE, style.COL_YELLOW_SUN, style.COL_NIGHT_RIDER]}
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
         >
           {newestForecastSearch.warning && <Warning message={newestForecastSearch.warning.message} />}
           {hasLocationPermission
