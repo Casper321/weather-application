@@ -8,8 +8,8 @@ const Rain = ({ amountRain }) => {
   return (
     <View style={[s.flexDr, s.flexAce, s.flexJsa, s.mr2]}>
       <FontAwesome name='tint' size={style.ICON_SIZE_SMALL} color={style.COL_WATER_BLUE} />
-      <Text style={[s.fz1, s.fw1, s.col_black, s.ml1]}>{amountRain}</Text>
-      <Text style={[s.ml1]}>mm/h</Text>
+      <Text style={[s.fz1, s.fw1, s.col_black, s.ml2]}>{amountRain}</Text>
+      <Text style={[s.ml2]}>mm/h</Text>
     </View>
   )
 }

@@ -2,17 +2,14 @@ import React, { Component } from 'react'
 import { View, ScrollView, RefreshControl } from 'react-native'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
-import CityHeader from '../../Components/CityHeader'
 import Header10Days from './Components/Header10Days'
 import ForecastDays from '../../Components/ForecastDays'
 import { connect } from 'react-redux'
 import Loading from '../../Components/Loading'
-import { Location, Permissions } from 'expo'
+import fetchWeatherData from '../../Assets/Functions/fetchWeatherData'
+import * as style from '../../Assets/style'
 import s from '../../Assets/style'
 import { weatherActions } from '../../Redux/WeatherReducer'
-import fetchWeatherForecast from '../../Assets/Functions/fetchWeatherForecast'
-import getLocationFromCoordinates from '../../Assets/Functions/getLocationFromCoordinates'
-import getWarningForecast from '../../Assets/Functions/getWarningForecast'
 
 class TenDaysForecastPage extends Component {
   state = {
@@ -21,46 +18,10 @@ class TenDaysForecastPage extends Component {
     refreshing: false
   }
 
-  componentDidMount () {
-    this.fetchData()
-  }
-
   onRefresh = async () => {
     this.setState({ refreshing: true })
-    this.fetchData().then(() => {
-      this.setState({ refreshing: false })
-    })
-  }
-
-  fetchData = async () => {
-    const { currentLatitude, currentLongitude } = await this.getLocation()
-    if (currentLatitude && currentLongitude) {
-      // this.getWeatherForecast('', currentLatitude, currentLongitude)
-      const { city, suburb, state } = getLocationFromCoordinates(currentLatitude, currentLongitude, this.props.dispatch)
-      fetchWeatherForecast(currentLatitude, currentLongitude, city || suburb, this.props.dispatch)
-        ? this.setState({ loadingForecastFailed: false })
-        : this.setState({ loadingForecastFailed: true })
-      getWarningForecast(state, this.props.dispatch)
-    }
-  }
-
-  getLocation = async () => {
-    try {
-      const location = await Location.getCurrentPositionAsync({})
-      const currentLatitude = Number.parseFloat(location.coords.latitude).toPrecision(5)
-      const currentLongitude = Number.parseFloat(location.coords.longitude).toPrecision(5)
-
-      this.props.dispatch(
-        weatherActions.setCurrentCoordinates({
-          latitude: currentLatitude,
-          longitude: currentLongitude
-        })
-      )
-      this.setState({ loadingCoordinatesFailed: false })
-      return { currentLatitude, currentLongitude }
-    } catch (error) {
-      this.setState({ loadingCoordinatesFailed: true })
-    }
+    const { loadingForecastFailed, loadingCoordinatesFailed } = fetchWeatherData(this.props.dispatch)
+    this.setState({ loadingForecastFailed, loadingCoordinatesFailed, refreshing: false })
   }
 
   setScrollIndex = index => {
@@ -75,7 +36,13 @@ class TenDaysForecastPage extends Component {
       <Container>
         <Header navigation={navigation} />
         <ScrollView
-          refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />}
+          refreshControl={
+            <RefreshControl
+              colors={[style.COL_GOOGLE_BLUE, style.COL_YELLOW_SUN, style.COL_NIGHT_RIDER]}
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
           contentContainerStyle={[s.pb3]}
         >
           {newestForecastSearch.hours

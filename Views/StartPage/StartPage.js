@@ -1,21 +1,15 @@
 import React, { Component } from 'react'
-import { ScrollView, View, TouchableHighlight, RefreshControl, AppState } from 'react-native'
+import { ScrollView, View, TouchableHighlight, RefreshControl, Text } from 'react-native'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
 import CurrentForecast from '../../Components/CurrentForecast'
 import ForecastHours from '../../Components/ForecastHours'
 import Loading from '../../Components/Loading'
-
-import fetchWeatherForecast from '../../Assets/Functions/fetchWeatherForecast'
-import getLocationFromCoordinates from '../../Assets/Functions/getLocationFromCoordinates'
-import getWarningForecast from '../../Assets/Functions/getWarningForecast'
-
+import fetchWeatherData from '../../Assets/Functions/fetchWeatherData'
 import s from '../../Assets/style'
 import * as style from '../../Assets/style'
 import FetchFailed from '../../Components/FetchFailed'
-import { Location, Permissions } from 'expo'
 import { connect } from 'react-redux'
-import { weatherActions } from '../../Redux/WeatherReducer'
 import BoxContainer from '../../Components/BoxContainer'
 import Warning from '../WarningPage/Components/Warning'
 
@@ -27,74 +21,23 @@ class StartPage extends Component {
     loadingCoordinatesFailed: false,
     loadingForecastFailed: false,
     refreshing: false,
-    timesUp: false,
-    appState: AppState.currentState
+    timesUp: false
   }
 
   componentDidMount () {
-    AppState.addEventListener('change', this.handleAppStateChange)
     setTimeout(this.timesUpF, timeOutSearchLimit)
-    this.fetchData()
-  }
-
-  componentWillUnmount () {
-    AppState.removeEventListener('change', this.handleAppStateChange)
-  }
-
-  handleAppStateChange = nextAppState => {
-    const prevAppState = this.state.appState
-    if ((prevAppState === 'background' || prevAppState === 'inactive') && nextAppState === 'active') {
-      this.onRefresh()
-      this.fetchData()
-    }
-    this.setState({ appState: nextAppState })
+    const { loadingForecastFailed, hasLocationPermission, loadingCoordinatesFailed } = fetchWeatherData(
+      this.props.dispatch
+    )
+    this.setState({ loadingForecastFailed, hasLocationPermission, loadingCoordinatesFailed })
   }
 
   onRefresh = async () => {
     this.setState({ refreshing: true })
-    this.fetchData().then(() => {
-      this.setState({ refreshing: false })
-    })
-  }
-
-  fetchData = async () => {
-    const { currentLatitude, currentLongitude } = await this.getLocation()
-    if (currentLatitude && currentLongitude) {
-      // this.getWeatherForecast('', currentLatitude, currentLongitude)
-      const { city, suburb, state } = getLocationFromCoordinates(currentLatitude, currentLongitude, this.props.dispatch)
-      fetchWeatherForecast(currentLatitude, currentLongitude, city || suburb, this.props.dispatch)
-        ? this.setState({ loadingForecastFailed: false })
-        : this.setState({ loadingForecastFailed: true })
-      getWarningForecast(state, this.props.dispatch)
-    }
-  }
-
-  getLocation = async () => {
-    if (!this.state.hasLocationPermission) {
-      const { status } = await Permissions.askAsync(Permissions.LOCATION)
-      if (status !== 'granted') {
-        this.setState({ hasLocationPermission: false })
-      } else {
-        this.setState({ hasLocationPermissions: true })
-      }
-    }
-
-    try {
-      const location = await Location.getCurrentPositionAsync({})
-      const currentLatitude = Number.parseFloat(location.coords.latitude).toPrecision(5)
-      const currentLongitude = Number.parseFloat(location.coords.longitude).toPrecision(5)
-
-      this.props.dispatch(
-        weatherActions.setCurrentCoordinates({
-          latitude: currentLatitude,
-          longitude: currentLongitude
-        })
-      )
-      this.setState({ loadingCoordinatesFailed: false })
-      return { currentLatitude, currentLongitude }
-    } catch (error) {
-      this.setState({ loadingCoordinatesFailed: true })
-    }
+    const { loadingForecastFailed, hasLocationPermission, loadingCoordinatesFailed } = fetchWeatherData(
+      this.props.dispatch
+    )
+    this.setState({ loadingForecastFailed, hasLocationPermission, loadingCoordinatesFailed, refreshing: false })
   }
 
   updateState = (type, value) => {
@@ -108,7 +51,7 @@ class StartPage extends Component {
   }
 
   render () {
-    const { loadingForecastFailed, hasLocationPermission, loadingCoordinatesFailed, timesUp } = this.state
+    const { loadingForecastFailed, hasLocationPermission, loadingCoordinatesFailed, timesUp, refreshing } = this.state
     const { forecasts, currentLocation, weatherWarningsInDistrict, navigation } = this.props
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const currentHour = new Date().getHours() + 1
@@ -121,7 +64,7 @@ class StartPage extends Component {
           refreshControl={
             <RefreshControl
               colors={[style.COL_GOOGLE_BLUE, style.COL_YELLOW_SUN, style.COL_NIGHT_RIDER]}
-              refreshing={this.state.refreshing}
+              refreshing={refreshing}
               onRefresh={this.onRefresh}
             />
           }
@@ -161,6 +104,7 @@ class StartPage extends Component {
                                   newestForecastSearch.hours.find(hour => hour)
                               }
                             />
+                          <Text>{this.props.hello}</Text>
                           <ForecastHours
                             forecastDay={new Date().getHours() === 23 ? 1 : 0}
                             hours={newestForecastSearch.hours}
