@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, View, TouchableHighlight, Alert, Button, RefreshControl } from 'react-native'
+import { ScrollView, View, TouchableHighlight, RefreshControl } from 'react-native'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
 import CurrentForecast from '../../Components/CurrentForecast'
@@ -10,18 +10,12 @@ import fetchWeatherForecast from '../../Assets/Functions/fetchWeatherForecast'
 import getLocationFromCoordinates from '../../Assets/Functions/getLocationFromCoordinates'
 import getWarningForecast from '../../Assets/Functions/getWarningForecast'
 
-import computeSunrise from '../../Assets/Functions/computeSunrise'
 import s from '../../Assets/style'
 import * as style from '../../Assets/style'
 import FetchFailed from '../../Components/FetchFailed'
-import CityHeader from '../../Components/CityHeader'
-// import forecastData from '../../Assets/test-api.json'
-import getWeatherCondition from '../../Assets/Functions/getWeatherCondition'
-import getDayFromDayIndex from '../../Assets/Functions/getDayFromDayIndex'
 import { Location, Permissions } from 'expo'
 import { connect } from 'react-redux'
 import { weatherActions } from '../../Redux/WeatherReducer'
-import ForecastHeader from '../../Components/ForecastHeader'
 import BoxContainer from '../../Components/BoxContainer'
 import Warning from '../WarningPage/Components/Warning'
 
@@ -41,7 +35,7 @@ class StartPage extends Component {
     this.fetchData()
   }
 
-  _onRefresh = async () => {
+  onRefresh = async () => {
     this.setState({ refreshing: true })
     this.fetchData().then(() => {
       this.setState({ refreshing: false })
@@ -109,7 +103,7 @@ class StartPage extends Component {
         <Header updateWeather={this.getWeatherForecast} navigation={this.props.navigation} />
         <ScrollView
           contentContainerStyle={[s.pb3]}
-          refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh} />}
+          refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />}
         >
           {newestForecastSearch.warning && <Warning message={newestForecastSearch.warning.message} />}
           {hasLocationPermission
