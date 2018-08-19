@@ -29,7 +29,8 @@ class ForecastHour extends Component {
   })
 
   onPress = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+
     const prevDropDownState = this.state.dropdownActive
     this.setState({ dropdownActive: !prevDropDownState })
   }

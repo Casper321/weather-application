@@ -16,7 +16,7 @@ class ForecastDay extends Component {
   }
 
   handleDayClick = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     const prevDropdownActive = this.state.dropdownActive
     this.setState({ dropdownActive: !prevDropdownActive })
   }
