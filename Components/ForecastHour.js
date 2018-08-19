@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
-import { Text, View, TouchableHighlight, StyleSheet } from 'react-native'
+import { Text, View, TouchableHighlight, StyleSheet, LayoutAnimation, UIManager } from 'react-native'
 import Wind from './Wind'
 import getWeatherIcon from '../Assets/Functions/getWeatherIcon'
 import s from '../Assets/style'
 import * as style from '../Assets/style'
 
 class ForecastHour extends Component {
+  constructor (props) {
+    super(props)
+    UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true)
+  }
+
   state = {
     dropdownActive: false
   }
@@ -24,6 +29,7 @@ class ForecastHour extends Component {
   })
 
   onPress = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
     const prevDropDownState = this.state.dropdownActive
     this.setState({ dropdownActive: !prevDropDownState })
   }
