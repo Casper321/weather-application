@@ -4,7 +4,7 @@ import getLocationFromCoordinates from './getLocationFromCoordinates'
 import getWarningForecast from './getWarningForecast'
 import { Location, Permissions } from 'expo'
 
-const fetchWeatherData = async dispatch => {
+const fetchWeatherData = async (dispatch, incomingLatitude, incomingLongitude, incomingCity) => {
   let loadingForecastFailed, hasLocationPermission, loadingCoordinatesFailed
 
   const getLocation = async () => {
@@ -34,13 +34,38 @@ const fetchWeatherData = async dispatch => {
     }
   }
 
-  const { currentLatitude, currentLongitude } = await getLocation()
-  if (currentLatitude && currentLongitude) {
-    const { city, suburb, state } = getLocationFromCoordinates(currentLatitude, currentLongitude, dispatch)
-    fetchWeatherForecast(currentLatitude, currentLongitude, city || suburb, dispatch)
+  const fetch = (currentLatitude, currentLongitude, incomingCity) => {
+    let newCity, newSuburb, newState
+    if (!incomingCity) {
+      const { city, suburb, state } = getLocationFromCoordinates(currentLatitude, currentLongitude, dispatch)
+      newCity = city
+      newSuburb = suburb
+      newState = state
+    } else {
+      newCity = incomingCity
+    }
+    fetchWeatherForecast(currentLatitude, currentLongitude, newCity || newSuburb, dispatch)
       ? (loadingForecastFailed = false)
       : (loadingForecastFailed = true)
-    getWarningForecast(state, dispatch)
+    getWarningForecast(newState, dispatch)
+  }
+
+  if (incomingLatitude && incomingLongitude) {
+    fetch(incomingLatitude, incomingLongitude, incomingCity)
+    dispatch(
+      weatherActions.setCurrentLocation({
+        latitude: incomingLatitude,
+        longitude: incomingLongitude,
+        city: incomingCity,
+        suburb: incomingCity,
+        state: '' /* Todo incoparte in localstorage */
+      })
+    )
+  } else {
+    const { currentLatitude, currentLongitude } = await getLocation()
+    if (currentLatitude && currentLongitude) {
+      fetch(currentLatitude, currentLongitude, false)
+    }
   }
 
   return { loadingForecastFailed, hasLocationPermission, loadingCoordinatesFailed }

@@ -1,5 +1,14 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, ScrollView, FlatList, TouchableHighlight, Button } from 'react-native'
+import {
+  AsyncStorage,
+  View,
+  StyleSheet,
+  ScrollView,
+  FlatList,
+  TouchableHighlight,
+  Button,
+  Keyboard
+} from 'react-native'
 import { SearchBar } from 'react-native-elements'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
@@ -15,7 +24,6 @@ import Loading from '../../Components/Loading'
 import FetchFailed from '../../Components/FetchFailed'
 
 const allowedCountries = ['Sweden', 'Sverige', 'Norge', 'Norway', 'Finland']
-const timeOutSearchLimit = 8000
 
 class SearchPage extends Component {
   state = {
@@ -24,6 +32,10 @@ class SearchPage extends Component {
     hasSearched: false,
     isSearching: false,
     invalidSearch: false
+  }
+
+  componentDidMount = () => {
+    this.search.focus()
   }
 
   onType = city => {
@@ -66,6 +78,57 @@ class SearchPage extends Component {
     request.send(null)
   }
 
+  storeData = city => {
+
+
+
+    /*
+    console.log('Entering')
+    this.retrieveItem()
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+    console.log('leaving')
+    */
+    /*
+    try {
+      let citiesSearched = await AsyncStorage.getItem('CitiesSearched')
+      if (JSON.parse(citiesSearched)) {
+        citiesSearched = JSON.parse(citiesSearched)
+      } else {
+        citiesSearched = []
+      }
+      console.log('Citiessearched', citiesSearched)
+      citiesSearched.push(city)
+      citiesSearched = JSON.stringify(citiesSearched)
+      await AsyncStorage.setItem('CitiesSearched', citiesSearched)
+    } catch (error) {
+      console.log(error)
+    }
+    */
+    
+  }
+
+  retrieveItem = async () => {
+    /*
+    console.log('entering retrieved')
+    try {
+      console.log('try')
+      const retrievedItem = await AsyncStorage.getItem('CitiesSearched')
+      console.log(retrievedItem)
+      const item = JSON.parse(retrievedItem)
+      console.log(item)
+      return item
+    } catch (error) {
+      console.log(error)
+    }
+    */
+  }
+
   onCityPicked = city => {
     let { latitude, longitude, cityName, longerLocationName } = city
     let longerLocationNameList = longerLocationName.split(',')
@@ -98,6 +161,8 @@ class SearchPage extends Component {
         state: state || ''
       })
     )
+
+    this.storeData(city.cityName)
 
     let { weatherWarnings } = this.props
 
@@ -159,6 +224,7 @@ class SearchPage extends Component {
     return (
       <Container>
         <SearchBar
+          ref={search => (this.search = search)}
           onChangeText={this.onType}
           icon={{ type: 'font-awesome', name: 'search' }}
           placeholder='Skriv din ort här...'
