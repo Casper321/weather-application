@@ -1,9 +1,10 @@
-// reducers/index.js
 import { combineReducers } from 'redux'
 import weather from './WeatherReducer'
+import searchHistory from './SearchHistoryReducer'
 
 const rootReducer = combineReducers({
-  weather
+  weather,
+  searchHistory
 })
 
 export default rootReducer
