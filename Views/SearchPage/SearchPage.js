@@ -17,6 +17,7 @@ import BoxContainer from '../../Components/BoxContainer'
 import * as style from '../../Assets/style'
 import s from '../../Assets/style'
 import { weatherActions } from '../../Redux/WeatherReducer'
+import { searchHistoryActions } from '../../Redux/SearchHistoryReducer'
 import { connect } from 'react-redux'
 import fetchWeatherForecast from '../../Assets/Functions/fetchWeatherForecast'
 import NormalText from '../../Components/NormalText'
@@ -79,9 +80,6 @@ class SearchPage extends Component {
   }
 
   storeData = city => {
-
-
-
     /*
     console.log('Entering')
     this.retrieveItem()
@@ -110,7 +108,6 @@ class SearchPage extends Component {
       console.log(error)
     }
     */
-    
   }
 
   retrieveItem = async () => {
@@ -162,7 +159,14 @@ class SearchPage extends Component {
       })
     )
 
-    this.storeData(city.cityName)
+    this.props.dispatch(
+      searchHistoryActions.addSearchHistoryItem({
+        city: city.cityName,
+        state: state,
+        latitude,
+        longitude
+      })
+    )
 
     let { weatherWarnings } = this.props
 
@@ -198,6 +202,8 @@ class SearchPage extends Component {
   render () {
     const { citiesAvailable, citySearch, hasSearched, invalidSearch, isSearching } = this.state
     let citiesList = []
+
+    console.log(this.props.searchHistory)
 
     if (citiesAvailable.length >= 1) {
       citiesList = citiesAvailable.map(city => {
@@ -289,7 +295,8 @@ function mapStateToProps (state) {
   return {
     currentLocation: state.weather.currentLocation,
     weatherWarningsInDistrict: state.weather.weatherWarningsInDistrict,
-    weatherWarnings: state.weather.weatherWarnings
+    weatherWarnings: state.weather.weatherWarnings,
+    searchHistory: state.searchHistory.searchHistory
   }
 }
 

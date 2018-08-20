@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView } from 'react-native'
+import { SafeAreaView, View, AsyncStorage } from 'react-native'
 import { Drawer } from './config/router'
 import { Provider } from 'react-redux'
 import configureStore from './Redux/configureStore'
@@ -23,28 +23,13 @@ import Loading from './Components/Loading'
 
 const persistConfig = {
   key: 'root',
-  storage: storage,
-  stateReconciler: autoMergeLevel2,
-  whiteList: ['searchHistory']
+  storage: AsyncStorage
 }
 
 const pReducer = persistReducer(persistConfig, rootReducer)
 
 const store = createStore(pReducer)
 const persistor = persistStore(store)
-
-/*
-const persistStoreConfig = {
-  storage: storage,
-  whiteList: ['searchHistory'],
-  stateReconciler: autoMergeLevel2
-}
-
-const store = configureStore()
-persistStore(store, persistStoreConfig)
-*/
-
-// const store = configureStore()
 
 const RootStack = createStackNavigator(
   {
@@ -70,7 +55,14 @@ export default class App extends React.Component {
 
     return (
       <Provider store={store}>
-        <PersistGate loading={<Loading message='Laddar appen...' />} persistor={persistor}>
+        <PersistGate
+          loading={
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <Loading message='Laddar appen...' />
+            </View>
+          }
+          persistor={persistor}
+        >
           <SafeAreaView style={{ flex: 1 }}>
             <RootStack />
           </SafeAreaView>
