@@ -74,7 +74,7 @@ class ForecastHour extends Component {
             <View style={[s.flex1, s.flexDr, s.flexJce, s.mr1]}>
               {icon}
             </View>
-            <Wind windSpeed={windSpeed} windGust={windGust} />
+            <Wind windDirection={windDirection} windSpeed={windSpeed} windGust={windGust} />
             <View style={[s.flexJce, s.flexAce, s.flex1]}>
               <Text style={[s.col_black, s.fw1, s.fz1]}>
                 {rain}

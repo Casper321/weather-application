@@ -5,15 +5,25 @@ import * as style from '../Assets/style'
 import s from '../Assets/style'
 import CenterContainer from './CenterContainer'
 
-const Wind = ({ windSpeed, windGust }) => {
+const Wind = ({ windSpeed, windGust, windDirection }) => {
+  console.log(`${windDirection}deg`)
+
   return (
     <View style={[s.flexDr, s.flexJsa]}>
-      <View>
-        <FontAwesome name='circle-thin' size={style.ICON_SIZE_MEDIUM} color={style.COL_DARK_GREY} />
-        <Text style={[s.fz1, s.fw1, s.col_black, s.ml2, styles.weatherWindValue]}>{Math.round(windSpeed)}</Text>
+      <View style={[s.flexJce, s.flexAce, s.mr0]}>
+        {windDirection &&
+          <FontAwesome
+            style={{ transform: [{ rotate: `${windDirection}deg` }] }}
+            name='long-arrow-right'
+            size={style.ICON_SIZE_SMALL}
+            color={style.COL_BLACK}
+          />}
       </View>
       <View style={[s.ml0, s.flexAce]}>
-        <Text style={[s.fw2]}>({Math.round(windGust)})</Text>
+        <View style={[s.flexDr, s.flexAce]}>
+          <Text style={[s.fz1, s.fw1, s.col_black, s.mr0]}>{Math.round(windSpeed)}</Text>
+          <Text style={[s.fw1, s.col_dark_grey]}>({Math.round(windGust)})</Text>
+        </View>
         <Text>m/s</Text>
       </View>
     </View>
