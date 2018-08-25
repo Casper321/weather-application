@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
-import { Text, View, TouchableHighlight, StyleSheet } from 'react-native'
+import { Text, View, TouchableHighlight, StyleSheet, LayoutAnimation, UIManager } from 'react-native'
 import Wind from './Wind'
 import getWeatherIcon from '../Assets/Functions/getWeatherIcon'
 import s from '../Assets/style'
 import * as style from '../Assets/style'
 
 class ForecastHour extends Component {
+  constructor (props) {
+    super(props)
+    UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true)
+  }
+
   state = {
     dropdownActive: false
   }
@@ -24,6 +29,8 @@ class ForecastHour extends Component {
   })
 
   onPress = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+
     const prevDropDownState = this.state.dropdownActive
     this.setState({ dropdownActive: !prevDropDownState })
   }
@@ -67,7 +74,7 @@ class ForecastHour extends Component {
             <View style={[s.flex1, s.flexDr, s.flexJce, s.mr1]}>
               {icon}
             </View>
-            <Wind windSpeed={windSpeed} windGust={windGust} />
+            <Wind windDirection={windDirection} windSpeed={windSpeed} windGust={windGust} />
             <View style={[s.flexJce, s.flexAce, s.flex1]}>
               <Text style={[s.col_black, s.fw1, s.fz1]}>
                 {rain}
@@ -86,10 +93,6 @@ class ForecastHour extends Component {
               <View style={[s.flexDr, s.mb1]}>
                 <Text style={this.styles.itemDesc}>Lufttryck: </Text>
                 <Text style={this.styles.itemValue}>{airPressure} hPa</Text>
-              </View>
-              <View style={[s.flexDr, s.mb1]}>
-                <Text style={this.styles.itemDesc}>Windriktning: </Text>
-                <Text style={this.styles.itemValue}>{windDirection}°</Text>
               </View>
               <View style={[s.flexDr]}>
                 <Text style={this.styles.itemDesc}>Relativ fuktighet: </Text>

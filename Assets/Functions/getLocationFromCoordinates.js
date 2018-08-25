@@ -12,12 +12,12 @@ const getLocationFromCoordinates = (latitude, longitude, dispatch) => {
     request.onload = () => {
       var data = JSON.parse(request.response)
       const newLocation = {}
+
+      console.log(data.address)
       newLocation.latitude = data.lat
       newLocation.longitude = data.lon
       newLocation.city = data.address.city_district || data.address.city
       newLocation.suburb = data.address.suburb || data.address.town
-
-      console.log(data.address.city_district)
 
       dispatch(
         weatherActions.setCurrentLocation({

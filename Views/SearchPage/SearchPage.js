@@ -1,5 +1,14 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, ScrollView, FlatList, TouchableHighlight, Button } from 'react-native'
+import {
+  AsyncStorage,
+  View,
+  StyleSheet,
+  ScrollView,
+  FlatList,
+  TouchableHighlight,
+  Button,
+  Keyboard
+} from 'react-native'
 import { SearchBar } from 'react-native-elements'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
@@ -8,6 +17,7 @@ import BoxContainer from '../../Components/BoxContainer'
 import * as style from '../../Assets/style'
 import s from '../../Assets/style'
 import { weatherActions } from '../../Redux/WeatherReducer'
+import { searchHistoryActions } from '../../Redux/SearchHistoryReducer'
 import { connect } from 'react-redux'
 import fetchWeatherForecast from '../../Assets/Functions/fetchWeatherForecast'
 import NormalText from '../../Components/NormalText'
@@ -15,7 +25,6 @@ import Loading from '../../Components/Loading'
 import FetchFailed from '../../Components/FetchFailed'
 
 const allowedCountries = ['Sweden', 'Sverige', 'Norge', 'Norway', 'Finland']
-const timeOutSearchLimit = 8000
 
 class SearchPage extends Component {
   state = {
@@ -24,6 +33,10 @@ class SearchPage extends Component {
     hasSearched: false,
     isSearching: false,
     invalidSearch: false
+  }
+
+  componentDidMount = () => {
+    this.search.focus()
   }
 
   onType = city => {
@@ -66,6 +79,7 @@ class SearchPage extends Component {
     request.send(null)
   }
 
+
   onCityPicked = city => {
     let { latitude, longitude, cityName, longerLocationName } = city
     let longerLocationNameList = longerLocationName.split(',')
@@ -96,6 +110,15 @@ class SearchPage extends Component {
         city: city.cityName || '',
         suburb: city.cityName || '',
         state: state || ''
+      })
+    )
+
+    this.props.dispatch(
+      searchHistoryActions.addSearchHistoryItem({
+        city: city.cityName,
+        state: state,
+        latitude,
+        longitude
       })
     )
 
@@ -134,6 +157,8 @@ class SearchPage extends Component {
     const { citiesAvailable, citySearch, hasSearched, invalidSearch, isSearching } = this.state
     let citiesList = []
 
+    console.log(this.props.searchHistory)
+
     if (citiesAvailable.length >= 1) {
       citiesList = citiesAvailable.map(city => {
         let cityObj = {}
@@ -159,6 +184,7 @@ class SearchPage extends Component {
     return (
       <Container>
         <SearchBar
+          ref={search => (this.search = search)}
           onChangeText={this.onType}
           icon={{ type: 'font-awesome', name: 'search' }}
           placeholder='Skriv din ort här...'
@@ -223,7 +249,8 @@ function mapStateToProps (state) {
   return {
     currentLocation: state.weather.currentLocation,
     weatherWarningsInDistrict: state.weather.weatherWarningsInDistrict,
-    weatherWarnings: state.weather.weatherWarnings
+    weatherWarnings: state.weather.weatherWarnings,
+    searchHistory: state.searchHistory.searchHistory
   }
 }
 

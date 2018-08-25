@@ -104,7 +104,6 @@ class StartPage extends Component {
                                   newestForecastSearch.hours.find(hour => hour)
                               }
                             />
-                          <Text>{this.props.hello}</Text>
                           <ForecastHours
                             forecastDay={new Date().getHours() === 23 ? 1 : 0}
                             hours={newestForecastSearch.hours}

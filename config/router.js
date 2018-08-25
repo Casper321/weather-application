@@ -1,15 +1,14 @@
 import React from 'react'
 import { Platform } from 'react-native'
-import { createBottomTabNavigator, createStackNavigator, createDrawerNavigator, StackNavigator } from 'react-navigation'
+import { createBottomTabNavigator, createStackNavigator, createDrawerNavigator, DrawerItems } from 'react-navigation'
 import StartPage from '../Views/StartPage/StartPage'
-import SearchPage from '../Views/SearchPage/SearchPage'
 import InfoPage from '../Views/InfoPage/InfoPage'
 import TenDaysForecastPage from '../Views/TenDaysForecastPage/TenDaysForecastPage'
-import AllHoursForecastPage from '../Views/AllHoursForecastPage/AllHoursForecastPage'
 import WarningPage from '../Views/WarningPage/WarningPage'
 import AnalysisPage from '../Views/AnalysisPage/AnalysisPage'
 import { FontAwesome, SimpleLineIcons, Entypo, MaterialCommunityIcons } from '@expo/vector-icons'
 import * as style from '../Assets/style'
+import CustomDrawerContentComponent from './Components/CustomDrawerContentComponent'
 
 export const Tabs = createBottomTabNavigator(
   {
@@ -17,7 +16,6 @@ export const Tabs = createBottomTabNavigator(
     Långprognos: TenDaysForecastPage,
     Varningar: WarningPage,
     Dataanalys: AnalysisPage
-    // AllaTimmar: AllHoursForecastPage
   },
   {
     order: ['Start', 'Långprognos', 'Varningar', 'Dataanalys'],
@@ -100,6 +98,11 @@ export const Drawer = createDrawerNavigator(
     Information: InfoPage
   },
   {
-    initialRouteName: 'Väderprognos'
+    contentComponent: props => <CustomDrawerContentComponent {...props} />,
+    initialRouteName: 'Väderprognos',
+    drawerPosition: 'left',
+    drawerOpenRoute: 'DrawerOpen',
+    drawerCloseRoute: 'DrawerClose',
+    drawerToggleRoute: 'DrawerToggle'
   }
 )
