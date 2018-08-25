@@ -11,9 +11,23 @@ import getMonth from '../Assets/Functions/getMonth'
 import unformatDayHours from '../Assets/Functions/unformatDayHours'
 import BoxContainer from './BoxContainer'
 
-const CurrentForecast = ({ currentHour, location, getNewLocation }) => {
-  const { dayNumber, temp, weatherType, weatherTypeNum, averageRain, windSpeed, windGust, time } = currentHour
-  const icon = getWeatherIcon(parseInt(weatherTypeNum), style.ICON_SIZE_LARGE, (parseInt(time) > 20 || parseInt(time) < 7) ? false : true)
+const CurrentForecast = ({ currentHour }) => {
+  const {
+    dayNumber,
+    temp,
+    weatherType,
+    weatherTypeNum,
+    averageRain,
+    windSpeed,
+    windGust,
+    time,
+    windDirection
+  } = currentHour
+  const icon = getWeatherIcon(
+    parseInt(weatherTypeNum),
+    style.ICON_SIZE_LARGE,
+    !(parseInt(time) > 20 || parseInt(time) < 7)
+  )
   const month = new Date().getMonth()
 
   return (
@@ -33,7 +47,7 @@ const CurrentForecast = ({ currentHour, location, getNewLocation }) => {
           <View style={[s.flex1, s.flexJsb, s.flexAfs, s.mr2]}>
             <Rain amountRain={averageRain} />
             <View style={[s.mt1]}>
-              <Wind windSpeed={windSpeed} windGust={windGust} />
+              <Wind windDirection={windDirection} windSpeed={windSpeed} windGust={windGust} />
             </View>
             {month >= 9 || month <= 1 ? <Snow amountSnow={0} /> : null}
           </View>

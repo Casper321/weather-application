@@ -94,10 +94,6 @@ class ForecastHour extends Component {
                 <Text style={this.styles.itemDesc}>Lufttryck: </Text>
                 <Text style={this.styles.itemValue}>{airPressure} hPa</Text>
               </View>
-              <View style={[s.flexDr, s.mb1]}>
-                <Text style={this.styles.itemDesc}>Windriktning: </Text>
-                <Text style={this.styles.itemValue}>{windDirection}°</Text>
-              </View>
               <View style={[s.flexDr]}>
                 <Text style={this.styles.itemDesc}>Relativ fuktighet: </Text>
                 <Text style={this.styles.itemValue}>{relativeHumidity}%</Text>

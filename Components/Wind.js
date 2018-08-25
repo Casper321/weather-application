@@ -1,20 +1,17 @@
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import * as style from '../Assets/style'
 import s from '../Assets/style'
-import CenterContainer from './CenterContainer'
 
 const Wind = ({ windSpeed, windGust, windDirection }) => {
-  console.log(`${windDirection}deg`)
-
   return (
     <View style={[s.flexDr, s.flexJsa]}>
-      <View style={[s.flexJce, s.flexAce, s.mr0]}>
+      <View style={[s.flexJce, s.flexAce, s.mr1]}>
         {windDirection &&
           <FontAwesome
-            style={{ transform: [{ rotate: `${windDirection}deg` }] }}
-            name='long-arrow-right'
+            style={{ transform: [{ rotate: `${windDirection + 180}deg` }] }}
+            name='long-arrow-up'
             size={style.ICON_SIZE_SMALL}
             color={style.COL_BLACK}
           />}
@@ -29,13 +26,5 @@ const Wind = ({ windSpeed, windGust, windDirection }) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  weatherWindValue: {
-    position: 'absolute',
-    right: 9,
-    bottom: 11
-  }
-})
 
 export default Wind
