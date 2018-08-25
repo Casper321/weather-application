@@ -54,7 +54,9 @@ class SearchPage extends Component {
     request.onload = () => {
       try {
         const cities = JSON.parse(request.response)
-        if (cities && cities !== undefined) {
+        console.log(cities)
+        console.log(cities.error)
+        if (cities && cities !== undefined && cities.error !== 'Unable to geocode') {
           const citiesAvailable = []
           cities.map(city => {
             const wordArr = city.display_name.split(' ')
@@ -70,6 +72,9 @@ class SearchPage extends Component {
           })
 
           this.setState({ citiesAvailable, hasSearched: true, isSearching: false, invalidSearch: false })
+        } else {
+          console.log('here')
+          this.setState({ invalidSearch: true })
         }
       } catch (error) {
         console.log(error)
@@ -78,7 +83,6 @@ class SearchPage extends Component {
     }
     request.send(null)
   }
-
 
   onCityPicked = city => {
     let { latitude, longitude, cityName, longerLocationName } = city
@@ -113,14 +117,16 @@ class SearchPage extends Component {
       })
     )
 
-    this.props.dispatch(
-      searchHistoryActions.addSearchHistoryItem({
-        city: city.cityName,
-        state: state,
-        latitude,
-        longitude
-      })
-    )
+    if (!this.props.searchHistory.find(searchItem => searchItem.city === city.cityName)) {
+      this.props.dispatch(
+        searchHistoryActions.addSearchHistoryItem({
+          city: city.cityName,
+          state: state,
+          latitude,
+          longitude
+        })
+      )
+    }
 
     let { weatherWarnings } = this.props
 
@@ -157,8 +163,6 @@ class SearchPage extends Component {
     const { citiesAvailable, citySearch, hasSearched, invalidSearch, isSearching } = this.state
     let citiesList = []
 
-    console.log(this.props.searchHistory)
-
     if (citiesAvailable.length >= 1) {
       citiesList = citiesAvailable.map(city => {
         let cityObj = {}
@@ -177,9 +181,11 @@ class SearchPage extends Component {
         disabled={!citySearch}
         style={[s.col_water_blue]}
         onPress={this.onSubmit}
-        title={citySearch ? 'SÖK NU!' : 'Skriv ortsnamn för att söka'}
+        title={citySearch ? 'SÖK NU' : 'Skriv ortsnamn för att söka'}
       />
     )
+
+    console.log(invalidSearch)
 
     return (
       <Container>
@@ -197,10 +203,12 @@ class SearchPage extends Component {
             ? <Loading message='Hämtar ortsdata...' />
             : invalidSearch
                 ? <View>
-                  <FetchFailed
-                    style={[s.mb3]}
-                    text='Kunde inte hämta ortsdata. Vänligen kontrollera att du stavade rätt och har internetanslutning.'
-                    />
+                  <View>
+                    <FetchFailed
+                      style={[s.mb3]}
+                      text='Kunde inte hämta ortsdata. Vänligen kontrollera att du stavade rätt och har internetanslutning.'
+                      />
+                  </View>
                   {searchButton}
                 </View>
                 : citiesList.length >= 1
@@ -225,7 +233,7 @@ class SearchPage extends Component {
                           disabled={!citySearch}
                           style={[s.col_water_blue]}
                           onPress={this.onSubmit}
-                          title={citySearch ? 'SÖK IGEN!' : 'Skriv ortsnamn för att söka'}
+                          title={citySearch ? 'SÖK IGEN' : 'Skriv ortsnamn för att söka'}
                           />
                       </View>
                     </View>

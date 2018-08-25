@@ -1,7 +1,8 @@
 export const types = {
   ADD_SEARCH_HISTORY_ITEM: 'ADD_SEARCH_HISTORY_ITEM',
   DELETE_SEARCH_HISTORY_ITEM: 'DELETE_SEARCH_HISTORY_ITEM',
-  REPLACE_SEARCH_HISTORY: 'REPLACE_SEARCH_HISTORY'
+  REPLACE_SEARCH_HISTORY: 'REPLACE_SEARCH_HISTORY',
+  DELETE_CAR_HISTORY: 'DELETE_CAR_HISTORY'
 }
 
 export const searchHistoryActions = {
@@ -13,6 +14,9 @@ export const searchHistoryActions = {
   },
   replaceSearchHistory: item => {
     return { type: types.DELETE_SEARCH_HISTORY_ITEM, payload: item }
+  },
+  deleteCarHistory: item => {
+    return { type: types.DELETE_CAR_HISTORY, payload: item }
   }
 }
 
@@ -27,7 +31,7 @@ export default function SearchHistoryReducer (state = initialState, action) {
 
   switch (type) {
     case types.ADD_SEARCH_HISTORY_ITEM:
-      searchHistory.push(payload)
+      searchHistory.unshift(payload)
 
       return {
         ...state,
@@ -44,10 +48,18 @@ export default function SearchHistoryReducer (state = initialState, action) {
 
     case types.REPLACE_SEARCH_HISTORY:
       searchHistory = payload
+      console.log('payload', payload)
+      console.log('searchistoru', searchHistory)
 
       return {
         ...state,
         searchHistory
+      }
+
+    case types.DELETE_CAR_HISTORY:
+      return {
+        ...state,
+        searchHistory: []
       }
 
     default:

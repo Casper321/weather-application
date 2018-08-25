@@ -6,6 +6,7 @@ import InfoPage from '../Views/InfoPage/InfoPage'
 import TenDaysForecastPage from '../Views/TenDaysForecastPage/TenDaysForecastPage'
 import WarningPage from '../Views/WarningPage/WarningPage'
 import AnalysisPage from '../Views/AnalysisPage/AnalysisPage'
+import SettingsPage from '../Views/SettingsPage/SettingsPage'
 import { FontAwesome, SimpleLineIcons, Entypo, MaterialCommunityIcons } from '@expo/vector-icons'
 import * as style from '../Assets/style'
 import CustomDrawerContentComponent from './Components/CustomDrawerContentComponent'
@@ -92,10 +93,30 @@ export const InfoStack = createStackNavigator(
   }
 )
 
+export const SettingsStack = createStackNavigator(
+  {
+    Inställningar: {
+      screen: SettingsPage,
+      navigationOptions: {
+        tabBarVisible: false,
+        title: 'Inställningar',
+        headerStyle: { backgroundColor: style.COL_GOOGLE_BLUE },
+        headerTintColor: '#fff'
+      }
+    }
+  },
+  {
+    initialRouteName: 'Inställningar',
+    headerMode: Platform.OS === 'ios' ? 'float' : 'screen',
+    headerMode: 'none'
+  }
+)
+
 export const Drawer = createDrawerNavigator(
   {
     Väderprognos: Tabs,
     Information: InfoPage
+    /* Inställningar: SettingsPage */
   },
   {
     contentComponent: props => <CustomDrawerContentComponent {...props} />,

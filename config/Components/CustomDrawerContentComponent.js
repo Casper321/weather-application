@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, SafeAreaView, View, StyleSheet, Text, TouchableOpacity, Dimensions } from 'react-native'
+import { ScrollView, SafeAreaView, View, StyleSheet, Text, TouchableOpacity, Dimensions, Button } from 'react-native'
 import { DrawerItems } from 'react-navigation'
 import { FontAwesome } from '@expo/vector-icons'
 import s from '../../Assets/style'
@@ -38,7 +38,7 @@ class CustomDrawerContentComponent extends Component {
   }
 
   clearStorage = () => {
-    this.props.dispatch(searchHistoryActions.replaceSearchHistory([]))
+    this.props.dispatch(searchHistoryActions.deleteCarHistory())
     this.props.navigation.closeDrawer()
   }
 
@@ -46,10 +46,10 @@ class CustomDrawerContentComponent extends Component {
     const { searchHistory } = this.props
 
     return (
-      <View
+      <ScrollView
         style={{
-          paddingTop: Expo.Constants.statusBarHeight,
           padding: style.SPACING_M,
+          paddingTop: Expo.Constants.statusBarHeight + 10,
           flex: 1
         }}
       >
@@ -58,7 +58,8 @@ class CustomDrawerContentComponent extends Component {
             <View style={[s.mt3, s.mb3]}>
               <Text style={[s.fz1, s.bbw, s.bc, s.pb2, s.mt2, s.col_dark_grey]}>Senaste sökningar</Text>
               {searchHistory.map((city, index) => {
-                if (index <= 5) {
+                if (index <= 4) {
+                  console.log(index)
                   return (
                     <TouchableOpacity key={`${Math.random() * 1000}`} onPress={() => this.onSelectCity(city)}>
                       <View style={styles.searchItem}>
@@ -86,13 +87,17 @@ class CustomDrawerContentComponent extends Component {
                   return null
                 }
               })}
+              {searchHistory.length >= 2 &&
+                <View style={[s.flexDr, s.mt3]}>
+                  <Button style={[s.col_water_blue]} onPress={() => this.clearStorage()} title='Rensa historik' />
+                </View>}
             </View>}
           <View>
             <Text style={[s.fz1, s.bbw, s.bc, s.pb2, s.mt2, s.col_dark_grey]}>Övriga sidor</Text>
             <DrawerItems {...this.props} />
           </View>
         </SafeAreaView>
-      </View>
+      </ScrollView>
     )
   }
 }
