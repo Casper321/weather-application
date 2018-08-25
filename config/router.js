@@ -1,28 +1,13 @@
-import React, { Component } from 'react'
-import {
-  Platform,
-  ScrollView,
-  SafeAreaView,
-  StyleSheet,
-  View,
-  AsyncStorage,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback
-} from 'react-native'
+import React from 'react'
+import { Platform } from 'react-native'
 import { createBottomTabNavigator, createStackNavigator, createDrawerNavigator, DrawerItems } from 'react-navigation'
 import StartPage from '../Views/StartPage/StartPage'
-import SearchPage from '../Views/SearchPage/SearchPage'
 import InfoPage from '../Views/InfoPage/InfoPage'
 import TenDaysForecastPage from '../Views/TenDaysForecastPage/TenDaysForecastPage'
-import AllHoursForecastPage from '../Views/AllHoursForecastPage/AllHoursForecastPage'
 import WarningPage from '../Views/WarningPage/WarningPage'
 import AnalysisPage from '../Views/AnalysisPage/AnalysisPage'
 import { FontAwesome, SimpleLineIcons, Entypo, MaterialCommunityIcons } from '@expo/vector-icons'
-import s from '../Assets/style'
 import * as style from '../Assets/style'
-import fetchWeatherData from '../Assets/Functions/fetchWeatherData'
-import { connect } from 'react-redux'
 import CustomDrawerContentComponent from './Components/CustomDrawerContentComponent'
 
 export const Tabs = createBottomTabNavigator(

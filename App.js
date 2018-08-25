@@ -2,7 +2,6 @@ import React from 'react'
 import { SafeAreaView, View, AsyncStorage } from 'react-native'
 import { Drawer } from './config/router'
 import { Provider } from 'react-redux'
-import configureStore from './Redux/configureStore'
 import { createStackNavigator } from 'react-navigation'
 import SearchPage from './Views/SearchPage/SearchPage'
 import InfoPage from './Views/InfoPage/InfoPage'
@@ -11,15 +10,12 @@ import StartPage from './Views/StartPage/StartPage'
 import WarningPage from './Views/WarningPage/WarningPage'
 import AnalysisPage from './Views/AnalysisPage/AnalysisPage'
 import AllHoursForecastPage from './Views/AllHoursForecastPage/AllHoursForecastPage'
-import storage from 'redux-persist/lib/storage'
-import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
-
 import { persistStore, persistReducer } from 'redux-persist'
-
 import rootReducer from './Redux/index'
 import { PersistGate } from 'redux-persist/lib/integration/react'
 import { createStore } from 'redux'
 import Loading from './Components/Loading'
+import CustomDrawerComponent from './config/Components/CustomDrawerContentComponent'
 
 const persistConfig = {
   key: 'root',
@@ -40,7 +36,8 @@ const RootStack = createStackNavigator(
     Långprognos: { screen: TenDaysForecastPage },
     Varningar: { screen: WarningPage },
     Dataanalys: { screen: AnalysisPage },
-    Timmar: { screen: AllHoursForecastPage }
+    Timmar: { screen: AllHoursForecastPage },
+    CustomDrawerComponent: { screen: CustomDrawerComponent }
   },
   {
     initialRouteName: 'Drawer',
@@ -50,15 +47,12 @@ const RootStack = createStackNavigator(
 
 export default class App extends React.Component {
   render () {
-    console.log('Store', store)
-    console.log('Persistor', persistor)
-
     return (
       <Provider store={store}>
         <PersistGate
           loading={
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <Loading message='Laddar appen...' />
+              <Loading message='Laddar Väder Norden...' />
             </View>
           }
           persistor={persistor}

@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { ScrollView, SafeAreaView, View, AsyncStorage, StyleSheet, Text, TouchableOpacity, Button } from 'react-native'
+import { ScrollView, SafeAreaView, View, StyleSheet, Text, TouchableOpacity, Button } from 'react-native'
 import { DrawerItems } from 'react-navigation'
 import { FontAwesome } from '@expo/vector-icons'
 import s from '../../Assets/style'
 import * as style from '../../Assets/style'
 import fetchWeatherData from '../../Assets/Functions/fetchWeatherData'
 import { connect } from 'react-redux'
+import { searchHistoryActions } from '../../Redux/SearchHistoryReducer'
 
 const styles = StyleSheet.create({
   searchItem: {
@@ -24,65 +25,19 @@ class CustomDrawerContentComponent extends Component {
     citiesSearched: []
   }
 
-  componentDidMount = () => {
-    this.retriveData()
-  }
-
-  retriveData = async () => {
-    try {
-      let citiesSearched = await AsyncStorage.getItem('CitiesSearched')
-      citiesSearched = JSON.parse(citiesSearched).filter(city => city !== null && city !== undefined && city)
-      console.log(citiesSearched)
-      if (citiesSearched !== null) {
-        this.setState({ citiesSearched })
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   onSelectCity = city => {
-    const request = new XMLHttpRequest()
-    console.log(city)
-    request.open('GET', `https://eu1.locationiq.org/v1/search.php?key=102c0e44882475&q=${city}&format=json`, true)
-    request.onload = () => {
-      try {
-        const city = JSON.parse(request.response)[0]
-        if (city && city !== undefined) {
-          fetchWeatherData(
-            this.props.dispatch,
-            parseInt(city.lat).toPrecision(5),
-            parseInt(city.lon).toPrecision(5),
-            city
-          )
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    request.send(null)
+    fetchWeatherData(this.props.dispatch, city.latitude, city.longitude, city.city)
+    this.props.navigation.closeDrawer()
   }
 
-  clearStorage = async () => {
-    try {
-      await AsyncStorage.removeItem('CitiesSearched')
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  logStorage = async () => {
-    console.log('here!!')
-    try {
-      const storage = await AsyncStorage.getItem('CitiesSearched')
-      console.log(storage)
-    } catch (error) {
-      console.log(error)
-    }
+  onDeleteCity = index => {
+    this.props.dispatch(searchHistoryActions.deleteSearchHistoryItem(index))
   }
 
   render () {
-    const { citiesSearched } = this.state
+    const { searchHistory } = this.props
+
+    console.log('SEARCHHISTORY: ', searchHistory)
 
     return (
       <ScrollView
@@ -91,15 +46,23 @@ class CustomDrawerContentComponent extends Component {
           padding: style.SPACING_M
         }}
       >
-        {citiesSearched &&
+        {searchHistory.length >= 1 &&
           <View style={[s.mt3]}>
             <Text style={[s.fz1, s.bbw, s.bc, s.pb2, s.mt2, s.col_dark_grey]}>Senaste sökningar</Text>
-            {citiesSearched.map((city, index) => {
+            {searchHistory.map((city, index) => {
               if (index <= 5) {
                 return (
                   <TouchableOpacity key={`${Math.random() * 1000}`} onPress={() => this.onSelectCity(city)}>
                     <View style={styles.searchItem}>
-                      <Text style={[s.fz1]}>{city}</Text>
+                      <Text style={[s.fz1]}>{city.city}</Text>
+                      <TouchableOpacity onPress={() => this.onDeleteCity(index)}>
+                        <FontAwesome
+                          style={[s.mr2, s.mlA]}
+                          name='trash'
+                          color={style.COL_DARK_GREY}
+                          size={style.ICON_SIZE_SMALL}
+                        />
+                      </TouchableOpacity>
                       <FontAwesome
                         style={[s.mr2, s.mlA]}
                         name='search'
@@ -127,7 +90,7 @@ class CustomDrawerContentComponent extends Component {
 
 function mapStateToProps (state) {
   return {
-    forecasts: state.weather.forecasts
+    searchHistory: state.searchHistory.searchHistory
   }
 }
 
