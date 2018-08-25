@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "Vackert Väder",
+    "name": "Väder Norden",
     "icon": "./Assets/Images/app_icon.png",
-    "version": "1.0.0",
-    "slug": "vackert-vader",
+    "version": "1.1.0",
+    "slug": "vader-norden",
     "sdkVersion": "27.0.0",
     "privacy": "public",
     "primaryColor": "#2196f3",
@@ -14,12 +14,15 @@
       "image": "./Assets/Images/app_icon.png"
     },
     "ios": {
-      "bundleIdentifier": "com.swenativedevs.vackertvader",
-      "supportsTablet": true
+      "bundleIdentifier": "com.swenativedevs.vadernorden",
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Your location will be used to find the weather forecast at your location."
+      }
     },
     "android": {
-      "package": "com.swenativedevs.vackertvader",
-      "versionCode": 1,
+      "package": "com.swenativedevs.vadernorden",
+      "versionCode": 2,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION"

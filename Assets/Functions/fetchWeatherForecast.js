@@ -40,6 +40,7 @@ const fetchWeatherForecast = async (latitude, longitude, city, dispatch) => {
       timeObj.averageRain = hour.parameters.find(element => element.name === 'pmean').values[0]
       timeObj.weatherType = getWeatherCondition(hour.parameters.find(element => element.name === 'Wsymb2').values[0])
       timeObj.weatherTypeNum = hour.parameters.find(element => element.name === 'Wsymb2').values[0]
+      timeObj.relativeHumidity = hour.parameters.find(element => element.name === 'r').values[0]
 
       // Change day on midnight
       timeObj.time === '00' && activeDayIndex++
@@ -51,12 +52,6 @@ const fetchWeatherForecast = async (latitude, longitude, city, dispatch) => {
 
     newForecastResult.hours = [...forecastHours]
     dispatch(weatherActions.addForecast(newForecastResult))
-    dispatch(
-      weatherActions.setCurrentCity({
-        city,
-        suburb: city
-      })
-    )
 
     // Successful fetch
     return true

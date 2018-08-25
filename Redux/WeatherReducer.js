@@ -5,7 +5,8 @@ export const types = {
   SET_CURRENT_LOCATION: 'SET_CURRENT_LOCATION',
   SET_WEATHER_WARNINGS: 'SET_WEATHER_WARNINGS',
   SET_WEATHER_WARNINGS_IN_DISTRICT: 'SET_WEATHER_WARNINGS_IN_DISTRICT',
-  SCROLL_INDEX_ALL_HOURS_PAGE: 'SCROLL_INDEX_ALL_HOURS_PAGE'
+  SCROLL_INDEX_ALL_HOURS_PAGE: 'SCROLL_INDEX_ALL_HOURS_PAGE',
+  SET_APP_STATE: 'SET_APP_STATE'
 }
 
 export const weatherActions = {
@@ -29,6 +30,9 @@ export const weatherActions = {
   },
   setScrollIndexAllHoursPage: item => {
     return { type: types.SCROLL_INDEX_ALL_HOURS_PAGE, payload: item }
+  },
+  setAppState: item => {
+    return { type: types.SET_APP_STATE, payload: item }
   }
 }
 
@@ -43,7 +47,8 @@ const initialState = {
   },
   weatherWarnings: [],
   weatherWarningsInDistrict: [],
-  setScrollIndexAllHoursPage: ''
+  setScrollIndexAllHoursPage: '',
+  appState: ''
 }
 
 export default function WeatherReducer (state = initialState, action) {
@@ -77,9 +82,15 @@ export default function WeatherReducer (state = initialState, action) {
       }
 
     case types.SET_CURRENT_LOCATION:
-      return {
-        ...state,
-        currentLocation: payload
+      if (payload.city || payload.suburb) {
+        return {
+          ...state,
+          currentLocation: payload
+        }
+      } else {
+        return {
+          ...state
+        }
       }
 
     case types.SET_WEATHER_WARNINGS:
@@ -98,6 +109,12 @@ export default function WeatherReducer (state = initialState, action) {
       return {
         ...state,
         setScrollIndexAllHoursPage: payload
+      }
+
+    case types.SET_APP_STATE:
+      return {
+        ...state,
+        appState: payload
       }
 
     default:

@@ -1,14 +1,17 @@
 import { weatherActions } from '../../Redux/WeatherReducer'
 import { Location, Permissions } from 'expo'
 
-const getLocation = async (updateState, dispatch) => {
-  const { status } = await Permissions.askAsync(Permissions.LOCATION)
-  if (status !== 'granted') {
-    updateState('hasLocationPermission', false)
-    // this.setState({ hasLocationPermission: false })
+const getLocation = async (prevHasLocationPermission, dispatch) => {
+  let hasLocationPermission
+  if (!prevHasLocationPermission) {
+    const { status } = await Permissions.askAsync(Permissions.LOCATION)
+    if (status !== 'granted') {
+      hasLocationPermission = false
+    } else {
+      hasLocationPermission = true
+    }
   } else {
-    updateState('hasLocationPermission', true)
-    // this.setState({ hasLocationPermissions: true })
+    hasLocationPermission = true
   }
 
   try {
@@ -22,12 +25,9 @@ const getLocation = async (updateState, dispatch) => {
         longitude: currentLongitude
       })
     )
-    updateState('loadingCoordinatesFailed', false)
-    // this.setState({ loadingCoordinatesFailed: false })
-    return { currentLatitude, currentLongitude }
+    return { currentLatitude, currentLongitude, hasLocationPermission, loadingCoordinatesFailed: false }
   } catch (error) {
-    updateState('loadingCoordinatesFailed', true)
-    // this.setState({ loadingCoordinatesFailed: true })
+    return { hasLocationPermission, loadingCoordinatesFailed: true }
   }
 }
 

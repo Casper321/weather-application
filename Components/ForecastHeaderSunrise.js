@@ -7,9 +7,11 @@ import * as style from '../Assets/style'
 const ForecastHeaderSunrise = ({ day = null, date = null, sunriseTime, sunsetTime }) => {
   return (
     <View style={[s.flexDr, s.flexJsb, s.flexAce, s.bbw, s.bc, s.pa1]}>
-      <Text style={[s.ml1, s.flexOne, s.fz1, s.fw2]}>
-        {day + ' ' + date}
-      </Text>
+      {day && date
+        ? <Text style={[s.ml1, s.flexOne, s.fz1, s.fw2]}>
+          {day + ' ' + date}
+        </Text>
+        : null}
       <View style={[s.flexOne, s.flexDr, s.flexJsb, s.flexAce, s.mr2]}>
         {sunriseTime &&
           <View style={[s.flexDr, s.flexJsa, s.flexAce]}>
