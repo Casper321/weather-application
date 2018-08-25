@@ -35,10 +35,6 @@ class SearchPage extends Component {
     invalidSearch: false
   }
 
-  componentDidMount = () => {
-    this.search.focus()
-  }
-
   onType = city => {
     this.setState({ citySearch: city })
   }
@@ -190,7 +186,7 @@ class SearchPage extends Component {
     return (
       <Container>
         <SearchBar
-          ref={search => (this.search = search)}
+          autoFocus
           onChangeText={this.onType}
           icon={{ type: 'font-awesome', name: 'search' }}
           placeholder='Skriv din ort här...'
