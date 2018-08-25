@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, SafeAreaView, View, StyleSheet, Text, TouchableOpacity, Button } from 'react-native'
+import { ScrollView, SafeAreaView, View, StyleSheet, Text, TouchableOpacity, Dimensions } from 'react-native'
 import { DrawerItems } from 'react-navigation'
 import { FontAwesome } from '@expo/vector-icons'
 import s from '../../Assets/style'
@@ -7,6 +7,8 @@ import * as style from '../../Assets/style'
 import fetchWeatherData from '../../Assets/Functions/fetchWeatherData'
 import { connect } from 'react-redux'
 import { searchHistoryActions } from '../../Redux/SearchHistoryReducer'
+
+const { height } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   searchItem: {
@@ -32,58 +34,65 @@ class CustomDrawerContentComponent extends Component {
 
   onDeleteCity = index => {
     this.props.dispatch(searchHistoryActions.deleteSearchHistoryItem(index))
+    this.props.navigation.closeDrawer()
+  }
+
+  clearStorage = () => {
+    this.props.dispatch(searchHistoryActions.replaceSearchHistory([]))
+    this.props.navigation.closeDrawer()
   }
 
   render () {
     const { searchHistory } = this.props
 
-    console.log('SEARCHHISTORY: ', searchHistory)
-
     return (
-      <ScrollView
+      <View
         style={{
           paddingTop: Expo.Constants.statusBarHeight,
-          padding: style.SPACING_M
+          padding: style.SPACING_M,
+          flex: 1
         }}
       >
-        {searchHistory.length >= 1 &&
-          <View style={[s.mt3]}>
-            <Text style={[s.fz1, s.bbw, s.bc, s.pb2, s.mt2, s.col_dark_grey]}>Senaste sökningar</Text>
-            {searchHistory.map((city, index) => {
-              if (index <= 5) {
-                return (
-                  <TouchableOpacity key={`${Math.random() * 1000}`} onPress={() => this.onSelectCity(city)}>
-                    <View style={styles.searchItem}>
-                      <Text style={[s.fz1]}>{city.city}</Text>
-                      <TouchableOpacity onPress={() => this.onDeleteCity(index)}>
-                        <FontAwesome
-                          style={[s.mr2, s.mlA]}
-                          name='trash'
-                          color={style.COL_DARK_GREY}
-                          size={style.ICON_SIZE_SMALL}
-                        />
-                      </TouchableOpacity>
-                      <FontAwesome
-                        style={[s.mr2, s.mlA]}
-                        name='search'
-                        color={style.COL_GOOGLE_BLUE}
-                        size={style.ICON_SIZE_SMALL}
-                      />
-                    </View>
-                  </TouchableOpacity>
-                )
-              } else {
-                return null
-              }
-            })}
-            <Button title='Rensa historik' onPress={() => this.clearStorage()} />
-          </View>}
-        <View style={[s.mt2]}>
-          <DrawerItems {...this.props} />
-        </View>
-        <Button title='Visa storage' onPress={() => this.logStorage()} />
-        <SafeAreaView style={[s.flex1]} forceInset={{ top: 'always', horizontal: 'never' }} />
-      </ScrollView>
+        <SafeAreaView style={[s.flex1]} forceInset={{ top: 'always', horizontal: 'never' }}>
+          {searchHistory.length >= 1 &&
+            <View style={[s.mt3, s.mb3]}>
+              <Text style={[s.fz1, s.bbw, s.bc, s.pb2, s.mt2, s.col_dark_grey]}>Senaste sökningar</Text>
+              {searchHistory.map((city, index) => {
+                if (index <= 5) {
+                  return (
+                    <TouchableOpacity key={`${Math.random() * 1000}`} onPress={() => this.onSelectCity(city)}>
+                      <View style={styles.searchItem}>
+                        <Text style={[s.fz1]}>{city.city}</Text>
+                        <View style={[s.mlA, s.flexDr]}>
+                          <TouchableOpacity onPress={() => this.onDeleteCity(index)}>
+                            <FontAwesome
+                              style={[s.mr3]}
+                              name='trash'
+                              color={style.COL_DARK_GREY}
+                              size={style.ICON_SIZE_SMALL}
+                            />
+                          </TouchableOpacity>
+                          <FontAwesome
+                            style={[s.pr2]}
+                            name='search'
+                            color={style.COL_GOOGLE_BLUE}
+                            size={style.ICON_SIZE_SMALL}
+                          />
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  )
+                } else {
+                  return null
+                }
+              })}
+            </View>}
+          <View>
+            <Text style={[s.fz1, s.bbw, s.bc, s.pb2, s.mt2, s.col_dark_grey]}>Övriga sidor</Text>
+            <DrawerItems {...this.props} />
+          </View>
+        </SafeAreaView>
+      </View>
     )
   }
 }

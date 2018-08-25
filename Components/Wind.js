@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet} from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import * as style from '../Assets/style'
 import s from '../Assets/style'
@@ -27,6 +27,5 @@ const styles = StyleSheet.create({
     bottom: 11
   }
 })
-
 
 export default Wind
