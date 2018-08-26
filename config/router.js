@@ -29,7 +29,7 @@ export const Tabs = createMaterialTopTabNavigator(
     Långprognos: {
       screen: TenDaysForecastPage,
       navigationOptions: {
-        tabBarLabel: '10 dagar',
+        tabBarLabel: '10 dygn',
         tabBarIcon: ({ tintColor, focused }) => (
           <SimpleLineIcons
             name={'social-soundcloud'}
@@ -75,7 +75,7 @@ export const Tabs = createMaterialTopTabNavigator(
       inactiveTintColor: '#000',
       upperCaseLabel: false,
       style: {
-        height: 60,
+        height: 56,
         backgroundColor: style.COL_WHITE,
         borderTopWidth: 0,
         elevation: 20

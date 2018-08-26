@@ -17,12 +17,14 @@ class Header extends Component {
           </TouchableWithoutFeedback>
         </View>
         <View style={[s.flex4, s.mrA, s.flexJce, s.ml2]}>
-          <Text numberOfLines={1} style={[s.flex1, s.fz2, s.fw1, s.col_white]}>{currentLocation.city || currentLocation.suburb}</Text>
+          <Text numberOfLines={1} style={[s.flex1, s.fz2, s.fw1, s.col_white]}>
+            {currentLocation.city || currentLocation.suburb}
+          </Text>
         </View>
         <View style={[s.flex3, s.flexDr, s.flexJfe]}>
           <View style={[s.mr3]}>
             <TouchableWithoutFeedback onPress={() => navigation.navigate('Sök', { navigation, updateWeather })}>
-              <FontAwesome style={[s.mr3]} name='search' color={style.COL_WHITE} size={style.ICON_SIZE_SMALL} />
+              <FontAwesome style={[s.pr3]} name='search' color={style.COL_WHITE} size={style.ICON_SIZE_SMALL} />
             </TouchableWithoutFeedback>
           </View>
         </View>

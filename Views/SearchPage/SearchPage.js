@@ -184,7 +184,7 @@ class SearchPage extends Component {
     console.log(invalidSearch)
 
     return (
-      <Container>
+      <Container style={{ backgroundColor: style.COL_WHITE }}>
         <SearchBar
           autoFocus
           onChangeText={this.onType}
