@@ -11,7 +11,6 @@ import {
 } from 'react-native'
 import { SearchBar } from 'react-native-elements'
 import Container from '../../Components/Container'
-import Header from '../../Components/Header'
 import SearchItem from './Components/SearchItem'
 import BoxContainer from '../../Components/BoxContainer'
 import * as style from '../../Assets/style'
@@ -23,6 +22,7 @@ import fetchWeatherForecast from '../../Assets/Functions/fetchWeatherForecast'
 import NormalText from '../../Components/NormalText'
 import Loading from '../../Components/Loading'
 import FetchFailed from '../../Components/FetchFailed'
+import { Header, Item, Input, Icon } from 'native-base'
 
 const allowedCountries = ['Sweden', 'Sverige', 'Norge', 'Norway', 'Finland']
 
@@ -184,16 +184,20 @@ class SearchPage extends Component {
     console.log(invalidSearch)
 
     return (
-      <Container style={{ backgroundColor: style.COL_WHITE }}>
-        <SearchBar
-          autoFocus
-          onChangeText={this.onType}
-          icon={{ type: 'font-awesome', name: 'search' }}
-          placeholder='Skriv din ort här...'
-          returnKeyType='search'
-          onSubmitEditing={this.onSubmit}
-          style={[s.pt2, s.pb2, s.boxSh]}
-        />
+      <Container>
+        <Header style={[s.col_bg_google_blue, s.boxSh, { height: 56 }]} searchBar rounded>
+          <Item>
+            <Icon name='ios-search' />
+            <Input
+              value={citySearch}
+              autoFocus
+              onChangeText={this.onType}
+              returnKeyType='search'
+              onSubmitEditing={this.onSubmit}
+              placeholder='Skriv din ort här...'
+            />
+          </Item>
+        </Header>
         <ScrollView contentContainerStyle={[s.pb3]}>
           {isSearching
             ? <Loading message='Hämtar ortsdata...' />
