@@ -15,9 +15,11 @@
     },
     "ios": {
       "bundleIdentifier": "com.swenativedevs.vadernorden",
-      "supportsTablet": true,
+      "supportsTablet": false,
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "Your location will be used to find the weather forecast at your location."
+        "NSLocationWhenInUseUsageDescription": "Your location will be used to find the weather forecast at your location.",
+        "NSLocationAlwaysUsageDescription": "Your location will be used to find the weather forecast at your location.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Your location will be used to find the weather forecast at your location."
       }
     },
     "android": {

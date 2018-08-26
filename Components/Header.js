@@ -17,7 +17,7 @@ class Header extends Component {
           </TouchableWithoutFeedback>
         </View>
         <View style={[s.flex4, s.mrA, s.flexJce, s.ml2]}>
-          <Text style={[s.flex1, s.fz2, s.fw1, s.col_white]}>{currentLocation.city || currentLocation.suburb}</Text>
+          <Text numberOfLines={1} style={[s.flex1, s.fz2, s.fw1, s.col_white]}>{currentLocation.city || currentLocation.suburb}</Text>
         </View>
         <View style={[s.flex3, s.flexDr, s.flexJfe]}>
           <View style={[s.mr3]}>
