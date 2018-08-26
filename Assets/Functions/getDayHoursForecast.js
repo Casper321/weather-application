@@ -10,6 +10,7 @@ export default (getDayHoursForecast = (daySearched, hoursForecast) => {
   if (day > numDaysMonth) {
     month = month + 1
     day = day - numDaysMonth
+    console.log(day)
   }
 
   let sumDate = ''

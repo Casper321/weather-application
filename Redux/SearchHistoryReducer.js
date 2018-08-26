@@ -48,9 +48,7 @@ export default function SearchHistoryReducer (state = initialState, action) {
 
     case types.REPLACE_SEARCH_HISTORY:
       searchHistory = payload
-      console.log('payload', payload)
-      console.log('searchistoru', searchHistory)
-
+      
       return {
         ...state,
         searchHistory

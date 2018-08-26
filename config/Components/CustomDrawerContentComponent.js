@@ -59,7 +59,6 @@ class CustomDrawerContentComponent extends Component {
               <Text style={[s.fz1, s.bbw, s.bc, s.pb2, s.mt2, s.col_dark_grey]}>Senaste sökningar</Text>
               {searchHistory.map((city, index) => {
                 if (index <= 4) {
-                  console.log(index)
                   return (
                     <TouchableOpacity key={`${Math.random() * 1000}`} onPress={() => this.onSelectCity(city)}>
                       <View style={styles.searchItem}>

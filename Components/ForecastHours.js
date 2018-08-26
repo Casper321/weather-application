@@ -42,6 +42,7 @@ const ForecastHours = ({
   const content = (
     <ScrollView>
       {!hideHeader &&
+        dayHours.length >= 1 &&
         <ForecastHeaderSunrise
           day={showDate ? dayLabel : ''}
           date={showDate ? `${dayHours[0].dayNumber} ${getMonth(dayHours[0].month)}` : ''}
@@ -62,26 +63,27 @@ const ForecastHours = ({
             false
           )}
         />}
-      <FlatList
-        data={dayHours}
-        ItemSeparatorComponent={() => itemSeperator()}
-        keyExtractor={item => `${item.date} ${item.time}`}
-        renderItem={({ item }) => (
-          <ForecastHour
-            time={item.time}
-            weatherType={item.weatherType}
-            weatherTypeNum={item.weatherTypeNum}
-            temperature={item.temp}
-            rain={item.averageRain}
-            windSpeed={item.windSpeed}
-            windGust={item.windGust}
-            thunderRisk={item.thunderRisk}
-            airPressure={item.airPressure}
-            windDirection={item.windDirection}
-            relativeHumidity={item.relativeHumidity}
-          />
-        )}
-      />
+      {dayHours.length >= 1 &&
+        <FlatList
+          data={dayHours}
+          ItemSeparatorComponent={() => itemSeperator()}
+          keyExtractor={item => `${item.date} ${item.time}`}
+          renderItem={({ item }) => (
+            <ForecastHour
+              time={item.time}
+              weatherType={item.weatherType}
+              weatherTypeNum={item.weatherTypeNum}
+              temperature={item.temp}
+              rain={item.averageRain}
+              windSpeed={item.windSpeed}
+              windGust={item.windGust}
+              thunderRisk={item.thunderRisk}
+              airPressure={item.airPressure}
+              windDirection={item.windDirection}
+              relativeHumidity={item.relativeHumidity}
+            />
+          )}
+        />}
     </ScrollView>
   )
 

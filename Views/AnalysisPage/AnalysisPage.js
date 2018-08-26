@@ -17,51 +17,53 @@ class AnalysisPage extends Component {
     const newestForecastSearch = forecasts[forecasts.length - 1] || {}
     const days = newestForecastSearch.hours
     // Array holding weather forecast data for 10 days
-    let tenDays
-    if (new Date().getHours() === 23) {
-      tenDays = [
-        getDayHoursForecast(1, days),
-        getDayHoursForecast(2, days),
-        getDayHoursForecast(3, days),
-        getDayHoursForecast(4, days),
-        getDayHoursForecast(5, days),
-        getDayHoursForecast(6, days),
-        getDayHoursForecast(7, days),
-        getDayHoursForecast(8, days),
-        getDayHoursForecast(9, days),
-      ]
-    } else {
-      tenDays = [
-        getDayHoursForecast(0, days),
-        getDayHoursForecast(1, days),
-        getDayHoursForecast(2, days),
-        getDayHoursForecast(3, days),
-        getDayHoursForecast(4, days),
-        getDayHoursForecast(5, days),
-        getDayHoursForecast(6, days),
-        getDayHoursForecast(7, days),
-        getDayHoursForecast(8, days),
-        getDayHoursForecast(9, days),
-      ]
-    }
-
     const tempMidday = []
     const labelMidday = []
+    let tenDays
 
-    tenDays.forEach(day => {
-      day.forEach(hour => {
-        if(parseInt(hour.time) === 12) {
-         tempMidday.push(hour.temp)
-         labelMidday.push(hour.day.slice(0, 3))
-        }
+    if (days && days.length >= 1) {
+      if (new Date().getHours() === 23) {
+        tenDays = [
+          getDayHoursForecast(1, days),
+          getDayHoursForecast(2, days),
+          getDayHoursForecast(3, days),
+          getDayHoursForecast(4, days),
+          getDayHoursForecast(5, days),
+          getDayHoursForecast(6, days),
+          getDayHoursForecast(7, days),
+          getDayHoursForecast(8, days),
+          getDayHoursForecast(9, days)
+        ]
+      } else {
+        tenDays = [
+          getDayHoursForecast(0, days),
+          getDayHoursForecast(1, days),
+          getDayHoursForecast(2, days),
+          getDayHoursForecast(3, days),
+          getDayHoursForecast(4, days),
+          getDayHoursForecast(5, days),
+          getDayHoursForecast(6, days),
+          getDayHoursForecast(7, days),
+          getDayHoursForecast(8, days),
+          getDayHoursForecast(9, days)
+        ]
+      }
+
+      tenDays.forEach(day => {
+        day.forEach(hour => {
+          if (parseInt(hour.time) === 12) {
+            tempMidday.push(hour.temp)
+            labelMidday.push(hour.day.slice(0, 3))
+          }
+        })
       })
-    })
-    
+    }
+
     const config = {
       line: {
         visible: true,
-        strokeWidth: 5,
-        strokeColor: '#216D99'
+        strokeWidth: 2,
+        strokeColor: style.COL_GOOGLE_BLUE
       },
       area: {
         visible: false
@@ -85,6 +87,16 @@ class AnalysisPage extends Component {
       <Container>
         <Header navigation={this.props.navigation} />
         <ScrollView contentContainerStyle={[s.pb3]}>
+          {days &&
+            days.length >= 1 &&
+            <ScrollView style={[s.mt2, s.mb2]} horizontal decelerationRate={0}>
+              <BoxContainer containerStyle={styles.containerStyle}>
+                <Title text='Temperaturen kommande dagar' style={[s.flexJce]} />
+                <View style={{ height: 350, width: 500, marginBottom: 12 }}>
+                  <LineChart style={{ flex: 1, left: -25 }} config={config} data={tempMidday} xLabels={labelMidday} />
+                </View>
+              </BoxContainer>
+            </ScrollView>}
           <BoxContainer containerStyle={styles.containerStyle}>
             <Title text='Under utveckling' />
             <NormalText>
@@ -94,25 +106,11 @@ class AnalysisPage extends Component {
             <View style={[s.flexJce, s.flexAfs, s.mt2]}>
               <Button
                 style={[s.col_water_blue, s.pb2]}
-                onPress={() =>
-                  Linking.openURL('mailto:kontakta.native@gmail.com')}
+                onPress={() => Linking.openURL('mailto:kontakta.native@gmail.com')}
                 title='Kontakta oss'
               />
             </View>
           </BoxContainer>
-          <ScrollView style={[s.mt2, s.mb2]} horizontal decelerationRate={0}>
-            <BoxContainer containerStyle={styles.containerStyle}>
-              <Title text='Temperatur kl: 12:00' style={[s.flexJce]} />  
-              <View style={{ height: 350, width: 500, marginBottom: 12}}>
-                <LineChart
-                  style={{ flex: 1 }}
-                  config={config}
-                  data={tempMidday}
-                  xLabels={labelMidday}
-                />
-              </View>
-            </BoxContainer>
-          </ScrollView>
         </ScrollView>
       </Container>
     )

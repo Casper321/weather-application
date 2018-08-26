@@ -50,8 +50,6 @@ class SearchPage extends Component {
     request.onload = () => {
       try {
         const cities = JSON.parse(request.response)
-        console.log(cities)
-        console.log(cities.error)
         if (cities && cities !== undefined && cities.error !== 'Unable to geocode') {
           const citiesAvailable = []
           cities.map(city => {
@@ -69,11 +67,9 @@ class SearchPage extends Component {
 
           this.setState({ citiesAvailable, hasSearched: true, isSearching: false, invalidSearch: false })
         } else {
-          console.log('here')
           this.setState({ invalidSearch: true })
         }
       } catch (error) {
-        console.log(error)
         this.setState({ invalidSearch: true })
       }
     }
@@ -180,8 +176,6 @@ class SearchPage extends Component {
         title={citySearch ? 'SÖK NU' : 'Skriv ortsnamn för att söka'}
       />
     )
-
-    console.log(invalidSearch)
 
     return (
       <Container>

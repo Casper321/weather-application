@@ -13,7 +13,6 @@ const getLocationFromCoordinates = (latitude, longitude, dispatch) => {
       var data = JSON.parse(request.response)
       const newLocation = {}
 
-      console.log(data.address)
       newLocation.latitude = data.lat
       newLocation.longitude = data.lon
       newLocation.city = data.address.city_district || data.address.city
