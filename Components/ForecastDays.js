@@ -8,6 +8,8 @@ import s from '../Assets/style'
 import getMonth from '../Assets/Functions/getMonth'
 import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
 import getHighestOccurrence from '../Assets/Functions/getHighestOccurrence'
+import getDaysInMonth from '../Assets/Functions/getDaysInMonth'
+
 
 const ForecastDays = ({ days, navigation, setScrollIndexm, currentLocation }) => {
   // Array holding weather forecast data for 10 days
@@ -38,7 +40,6 @@ const ForecastDays = ({ days, navigation, setScrollIndexm, currentLocation }) =>
         getDayHoursForecast(9, days),
       ]
     }
-
   // singleDay holds forecast for each day
   let key = 0
   const singleDay = []
@@ -130,7 +131,9 @@ const ForecastDays = ({ days, navigation, setScrollIndexm, currentLocation }) =>
               weatherTypeNumDay={item.weatherTypeNumDay}
               totalRain={item.totalRain}
               hoursLeft={item.hoursLeft}
-              dayIndex={parseInt(item.dayNumber) - new Date().getDate()}
+              dayIndex={(parseInt(item.dayNumber) - new Date().getDate()) < 0 
+                ? (parseInt(item.dayNumber) - new Date().getDate()) + getDaysInMonth() 
+                : (parseInt(item.dayNumber) - new Date().getDate())}
               hours={days}
               currentLocation={currentLocation}
             />

@@ -36,7 +36,7 @@ class ForecastDay extends Component {
       currentLocation
     } = this.props
     const { dropdownActive } = this.state
-
+    
     const iconNight = getWeatherIcon(parseInt(weatherTypeNumNight), style.ICON_SIZE_MEDIUM, false)
     const iconDay = getWeatherIcon(parseInt(weatherTypeNumDay), style.ICON_SIZE_MEDIUM, true)
 
