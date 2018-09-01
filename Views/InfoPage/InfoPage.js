@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { Text, View, TouchableHighlight, ScrollView, Button, Linking, StyleSheet } from 'react-native'
+import { Text, View, TouchableHighlight, TouchableWithoutFeedback, ScrollView, Button, Linking, StyleSheet } from 'react-native'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
 import BoxContainer from '../../Components/BoxContainer'
 import { FontAwesome } from '@expo/vector-icons/'
-
 import s from '../../Assets/style'
 import * as style from '../../Assets/style'
 import Title from '../../Components/Title'
@@ -14,10 +13,12 @@ import BackHeader from '../../Components/BackHeader'
 export default class InfoPage extends Component {
   render () {
     const { navigation } = this.props
-
+    
     return (
       <Container>
+        <TouchableHighlight onPress={() => navigation.openDrawer()}>
         <BackHeader stackNavigation={navigation} title='Information' />
+        </TouchableHighlight>
         <ScrollView contentContainerStyle={[s.pb3]}>
 
           <BoxContainer containerStyle={styles.containerStyle}>
