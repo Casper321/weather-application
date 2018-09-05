@@ -86,11 +86,15 @@ class StartPage extends Component {
                                   >
                                   <Warning
                                     location={
-                                        weatherWarningsInDistrict[0].location +
-                                          ' (' +
-                                          weatherWarningsInDistrict.length +
-                                          ' varningar)'
-                                      }
+                                      weatherWarningsInDistrict[0].location.split(',').length === 2
+                                      ?  weatherWarningsInDistrict.length === 1
+                                        ? weatherWarningsInDistrict[0].location.split(',')[0] + ', ' + weatherWarningsInDistrict[0].location.split(',')[1] + ' (' + weatherWarningsInDistrict.length + ' varning)'
+                                          : weatherWarningsInDistrict[0].location.split(',')[0] + ', ' + weatherWarningsInDistrict[0].location.split(',')[1] + ' (' + weatherWarningsInDistrict.length + ' varning)'
+
+                                      : weatherWarningsInDistrict.length === 1
+                                        ? weatherWarningsInDistrict[0].location + ' (' + weatherWarningsInDistrict.length + ' varning)'
+                                          : weatherWarningsInDistrict[0].location + ' (' + weatherWarningsInDistrict.length + ' varningar)'
+                                        }
                                     message={weatherWarningsInDistrict[0].message}
                                     />
                                 </TouchableHighlight>

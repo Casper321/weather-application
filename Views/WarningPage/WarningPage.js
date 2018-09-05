@@ -59,7 +59,9 @@ class WarningPage extends Component {
       let warningData = {}
       key += 1
       warningData.key = key
-      warningData.location = warning.location
+      let locationList = []
+      locationList = warning.location.split(',')
+      warningData.location = locationList.length === 2 ? locationList[0] + ', ' + locationList[1] : warning.location
       warningData.icon = warning.icon
       warningData.message = warning.message
       Warnings.push(warningData)
