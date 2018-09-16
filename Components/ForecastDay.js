@@ -33,16 +33,27 @@ class ForecastDay extends Component {
       hoursLeft,
       hours,
       dayIndex,
-      currentLocation
+      currentLocation,
+      counter,
+      daysLength
     } = this.props
     const { dropdownActive } = this.state
-    
+
     const iconNight = getWeatherIcon(parseInt(weatherTypeNumNight), style.ICON_SIZE_MEDIUM, false)
     const iconDay = getWeatherIcon(parseInt(weatherTypeNumDay), style.ICON_SIZE_MEDIUM, true)
 
     return (
       <View style={[dropdownActive ? { backgroundColor: style.COL_GREY } : {}]}>
-        <TouchableHighlight underlayColor={style.COL_GREY} onPress={() => this.handleDayClick()}>
+        <TouchableHighlight
+          style={{
+            borderTopLeftRadius: counter === 0 ? style.BORDER_RADIUS_STANDARD : 0,
+            borderTopRightRadius: counter === 0 ? style.BORDER_RADIUS_STANDARD : 0,
+            borderBottomLeftRadius: counter + 1 === daysLength ? style.BORDER_RADIUS_STANDARD : 0,
+            borderBottomRightRadius: counter + 1 === daysLength ? style.BORDER_RADIUS_STANDARD : 0
+          }}
+          underlayColor={style.COL_GREY}
+          onPress={() => this.handleDayClick()}
+        >
           <View>
             <View
               style={[

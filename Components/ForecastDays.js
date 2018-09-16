@@ -41,6 +41,7 @@ const ForecastDays = ({ days, navigation, currentLocation }) => {
   }
   // singleDay holds forecast for each day
   let key = 0
+  let counter = 0
   const singleDay = []
   tenDays.forEach(day => {
     let dayData = {}
@@ -99,6 +100,8 @@ const ForecastDays = ({ days, navigation, currentLocation }) => {
     dayData.tempHigh = maxTemp
     dayData.tempLow = minTemp
     dayData.key = key
+    dayData.counter = counter
+    counter++
     key += 1
     singleDay.push(dayData)
   })
@@ -122,6 +125,8 @@ const ForecastDays = ({ days, navigation, currentLocation }) => {
           keyExtractor={item => `${item.key}`}
           renderItem={({ item }) => (
             <ForecastDay
+              counter={item.counter}
+              daysLength={singleDay.length}
               day={item.day}
               date={item.date}
               tempHigh={item.tempHigh}
