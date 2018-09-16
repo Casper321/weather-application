@@ -9,6 +9,8 @@ import Warning from './Components/Warning'
 import Container from '../../Components/Container'
 import { connect, weatherActions } from 'react-redux'
 import Loading from '../../Components/Loading'
+import Title from '../../Components/Title'
+import NormalText from '../../Components/NormalText'
 
 class WarningPage extends Component {
   itemSeparator = () => {
@@ -78,9 +80,9 @@ class WarningPage extends Component {
               data={Warnings}
               keyExtractor={item => `${item.key}`}
               renderItem={({ item }) => (
-                <BoxContainer containerStyle={{ marginBottom: style.SPACING_S}}>
+                <BoxContainer containerStyle={{ marginBottom: style.SPACING_S }}>
                   <TouchableHighlight
-                    style={{ borderRadius: 14}}
+                    style={{ borderRadius: 14 }}
                     underlayColor={style.COL_GREY}
                     onPress={() =>
                         Alert.alert(
@@ -98,11 +100,13 @@ class WarningPage extends Component {
                 )}
               />
           </ScrollView>
-          : <Loading message='Laddar varningar...' />}
+          : <BoxContainer containerStyle={styles.containerStyle}>
+            <NormalText>
+                Det finns inga varningar utfärdade i Sverige av SMHI.
+              </NormalText>
+          </BoxContainer>}
       </Container>
     )
-    // <Warning location={'DISPLAY location HERE'} typeOfWarning={'warning'} />
-    // fire, weather-snowy, weather-rainy, weather-windy
   }
 }
 
@@ -112,6 +116,15 @@ function mapStateToProps (state) {
     currentLocation: state.weather.currentLocation
   }
 }
+
+const styles = StyleSheet.create({
+  containerStyle: {
+    paddingTop: style.SPACING_M,
+    paddingBottom: style.SPACING_M,
+    paddingLeft: style.SPACING_M,
+    paddingRight: style.SPACING_M
+  }
+})
 
 export default connect(mapStateToProps)(WarningPage)
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Platform } from 'react-native'
 import s from '../Assets/style'
 
 const Container = ({ children, noPadding = false, style = {} }) => {
@@ -12,7 +12,7 @@ const Container = ({ children, noPadding = false, style = {} }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Expo.Constants.statusBarHeight
+    paddingTop: Platform.OS === 'android' ? Expo.Constants.statusBarHeight : 0
   }
 })
 

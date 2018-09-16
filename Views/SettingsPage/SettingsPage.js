@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TouchableHighlight, ScrollView, Button, Linking, StyleSheet, Modal } from 'react-native'
+import { Text, View, TouchableHighlight, ScrollView, Button, Linking, StyleSheet, Modal, Platform } from 'react-native'
 import Container from '../../Components/Container'
 import Header from '../../Components/Header'
 import BoxContainer from '../../Components/BoxContainer'
@@ -29,7 +29,7 @@ export default class SettingsPage extends Component {
           s.flex1,
           s.col_bg_white,
           {
-            paddingTop: Expo.Constants.statusBarHeight
+            paddingTop: Platform.OS === 'android' ? Expo.Constants.statusBarHeight : 0
           }
         ]}
       >

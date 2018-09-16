@@ -7,7 +7,7 @@ import {
   FlatList,
   TouchableHighlight,
   Button,
-  Keyboard
+  Platform
 } from 'react-native'
 import { SearchBar } from 'react-native-elements'
 import Container from '../../Components/Container'
@@ -179,7 +179,7 @@ class SearchPage extends Component {
 
     return (
       <Container>
-        <Header style={[s.col_bg_google_blue, s.boxSh, { height: 56 }]} searchBar rounded>
+        <Header style={[s.col_bg_google_blue, s.boxSh, { height: 56 }, Platform.OS === 'ios' && {paddingBottom: 20} ]} searchBar rounded>
           <Item>
             <Icon name='ios-search' />
             <Input
@@ -234,7 +234,7 @@ class SearchPage extends Component {
                     : hasSearched
                         ? <BoxContainer paddingize>
                           <NormalText>
-                              Ingen platser matchade din sökning. Skriv du in det rätt?
+                              Inga platser matchade din sökning. Skrev du in det rätt?
                             </NormalText>
                           {searchButton}
                         </BoxContainer>

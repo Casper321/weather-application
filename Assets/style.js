@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 
 export const COL_GOOGLE_BLUE = '#2196f3'
 export const COL_PRIMARY = '#000'
@@ -222,5 +222,10 @@ export default StyleSheet.create({
   abs: { position: 'absolute' },
 
   /* Box shadow */
-  boxSh: { elevation: BOX_SHADOW_STANDARD }
+  boxSh: {
+    elevation: BOX_SHADOW_STANDARD,
+    shadowColor: Platform.OS === 'ios' ? '#000' : null,
+    shadowOpacity: Platform.OS === 'ios' ? 0.1 : null,
+    shadowOffset: Platform.OS === 'ios' ? { width: BOX_SHADOW_STANDARD, height: BOX_SHADOW_STANDARD } : null
+  }
 })

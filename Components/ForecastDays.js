@@ -10,36 +10,35 @@ import getDayHoursForecast from '../Assets/Functions/getDayHoursForecast'
 import getHighestOccurrence from '../Assets/Functions/getHighestOccurrence'
 import getDaysInMonth from '../Assets/Functions/getDaysInMonth'
 
-
-const ForecastDays = ({ days, navigation, setScrollIndexm, currentLocation }) => {
+const ForecastDays = ({ days, navigation, currentLocation }) => {
   // Array holding weather forecast data for 10 days
-    let tenDays
-    if (new Date().getHours() === 23) {
-      tenDays = [
-        getDayHoursForecast(1, days),
-        getDayHoursForecast(2, days),
-        getDayHoursForecast(3, days),
-        getDayHoursForecast(4, days),
-        getDayHoursForecast(5, days),
-        getDayHoursForecast(6, days),
-        getDayHoursForecast(7, days),
-        getDayHoursForecast(8, days),
-        getDayHoursForecast(9, days),
-      ]
-    } else {
-      tenDays = [
-        getDayHoursForecast(0, days),
-        getDayHoursForecast(1, days),
-        getDayHoursForecast(2, days),
-        getDayHoursForecast(3, days),
-        getDayHoursForecast(4, days),
-        getDayHoursForecast(5, days),
-        getDayHoursForecast(6, days),
-        getDayHoursForecast(7, days),
-        getDayHoursForecast(8, days),
-        getDayHoursForecast(9, days),
-      ]
-    }
+  let tenDays
+  if (new Date().getHours() === 23) {
+    tenDays = [
+      getDayHoursForecast(1, days),
+      getDayHoursForecast(2, days),
+      getDayHoursForecast(3, days),
+      getDayHoursForecast(4, days),
+      getDayHoursForecast(5, days),
+      getDayHoursForecast(6, days),
+      getDayHoursForecast(7, days),
+      getDayHoursForecast(8, days),
+      getDayHoursForecast(9, days)
+    ]
+  } else {
+    tenDays = [
+      getDayHoursForecast(0, days),
+      getDayHoursForecast(1, days),
+      getDayHoursForecast(2, days),
+      getDayHoursForecast(3, days),
+      getDayHoursForecast(4, days),
+      getDayHoursForecast(5, days),
+      getDayHoursForecast(6, days),
+      getDayHoursForecast(7, days),
+      getDayHoursForecast(8, days),
+      getDayHoursForecast(9, days)
+    ]
+  }
   // singleDay holds forecast for each day
   let key = 0
   const singleDay = []
@@ -131,9 +130,11 @@ const ForecastDays = ({ days, navigation, setScrollIndexm, currentLocation }) =>
               weatherTypeNumDay={item.weatherTypeNumDay}
               totalRain={item.totalRain}
               hoursLeft={item.hoursLeft}
-              dayIndex={(parseInt(item.dayNumber) - new Date().getDate()) < 0 
-                ? (parseInt(item.dayNumber) - new Date().getDate()) + getDaysInMonth() 
-                : (parseInt(item.dayNumber) - new Date().getDate())}
+              dayIndex={
+                parseInt(item.dayNumber) - new Date().getDate() < 0
+                  ? parseInt(item.dayNumber) - new Date().getDate() + getDaysInMonth()
+                  : parseInt(item.dayNumber) - new Date().getDate()
+              }
               hours={days}
               currentLocation={currentLocation}
             />
