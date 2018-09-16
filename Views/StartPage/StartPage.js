@@ -78,14 +78,6 @@ class StartPage extends Component {
                     ? <FetchFailed text='Din sökning kunde tyvärr inte genomföras då din nuvarande plats är utanför vårt prognosområde.' />
                     : newestForecastSearch.hours
                         ? <View>
-                          {weatherWarningsInDistrict[0]
-                              ? <BoxContainer>
-                                <TouchableHighlight
-                                  underlayColor={style.COL_WHITE}
-                                  onPress={() => navigation.navigate('Varningar')}
-                                  />
-                              </BoxContainer>
-                              : null}
                           <CurrentForecast
                             location={currentLocation.suburb ? currentLocation.suburb : currentLocation.city}
                             getNewLocation={() => this.getLocation()}
