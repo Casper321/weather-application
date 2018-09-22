@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {
-  AsyncStorage,
   View,
   StyleSheet,
   ScrollView,
@@ -9,7 +8,6 @@ import {
   Button,
   Platform
 } from 'react-native'
-import { SearchBar } from 'react-native-elements'
 import Container from '../../Components/Container'
 import SearchItem from './Components/SearchItem'
 import BoxContainer from '../../Components/BoxContainer'
