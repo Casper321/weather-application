@@ -1,14 +1,9 @@
 import React, { Component } from 'react'
-import { Text, View, TouchableHighlight, ScrollView, Button, Linking, StyleSheet, Modal, Platform } from 'react-native'
+import { Text, View, TouchableHighlight, ScrollView, StyleSheet, Modal } from 'react-native'
 import Container from '../../Components/Container'
-import Header from '../../Components/Header'
-import BoxContainer from '../../Components/BoxContainer'
-import { FontAwesome } from '@expo/vector-icons/'
 
 import s from '../../Assets/style'
 import * as style from '../../Assets/style'
-import Title from '../../Components/Title'
-import NormalText from '../../Components/NormalText'
 import BackHeader from '../../Components/BackHeader'
 
 export default class SettingsPage extends Component {
@@ -24,15 +19,7 @@ export default class SettingsPage extends Component {
     const { navigation } = this.props
 
     return (
-      <View
-        style={[
-          s.flex1,
-          s.col_bg_white,
-          {
-            paddingTop: Platform.OS === 'android' ? Expo.Constants.statusBarHeight : 0
-          }
-        ]}
-      >
+      <Container>
         <BackHeader stackNavigation={navigation} title='Inställningar' />
         <ScrollView contentContainerStyle={[s.pb3]}>
           <TouchableHighlight style={styles.itemContainer}>
@@ -94,7 +81,7 @@ export default class SettingsPage extends Component {
             </View>
           </TouchableHighlight>
         </ScrollView>
-      </View>
+      </Container>
     )
   }
 }

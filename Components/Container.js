@@ -12,7 +12,7 @@ const Container = ({ children, noPadding = false, style = {} }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Platform.OS === 'android' ? Expo.Constants.statusBarHeight : 0
+    paddingTop: Platform.OS === 'android' && Platform.Version >= 20 ? 24 : 0
   }
 })
 

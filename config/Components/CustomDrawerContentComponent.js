@@ -49,7 +49,7 @@ class CustomDrawerContentComponent extends Component {
       <ScrollView
         style={{
           padding: style.SPACING_M,
-          paddingTop: Expo.Constants.statusBarHeight + 10,
+          paddingTop: Platform.OS === 'android' && Platform.Version >= 20 ? 34 : 0,
           flex: 1
         }}
       >

@@ -48,7 +48,6 @@ const RootStack = createStackNavigator(
 export default class App extends React.Component {
   render () {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
       <Provider store={store}>
         <PersistGate
           loading={
@@ -58,10 +57,11 @@ export default class App extends React.Component {
           }
           persistor={persistor}
         >
+          <SafeAreaView style={{ flex: 1 }}>
             <RootStack />
+          </SafeAreaView>
         </PersistGate>
       </Provider>
-      </SafeAreaView>
     )
   }
 }
