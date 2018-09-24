@@ -16,6 +16,12 @@ import { PersistGate } from 'redux-persist/lib/integration/react'
 import { createStore } from 'redux'
 import Loading from './Components/Loading'
 import CustomDrawerComponent from './config/Components/CustomDrawerContentComponent'
+import Sentry from 'sentry-expo';
+
+// Remove this once Sentry is correctly setup.
+Sentry.enableInExpoDevelopment = true;
+
+Sentry.config('https://b180658ea4354b50a763c565ad9450af@sentry.io/1287229').install();
 
 const persistConfig = {
   key: 'root',

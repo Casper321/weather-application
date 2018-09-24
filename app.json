@@ -29,9 +29,18 @@
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION"
       ]
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "joelrudsbergse",
+            "project": "vadernorden",
+            "authToken": "2b038d50a9134f0dbd83ae205eca668a6642487c6a5c4a59aecfaa3ece607742"
+          }
+        }
+      ]
     }
   }
 }
-
-
-
